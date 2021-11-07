@@ -1,6 +1,7 @@
 package com.nosql.cryp.entity;
 
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -41,4 +42,12 @@ public class Currency {
     private double price_usd;
 
     private History currHistory;
+/*
+    public Currency(String asset_id, Date data_end, double price_usd){
+        this.asset_id = asset_id;
+        this.data_end = data_end;
+        this.price_usd = price_usd;
+    }
+
+ */
 }

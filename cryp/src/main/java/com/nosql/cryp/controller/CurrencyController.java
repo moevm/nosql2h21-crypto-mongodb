@@ -6,9 +6,12 @@ import com.nosql.cryp.service.CurrencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,13 +29,16 @@ public class CurrencyController {
 
     @GetMapping("/getAllCurr")
     //public List<Currency> getCurrencies(){
-    public ResponseEntity<?> getAllCurrencies(){
+    public String getAllCurrencies(Model model){
         List<Currency> currencies = currencyService.getAllCurr();
         if (currencies.size() > 0){
-            return new ResponseEntity<List<Currency>>(currencies, HttpStatus.OK);
+            model.addAttribute("currencies", currencies);
+            return "Vrode ok";
+          //  return new ResponseEntity<List<Currency>>(currencies, HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<>("no comprende", HttpStatus.NOT_FOUND);
+            return "error";
+         //   return new ResponseEntity<>("no comprende", HttpStatus.NOT_FOUND);
         }
     }
 
@@ -40,4 +46,6 @@ public class CurrencyController {
     public Optional<Currency> getCurrency(@PathVariable int id){
         return currencyService.getCurrency(id);
     }
+
+
 }
