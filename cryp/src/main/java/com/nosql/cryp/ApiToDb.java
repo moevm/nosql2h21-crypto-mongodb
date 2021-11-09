@@ -3,10 +3,11 @@ package com.nosql.cryp;
 
 import com.nosql.cryp.entity.Currency;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
-import java.io.FileInputStream;
 
 public class ApiToDb {
 
@@ -23,11 +24,28 @@ public class ApiToDb {
     }
 
 
-    String api_key = prop.getProperty("api_key");
+    String key_api = prop.getProperty("key_api");
 
-    public void list_all_assets()
-    {
-        Currency
+    public void list_all_assets() throws IOException {
+        //Currency
+        System.out.println(key_api);
+        String url = "http://www.google.com/";
+
+        URL obj = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+
+        connection.setRequestMethod("GET");
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String inputLine;
+        StringBuffer response = new StringBuffer();
+
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        System.out.println(response.toString());
     }
 
 }
