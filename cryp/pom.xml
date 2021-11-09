@@ -66,9 +66,9 @@
             <artifactId>webjars-locator-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.coinapi.rest</groupId>
-            <artifactId>v1</artifactId>
-            <version>1.14</version>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
         </dependency>
     </dependencies>
 

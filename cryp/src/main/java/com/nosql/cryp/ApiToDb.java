@@ -4,10 +4,16 @@ package com.nosql.cryp;
 import com.nosql.cryp.entity.Currency;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 import java.util.Properties;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 public class ApiToDb {
 
@@ -26,26 +32,26 @@ public class ApiToDb {
 
     String key_api = prop.getProperty("key_api");
 
-    public void list_all_assets() throws IOException {
+    public void list_all_assets() throws IOException, URISyntaxException {
         //Currency
-        System.out.println(key_api);
-        String url = "http://www.google.com/";
 
-        URL obj = new URL(url);
-        HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+        //String url = prop.getProperty("cUrl_list_all_assets");
 
-        connection.setRequestMethod("GET");
+        DefaultHttpClient httpclient = new DefaultHttpClient();
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
+        HttpGet httpGet = new HttpGet("http://rest.coinapi.io/v1/assets/BTC");
 
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+        httpGet.setHeader("X-CoinAPI-Key" , "9D62D7F1-C92D-4615-BC53-BF7BC0B78399");
+
+        HttpResponse response = httpclient.execute(httpGet);
+
+        //System.out.println(response.toString());
+
+        BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+        String line = "";
+        while ((line = rd.readLine()) != null) {
+            System.out.println(line);
         }
-        in.close();
-
-        System.out.println(response.toString());
     }
 
 }
