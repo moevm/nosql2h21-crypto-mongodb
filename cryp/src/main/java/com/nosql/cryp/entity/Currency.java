@@ -40,8 +40,6 @@ public class Currency {
     private double volume_1mth_usd;
 
     private double price_usd;
-
-    private History currHistory;
 /*
     public Currency(String asset_id, Date data_end, double price_usd){
         this.asset_id = asset_id;

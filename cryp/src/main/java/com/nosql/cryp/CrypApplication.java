@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-
+//@ComponentScan("com.nosql.cryp.service")
 public class CrypApplication {
 
     public static void main(String[] args) {
