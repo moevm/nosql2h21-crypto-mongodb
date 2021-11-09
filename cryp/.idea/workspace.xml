@@ -23,11 +23,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37597465-880c-4090-a486-70fa01129c31" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/ApiToDb.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/TextConstants.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/ApiToDb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/ApiToDb.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +86,7 @@
       <option name="presentableId" value="Default" />
       <updated>1636315921241</updated>
       <workItem from="1636315928848" duration="6017000" />
-      <workItem from="1636452003526" duration="1400000" />
+      <workItem from="1636452003526" duration="2377000" />
     </task>
     <servers />
   </component>
