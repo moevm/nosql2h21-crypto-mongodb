@@ -1,5 +1,6 @@
 package com.nosql.cryp;
 
+import org.json.JSONException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -14,7 +15,7 @@ import java.net.URISyntaxException;
 
 public class CrypApplication {
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args) throws IOException, URISyntaxException, JSONException {
         SpringApplication.run(CrypApplication.class, args);
         ApiToDb apitodb = new ApiToDb();
         apitodb.list_all_assets();

@@ -23,15 +23,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37597465-880c-4090-a486-70fa01129c31" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/ApiToDb.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/ApiToDb.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/CrypApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/CrypApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/TextConstants.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/TextConstants.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nosql/cryp/CrypApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nosql/cryp/CrypApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nosql/cryp/controller/CurrencyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nosql/cryp/controller/CurrencyController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nosql/cryp/entity/Currency.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nosql/cryp/entity/Currency.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nosql/cryp/ApiToDb.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nosql/cryp/ApiToDb.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,13 +68,18 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RunManager">
-    <configuration name="CrypApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <configuration name="CrypApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
       <module name="cryp" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.nosql.cryp.CrypApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.CrypApplication" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -94,7 +93,10 @@
       <option name="presentableId" value="Default" />
       <updated>1636315921241</updated>
       <workItem from="1636315928848" duration="6017000" />
-      <workItem from="1636452003526" duration="6009000" />
+      <workItem from="1636452003526" duration="7342000" />
+      <workItem from="1636471784536" duration="1068000" />
+      <workItem from="1636472895186" duration="2571000" />
+      <workItem from="1636478802145" duration="379000" />
     </task>
     <servers />
   </component>
@@ -113,21 +115,7 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/com/nosql/cryp/CrypApplication.java</url>
-          <line>14</line>
-          <properties class="com.nosql.cryp.CrypApplication" method="main">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
-  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/cryp$CrypApplication.ic" NAME="CrypApplication Coverage Results" MODIFIED="1636455003620" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/cryp$CrypApplication.ic" NAME="CrypApplication Coverage Results" MODIFIED="1636459377129" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

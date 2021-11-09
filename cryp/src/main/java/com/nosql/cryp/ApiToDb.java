@@ -6,6 +6,8 @@ import com.nosql.cryp.entity.Currency;
 import java.io.*;
 import java.net.*;
 import java.util.Properties;
+
+import jdk.nashorn.internal.parser.JSONParser;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -14,6 +16,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONTokener;
 
 public class ApiToDb {
 
@@ -32,7 +37,7 @@ public class ApiToDb {
 
     String key_api = prop.getProperty("key_api");
 
-    public void list_all_assets() throws IOException, URISyntaxException {
+    public void list_all_assets() throws IOException, URISyntaxException, JSONException {
         //Currency
 
         //String url = prop.getProperty("cUrl_list_all_assets");
@@ -47,11 +52,22 @@ public class ApiToDb {
 
         //System.out.println(response.toString());
 
-        BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+        /*BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
         String line = "";
         while ((line = rd.readLine()) != null) {
             System.out.println(line);
+        }*/
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+        StringBuilder builder = new StringBuilder();
+        for (String line = null; (line = reader.readLine()) != null;) {
+            builder.append(line).append("\n");
         }
+        JSONTokener tokener = new JSONTokener(builder.toString());
+        JSONArray finalResult = new JSONArray(tokener);
+
+        System.out.println(finalResult);
+
     }
 
 }
