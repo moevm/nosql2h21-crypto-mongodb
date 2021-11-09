@@ -12,7 +12,8 @@ public class CrypApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CrypApplication.class, args);
-        
+        ApiToDb apitodb = new ApiToDb();
+        apitodb.list_all_assets();
     }
 
 }
