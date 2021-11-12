@@ -11,14 +11,17 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
-@SpringBootApplication
+import org.json.JSONArray;
 
+@SpringBootApplication
 public class CrypApplication {
 
     public static void main(String[] args) throws IOException, URISyntaxException, JSONException {
+
         SpringApplication.run(CrypApplication.class, args);
         ApiToDb apitodb = new ApiToDb();
-        apitodb.list_all_assets();
+        JSONArray curr = apitodb.list_all_assets();
+
     }
 
 }

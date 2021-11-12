@@ -34,20 +34,16 @@ public class ApiToDb {
         }
     }
 
-
     String key_api = prop.getProperty("key_api");
 
-    public void list_all_assets() throws IOException, URISyntaxException, JSONException {
+    public JSONArray list_all_assets() throws IOException, URISyntaxException, JSONException {
         //Currency
 
         //String url = prop.getProperty("cUrl_list_all_assets");
 
         DefaultHttpClient httpclient = new DefaultHttpClient();
-
         HttpGet httpGet = new HttpGet("http://rest.coinapi.io/v1/assets/BTC");
-
-        httpGet.setHeader("X-CoinAPI-Key" , "9D62D7F1-C92D-4615-BC53-BF7BC0B78399");
-
+        httpGet.setHeader("X-CoinAPI-Key" , key_api);
         HttpResponse response = httpclient.execute(httpGet);
 
         //System.out.println(response.toString());
@@ -65,9 +61,9 @@ public class ApiToDb {
         }
         JSONTokener tokener = new JSONTokener(builder.toString());
         JSONArray finalResult = new JSONArray(tokener);
-
         System.out.println(finalResult);
 
+        return finalResult;
     }
 
 }
