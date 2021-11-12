@@ -23,8 +23,6 @@ public class CrypApplication {
     public static void main(String[] args) throws IOException, URISyntaxException, JSONException {
 
         SpringApplication.run(CrypApplication.class, args);
-        ApiToDb apitodb = new ApiToDb();
-        JSONArray curr = apitodb.list_all_assets();
 
     }
 

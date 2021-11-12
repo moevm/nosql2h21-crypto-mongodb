@@ -1,8 +1,12 @@
 package com.nosql.cryp.controller;
 
+import com.nosql.cryp.ApiToDb;
 import com.nosql.cryp.entity.Currency;
 import com.nosql.cryp.repository.CurrencyRepository;
 import com.nosql.cryp.service.CurrencyService;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,10 +30,18 @@ public class CurrencyController {
     private CurrencyService currencyService;
 
     @GetMapping("/apiFull")
-    public String currencyFromApi(){
+    public String currencyFromApi() throws JSONException, IOException, URISyntaxException, ParseException {
             // запросы к апи
-        Currency currency =  new Currency();
-        currencyService.saveCurrency(currency);
+        ApiToDb apitodb = new ApiToDb();
+        JSONArray curr = apitodb.list_all_assets();
+        for (int i = 0 ; i < curr.length(); i++) {
+            JSONObject obj = curr.getJSONObject(i);
+            if (((int) obj.get("type_is_crypto") == 0))
+                continue;
+            Currency currency =  new Currency(obj);
+            currencyService.saveCurrency(currency);
+            System.out.println("Succesfully added currency: " + currency.toString());
+        }
         return "redirect:/main";
     }
     @PostMapping("/new")

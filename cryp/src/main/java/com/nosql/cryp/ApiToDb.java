@@ -42,7 +42,7 @@ public class ApiToDb {
         //String url = prop.getProperty("cUrl_list_all_assets");
 
         DefaultHttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet("http://rest.coinapi.io/v1/assets/BTC");
+        HttpGet httpGet = new HttpGet("http://rest.coinapi.io/v1/assets");
         httpGet.setHeader("X-CoinAPI-Key" , key_api);
         HttpResponse response = httpclient.execute(httpGet);
 
@@ -61,7 +61,7 @@ public class ApiToDb {
         }
         JSONTokener tokener = new JSONTokener(builder.toString());
         JSONArray finalResult = new JSONArray(tokener);
-        System.out.println(finalResult);
+        //System.out.println(finalResult);
 
         return finalResult;
     }
