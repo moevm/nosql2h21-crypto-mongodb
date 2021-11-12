@@ -20,28 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37597465-880c-4090-a486-70fa01129c31" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_15.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_14.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/controller/HistoryController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/repository/HistoryRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/service/HistoryService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/service/impl/HistoryServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/currency_form.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mongodb_mongo_java_driver_2_10_1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cryp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/cryp.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/CrypApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/CrypApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/controller/CurrencyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/controller/CurrencyController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/entity/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/entity/Currency.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/entity/History.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/entity/History.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/main.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/cryp.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nosql/cryp/controller/CurrencyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nosql/cryp/controller/CurrencyController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nosql/cryp/controller/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nosql/cryp/controller/MainController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nosql/cryp/entity/Currency.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nosql/cryp/entity/Currency.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nosql/cryp/CrypApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nosql/cryp/CrypApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/currency_form.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/currency_form.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +92,10 @@
       <workItem from="1636452717802" duration="763000" />
       <workItem from="1636453591151" duration="30000" />
       <workItem from="1636468070900" duration="4868000" />
-      <workItem from="1636476710980" duration="820000" />
+      <workItem from="1636476710980" duration="911000" />
+      <workItem from="1636477896127" duration="730000" />
+      <workItem from="1636713038137" duration="1000000" />
+      <workItem from="1636719320794" duration="2405000" />
     </task>
     <servers />
   </component>
@@ -134,38 +123,38 @@
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="1263" y="375" key="#com.intellij.ide.util.MemberChooser/0.40.1920.1040@0.40.1920.1040" timestamp="1636475557277" />
-    <state width="920" height="391" key="GridCell.Tab.0.bottom" timestamp="1636477445179">
+    <state width="920" height="391" key="GridCell.Tab.0.bottom" timestamp="1636477640727">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="920" height="391" key="GridCell.Tab.0.bottom/0.40.1920.1040@0.40.1920.1040" timestamp="1636477445179" />
-    <state width="920" height="391" key="GridCell.Tab.0.center" timestamp="1636477445177">
+    <state width="920" height="391" key="GridCell.Tab.0.bottom/0.40.1920.1040@0.40.1920.1040" timestamp="1636477640727" />
+    <state width="920" height="391" key="GridCell.Tab.0.center" timestamp="1636477640727">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="920" height="391" key="GridCell.Tab.0.center/0.40.1920.1040@0.40.1920.1040" timestamp="1636477445177" />
-    <state width="920" height="391" key="GridCell.Tab.0.left" timestamp="1636477445177">
+    <state width="920" height="391" key="GridCell.Tab.0.center/0.40.1920.1040@0.40.1920.1040" timestamp="1636477640727" />
+    <state width="920" height="391" key="GridCell.Tab.0.left" timestamp="1636477640726">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="920" height="391" key="GridCell.Tab.0.left/0.40.1920.1040@0.40.1920.1040" timestamp="1636477445177" />
-    <state width="920" height="391" key="GridCell.Tab.0.right" timestamp="1636477445178">
+    <state width="920" height="391" key="GridCell.Tab.0.left/0.40.1920.1040@0.40.1920.1040" timestamp="1636477640726" />
+    <state width="920" height="391" key="GridCell.Tab.0.right" timestamp="1636477640727">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="920" height="391" key="GridCell.Tab.0.right/0.40.1920.1040@0.40.1920.1040" timestamp="1636477445178" />
-    <state width="920" height="391" key="GridCell.Tab.1.bottom" timestamp="1636477445183">
+    <state width="920" height="391" key="GridCell.Tab.0.right/0.40.1920.1040@0.40.1920.1040" timestamp="1636477640727" />
+    <state width="920" height="391" key="GridCell.Tab.1.bottom" timestamp="1636477640728">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="920" height="391" key="GridCell.Tab.1.bottom/0.40.1920.1040@0.40.1920.1040" timestamp="1636477445183" />
-    <state width="920" height="391" key="GridCell.Tab.1.center" timestamp="1636477445182">
+    <state width="920" height="391" key="GridCell.Tab.1.bottom/0.40.1920.1040@0.40.1920.1040" timestamp="1636477640728" />
+    <state width="920" height="391" key="GridCell.Tab.1.center" timestamp="1636477640727">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="920" height="391" key="GridCell.Tab.1.center/0.40.1920.1040@0.40.1920.1040" timestamp="1636477445182" />
-    <state width="920" height="391" key="GridCell.Tab.1.left" timestamp="1636477445180">
+    <state width="920" height="391" key="GridCell.Tab.1.center/0.40.1920.1040@0.40.1920.1040" timestamp="1636477640727" />
+    <state width="920" height="391" key="GridCell.Tab.1.left" timestamp="1636477640727">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="920" height="391" key="GridCell.Tab.1.left/0.40.1920.1040@0.40.1920.1040" timestamp="1636477445180" />
-    <state width="920" height="391" key="GridCell.Tab.1.right" timestamp="1636477445183">
+    <state width="920" height="391" key="GridCell.Tab.1.left/0.40.1920.1040@0.40.1920.1040" timestamp="1636477640727" />
+    <state width="920" height="391" key="GridCell.Tab.1.right" timestamp="1636477640727">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="920" height="391" key="GridCell.Tab.1.right/0.40.1920.1040@0.40.1920.1040" timestamp="1636477445183" />
+    <state width="920" height="391" key="GridCell.Tab.1.right/0.40.1920.1040@0.40.1920.1040" timestamp="1636477640727" />
     <state x="424" y="234" key="SettingsEditor" timestamp="1636316028183">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>

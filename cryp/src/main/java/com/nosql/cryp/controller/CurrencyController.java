@@ -22,6 +22,13 @@ public class CurrencyController {
     @Autowired
     private CurrencyService currencyService;
 
+    @GetMapping("/apiFull")
+    public String currencyFromApi(){
+            // запросы к апи
+        Currency currency =  new Currency();
+        currencyService.saveCurrency(currency);
+        return "redirect:/main";
+    }
     @PostMapping("/new")
     public String saveCurrency(@RequestBody Currency newCurrency){
 

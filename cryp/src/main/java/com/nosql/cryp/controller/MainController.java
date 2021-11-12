@@ -12,6 +12,12 @@ import java.util.List;
 
 @Controller
 public class MainController {
+
+    @GetMapping("/")
+    public String apiGet(){
+
+        return "redirect:/currency/apiFull";
+    }
     @GetMapping("/main")
     public String showHomePage(Model model){
         /*
