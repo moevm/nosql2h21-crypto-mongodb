@@ -1,6 +1,7 @@
 package com.nosql.cryp.entity;
 
 import lombok.*;
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,8 +22,8 @@ import java.util.Date;
 @Document(collection="Currency")
 public class Currency {
     //@GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Id
-    private int id;
+    /*@Id
+    private int id;*/
 
     private String asset_id;
 
@@ -81,17 +82,17 @@ public class Currency {
             this.data_trade_end  = simpleDateFormat_2.parse((String) curr.get("data_trade_end"));
 
         if(curr.has("data_symbols_count"))
-            this.data_symbols_count = (int) curr.get("data_symbols_count");
+            this.data_symbols_count = curr.getInt("data_symbols_count");
 
         if(curr.has("volume_1hrs_usd"))
-            this.volume_1hrs_usd = (double) curr.get("volume_1hrs_usd");
+            this.volume_1hrs_usd = curr.getDouble("volume_1hrs_usd");
         if(curr.has("volume_1day_usd"))
-            this.volume_1day_usd = (double) curr.get("volume_1day_usd");
+            this.volume_1day_usd = curr.getDouble("volume_1day_usd");
         if(curr.has("volume_1mth_usd"))
-            this.volume_1mth_usd = (double) curr.get("volume_1mth_usd");
+            this.volume_1mth_usd = curr.getDouble("volume_1mth_usd");
 
         if(curr.has("price_usd"))
-            this.price_usd = (double) curr.get("price_usd");
+            this.price_usd = curr.getDouble("price_usd");
 
     }
 /*

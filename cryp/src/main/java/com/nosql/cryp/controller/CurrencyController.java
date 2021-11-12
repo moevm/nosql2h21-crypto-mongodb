@@ -40,7 +40,6 @@ public class CurrencyController {
                 continue;
             Currency currency =  new Currency(obj);
             currencyService.saveCurrency(currency);
-            System.out.println("Succesfully added currency: " + currency.toString());
         }
         return "redirect:/main";
     }
