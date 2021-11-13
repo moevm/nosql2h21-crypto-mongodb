@@ -26,10 +26,14 @@ public class HistoryController {
     }
 
     @PostMapping("/save")
-    public String saveHistory(@RequestBody History newHistory){
+    public String saveHistory(History newHistory){
         Date curr_date = new Date();
         newHistory.setTime(curr_date);
         historyService.saveHistory(newHistory);
+        System.out.println("rate: " + newHistory.getRate);
+        for (int i = 0; i < historyService.getAllHist().size(); i++){
+            System.out.println(historyService.getAllHist().get(i).toString());;
+        }
         return "main";
     }
 }

@@ -15,11 +15,9 @@ import java.util.Date;
 @Document(collection="History")
 public class History {
     @Id
-    private int id;
+    private String asset_id_base;
 
     private Date time;
-
-    private String asset_id_base;
 
     private String asset_id_quote;
 
