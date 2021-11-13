@@ -24,7 +24,7 @@ public class Currency {
     //@GeneratedValue (strategy = GenerationType.IDENTITY)
     /*@Id
     private int id;*/
-
+    @Id
     private String asset_id;
 
     private String name;
