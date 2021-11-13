@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -21,6 +24,11 @@
   <component name="ChangeListManager">
     <list default="true" id="37597465-880c-4090-a486-70fa01129c31" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+=======
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/entity/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/entity/Currency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nosql/cryp/entity/Currency.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nosql/cryp/entity/Currency.class" afterDir="false" />
+>>>>>>> c1980b2d720deb46c7926885c859b402280e5479
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,7 +68,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.project.maven.repository.indices" />
   </component>
   <component name="RunManager">
     <configuration name="CrypApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
@@ -107,6 +115,7 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="WindowStateProjectService">
     <state x="880" y="138" key="#Project_Structure" timestamp="1636476364346">
       <screen x="0" y="40" width="1920" height="1040" />
@@ -156,5 +165,9 @@
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
     <state x="1267" y="573" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.40.1920.1040@0.40.1920.1040" timestamp="1636318723470" />
+=======
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/cryp$CrypApplication.ic" NAME="CrypApplication Coverage Results" MODIFIED="1636459377129" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+>>>>>>> c1980b2d720deb46c7926885c859b402280e5479
   </component>
 </project>
