@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
-  </component>
   <component name="BranchesTreeState">
     <expand>
       <path>
@@ -24,11 +21,14 @@
   <component name="ChangeListManager">
     <list default="true" id="37597465-880c-4090-a486-70fa01129c31" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-<<<<<<< HEAD
-=======
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/entity/Currency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/entity/Currency.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/nosql/cryp/entity/Currency.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nosql/cryp/entity/Currency.class" afterDir="false" />
->>>>>>> c1980b2d720deb46c7926885c859b402280e5479
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/controller/CurrencyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/controller/CurrencyController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/repository/CurrencyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/repository/CurrencyRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/service/CurrencyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/service/CurrencyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/service/impl/CurrencyServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/nosql/cryp/service/impl/CurrencyServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nosql/cryp/controller/CurrencyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nosql/cryp/controller/CurrencyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nosql/cryp/repository/CurrencyRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nosql/cryp/repository/CurrencyRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nosql/cryp/service/CurrencyService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nosql/cryp/service/CurrencyService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/nosql/cryp/service/impl/CurrencyServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/nosql/cryp/service/impl/CurrencyServiceImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +96,8 @@
       <workItem from="1636476710980" duration="911000" />
       <workItem from="1636477896127" duration="730000" />
       <workItem from="1636713038137" duration="1000000" />
-      <workItem from="1636719320794" duration="3004000" />
+      <workItem from="1636719320794" duration="2405000" />
+      <workItem from="1636808556230" duration="3019000" />
     </task>
     <servers />
   </component>
@@ -115,59 +116,45 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
-<<<<<<< HEAD
   <component name="WindowStateProjectService">
-    <state x="880" y="138" key="#Project_Structure" timestamp="1636476364346">
+    <state x="765" y="266" key="#com.intellij.ide.util.MemberChooser" timestamp="1636809926314">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state x="880" y="138" key="#Project_Structure/0.40.1920.1040@0.40.1920.1040" timestamp="1636476364346" />
-    <state x="1263" y="375" key="#com.intellij.ide.util.MemberChooser" timestamp="1636475557277">
+    <state x="765" y="266" key="#com.intellij.ide.util.MemberChooser/0.40.1920.1040@0.40.1920.1040" timestamp="1636809926314" />
+    <state width="1877" height="394" key="GridCell.Tab.0.bottom" timestamp="1636811436320">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state x="1263" y="375" key="#com.intellij.ide.util.MemberChooser/0.40.1920.1040@0.40.1920.1040" timestamp="1636475557277" />
-    <state width="1877" height="394" key="GridCell.Tab.0.bottom" timestamp="1636723379662">
+    <state width="1877" height="394" key="GridCell.Tab.0.bottom/0.40.1920.1040@0.40.1920.1040" timestamp="1636811436320" />
+    <state width="1877" height="394" key="GridCell.Tab.0.center" timestamp="1636811436320">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="1877" height="394" key="GridCell.Tab.0.bottom/0.40.1920.1040@0.40.1920.1040" timestamp="1636723379662" />
-    <state width="1877" height="394" key="GridCell.Tab.0.center" timestamp="1636723379662">
+    <state width="1877" height="394" key="GridCell.Tab.0.center/0.40.1920.1040@0.40.1920.1040" timestamp="1636811436320" />
+    <state width="1877" height="394" key="GridCell.Tab.0.left" timestamp="1636811436319">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="1877" height="394" key="GridCell.Tab.0.center/0.40.1920.1040@0.40.1920.1040" timestamp="1636723379662" />
-    <state width="1877" height="394" key="GridCell.Tab.0.left" timestamp="1636723379662">
+    <state width="1877" height="394" key="GridCell.Tab.0.left/0.40.1920.1040@0.40.1920.1040" timestamp="1636811436319" />
+    <state width="1877" height="394" key="GridCell.Tab.0.right" timestamp="1636811436320">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="1877" height="394" key="GridCell.Tab.0.left/0.40.1920.1040@0.40.1920.1040" timestamp="1636723379662" />
-    <state width="1877" height="394" key="GridCell.Tab.0.right" timestamp="1636723379662">
+    <state width="1877" height="394" key="GridCell.Tab.0.right/0.40.1920.1040@0.40.1920.1040" timestamp="1636811436320" />
+    <state width="1877" height="394" key="GridCell.Tab.1.bottom" timestamp="1636811436321">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="1877" height="394" key="GridCell.Tab.0.right/0.40.1920.1040@0.40.1920.1040" timestamp="1636723379662" />
-    <state width="1877" height="394" key="GridCell.Tab.1.bottom" timestamp="1636723379663">
+    <state width="1877" height="394" key="GridCell.Tab.1.bottom/0.40.1920.1040@0.40.1920.1040" timestamp="1636811436321" />
+    <state width="1877" height="394" key="GridCell.Tab.1.center" timestamp="1636811436320">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="1877" height="394" key="GridCell.Tab.1.bottom/0.40.1920.1040@0.40.1920.1040" timestamp="1636723379663" />
-    <state width="1877" height="394" key="GridCell.Tab.1.center" timestamp="1636723379663">
+    <state width="1877" height="394" key="GridCell.Tab.1.center/0.40.1920.1040@0.40.1920.1040" timestamp="1636811436320" />
+    <state width="1877" height="394" key="GridCell.Tab.1.left" timestamp="1636811436320">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="1877" height="394" key="GridCell.Tab.1.center/0.40.1920.1040@0.40.1920.1040" timestamp="1636723379663" />
-    <state width="1877" height="394" key="GridCell.Tab.1.left" timestamp="1636723379662">
+    <state width="1877" height="394" key="GridCell.Tab.1.left/0.40.1920.1040@0.40.1920.1040" timestamp="1636811436320" />
+    <state width="1877" height="394" key="GridCell.Tab.1.right" timestamp="1636811436321">
       <screen x="0" y="40" width="1920" height="1040" />
     </state>
-    <state width="1877" height="394" key="GridCell.Tab.1.left/0.40.1920.1040@0.40.1920.1040" timestamp="1636723379662" />
-    <state width="1877" height="394" key="GridCell.Tab.1.right" timestamp="1636723379663">
-      <screen x="0" y="40" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="394" key="GridCell.Tab.1.right/0.40.1920.1040@0.40.1920.1040" timestamp="1636723379663" />
-    <state x="424" y="234" key="SettingsEditor" timestamp="1636316028183">
-      <screen x="0" y="40" width="1920" height="1040" />
-    </state>
-    <state x="424" y="234" key="SettingsEditor/0.40.1920.1040@0.40.1920.1040" timestamp="1636316028183" />
-    <state x="1267" y="573" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1636318723470">
-      <screen x="0" y="40" width="1920" height="1040" />
-    </state>
-    <state x="1267" y="573" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.40.1920.1040@0.40.1920.1040" timestamp="1636318723470" />
-=======
+    <state width="1877" height="394" key="GridCell.Tab.1.right/0.40.1920.1040@0.40.1920.1040" timestamp="1636811436321" />
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/cryp$CrypApplication.ic" NAME="CrypApplication Coverage Results" MODIFIED="1636459377129" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
->>>>>>> c1980b2d720deb46c7926885c859b402280e5479
   </component>
 </project>

@@ -28,4 +28,9 @@ public class CurrencyServiceImpl implements CurrencyService {
     public Optional<Currency> getCurrency(Integer id) {
         return currencyRepository.findById(id);
     }
+
+    @Override
+    public List<Currency> getByAsset_id(String asset_id) {
+        return currencyRepository.findByAsset_id(asset_id);
+    }
 }

@@ -12,4 +12,6 @@ public interface CurrencyService {
     public List<Currency> getAllCurr();
 
     public Optional<Currency> getCurrency(Integer id);
+
+    public List<Currency> getByAsset_id(String asset_id);
 }
