@@ -32,10 +32,19 @@ public class CurrencyController {
             // запросы к апи
         ApiToDb apitodb = new ApiToDb();
         JSONArray curr = apitodb.list_all_assets();
-        for (int i = 0 ; i < 100; i++) {
+        for (int i = 0 ; i < 200; i++) {
             JSONObject obj = curr.getJSONObject(i);
             if (((int) obj.get("type_is_crypto") == 0))
                 continue;
+            if(obj.has("price_usd"))
+            {
+                if(((int) obj.getDouble("price_usd")) <= 0)
+                    continue;
+            }
+            else
+            {
+                continue;
+            }
 
             Currency currency =  new Currency(obj);
             currencyService.saveCurrency(currency);
