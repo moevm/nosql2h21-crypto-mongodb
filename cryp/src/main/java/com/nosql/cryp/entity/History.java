@@ -16,7 +16,6 @@ import java.util.Date;
 public class History {
     private String asset_id_base;
 
-    @Id
     private Date time;
 
     private String asset_id_quote;
