@@ -36,8 +36,22 @@ public class CurrencyController {
             JSONObject obj = curr.getJSONObject(i);
             if (((int) obj.get("type_is_crypto") == 0))
                 continue;
+
             Currency currency =  new Currency(obj);
             currencyService.saveCurrency(currency);
+            /*String asset_id = (String) obj.get("asset_id");
+            List<Currency> assetCurrency = currencyService.getByAsset_id(asset_id);
+            if(assetCurrency.isEmpty())
+            {
+                Currency currency =  new Currency(obj);
+                currencyService.saveCurrency(currency);
+            }
+            else
+            {
+                Currency currency =  new Currency(obj);
+                currencyService.updateCurrencyByAssetId(currency, asset_id);
+            }*/
+
         }
         return "redirect:/currency/getAllCurr";
     }
@@ -66,10 +80,10 @@ public class CurrencyController {
     public String getCurrencyList(@PathVariable String asset_id, Model model){
         List<Currency> assetCurrency = currencyService.getByAsset_id(asset_id);
         model.addAttribute(assetCurrency);
-        System.out.println("asset_id: " + asset_id);
+        /*System.out.println("asset_id: " + asset_id);
         for (int i = 0; i < assetCurrency.size(); i++){
             System.out.println(assetCurrency.get(i).toString());
-        }
+        }*/
         return "main";
     }
 

@@ -33,4 +33,5 @@ public class CurrencyServiceImpl implements CurrencyService {
     public List<Currency> getByAsset_id(String asset_id) {
         return currencyRepository.findByAsset_id(asset_id);
     }
+
 }
