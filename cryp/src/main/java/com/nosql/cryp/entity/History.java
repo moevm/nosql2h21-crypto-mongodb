@@ -14,12 +14,10 @@ import java.util.Date;
 @NoArgsConstructor
 @Document(collection="History")
 public class History {
-    @Id
-    private int id;
-
-    private Date time;
-
     private String asset_id_base;
+
+    @Id
+    private Date time;
 
     private String asset_id_quote;
 
