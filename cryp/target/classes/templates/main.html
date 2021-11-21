@@ -44,8 +44,10 @@
 <a th:href="@{/mainPage}">Главная</a>
 <script type="text/javascript" >
     const fileUploader = document.getElementById('currency_json');
+    var fileread = new FileReader();
     var jsonObject;
     var jsonString;
+
     fileUploader.addEventListener('change',
         (event) => {
             const files = event.target.files;
@@ -54,17 +56,30 @@
             console.log('files2', file);
             var reader  = new FileReader();
 
-            reader.onloadend = function () {
-                jsonString = reader.result;
-                console.log(jsonString);
-            }
+            reader.readAsText(file);
 
-            if (file) {
-                jsonString = reader.readAsDataURL(file);
+            reader.onload = function() {
+                jsonString = reader.result;
+                jsonString = jsonString.toString();
+                //console.log(reader.result);
+            };
+
+            /*reader.onloadend = function () {
+                jsonString = reader.result;
+                //console.log(jsonString);
+            }*/
+
+            /*if (file) {
+                //jsonString = reader.readAsDataURL(file);
+                jsonString = reader.readAsText(file);
+
                 console.log(jsonString);
-            }
+            }*/
         }
     );
+
+
+
     function sendJSON(){
 
         let xhr = new XMLHttpRequest();
@@ -72,6 +87,18 @@
         xhr.open("POST", url, true);
         xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
         xhr.send(jsonString);
+    }
+
+    function readTextFile(file, callback) {
+        var rawFile = new XMLHttpRequest();
+        rawFile.overrideMimeType("application/json");
+        rawFile.open("GET", file, true);
+        rawFile.onreadystatechange = function() {
+            if (rawFile.readyState === 4 && rawFile.status == "200") {
+                callback(rawFile.responseText);
+            }
+        }
+        rawFile.send(null);
     }
 </script>
 </body>

@@ -44,27 +44,30 @@
 <a th:href="@{/mainPage}">Главная</a>
 <script type="text/javascript" >
     const fileUploader = document.getElementById('currency_json');
+    var fileread = new FileReader();
     var jsonObject;
     var jsonString;
+
     fileUploader.addEventListener('change',
         (event) => {
             const files = event.target.files;
-            console.log('files', files);
+            //console.log('files', files);
             var file    = document.querySelector('input[type=file]').files[0];
-            console.log('files2', file);
+            //console.log('files2', file);
             var reader  = new FileReader();
 
-            reader.onloadend = function () {
-                jsonString = reader.result;
-                console.log(jsonString);
-            }
+            reader.readAsText(file);
 
-            if (file) {
-                jsonString = reader.readAsDataURL(file);
-                console.log(jsonString);
-            }
+            reader.onload = function() {
+                jsonString = reader.result;
+                jsonString = jsonString.toString();
+                //console.log(reader.result);
+            };
         }
     );
+
+
+
     function sendJSON(){
 
         let xhr = new XMLHttpRequest();
@@ -73,6 +76,7 @@
         xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
         xhr.send(jsonString);
     }
+
 </script>
 </body>
 </html>
