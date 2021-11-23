@@ -51,9 +51,9 @@
     fileUploader.addEventListener('change',
         (event) => {
             const files = event.target.files;
-            console.log('files', files);
+            //console.log('files', files);
             var file    = document.querySelector('input[type=file]').files[0];
-            console.log('files2', file);
+            //console.log('files2', file);
             var reader  = new FileReader();
 
             reader.readAsText(file);
@@ -63,18 +63,6 @@
                 jsonString = jsonString.toString();
                 //console.log(reader.result);
             };
-
-            /*reader.onloadend = function () {
-                jsonString = reader.result;
-                //console.log(jsonString);
-            }*/
-
-            /*if (file) {
-                //jsonString = reader.readAsDataURL(file);
-                jsonString = reader.readAsText(file);
-
-                console.log(jsonString);
-            }*/
         }
     );
 
@@ -89,17 +77,6 @@
         xhr.send(jsonString);
     }
 
-    function readTextFile(file, callback) {
-        var rawFile = new XMLHttpRequest();
-        rawFile.overrideMimeType("application/json");
-        rawFile.open("GET", file, true);
-        rawFile.onreadystatechange = function() {
-            if (rawFile.readyState === 4 && rawFile.status == "200") {
-                callback(rawFile.responseText);
-            }
-        }
-        rawFile.send(null);
-    }
 </script>
 </body>
 </html>
