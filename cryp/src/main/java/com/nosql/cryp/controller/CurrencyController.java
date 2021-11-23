@@ -79,7 +79,7 @@ public class CurrencyController {
         if (currencies.size() > 0){
             System.out.println(text);
             // удаление из списка валют, которые не соответствуют переданному имени
-
+            currencies.removeIf(e -> ((e.getAsset_id()).indexOf(text)) == -1);
             model.addAttribute("currencies", currencies);
             return "main";
         }
