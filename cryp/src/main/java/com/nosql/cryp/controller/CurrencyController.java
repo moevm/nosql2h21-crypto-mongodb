@@ -14,13 +14,79 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 
 @Controller
 @RequestMapping("/currency")
 public class CurrencyController {
     @Autowired
     private CurrencyService currencyService;
+
+    @GetMapping("/name_filter")
+    public String getCurrencyNameFilter(Model model){
+        List<Currency> currencies = currencyService.getAllCurr();
+        if (currencies.size() > 0){
+            Collections.sort(currencies, new Comparator<Currency>() {
+                @Override
+                public int compare(Currency o1, Currency o2) {
+                    return o1.getAsset_id().compareTo(o2.getAsset_id());
+                }
+            });
+            model.addAttribute("currencies", currencies);
+            return "main";
+        }
+        else{
+            return "error";
+        }
+    }
+
+    @GetMapping("/time_filter")
+    public String getCurrencyTimeFilter(Model model){
+        return "main";
+    }
+
+    @GetMapping("/price_filter")
+    public String getCurrencyPriceFilter(Model model){
+        List<Currency> currencies = currencyService.getAllCurr();
+        if (currencies.size() > 0){
+            Collections.sort(currencies, new Comparator<Currency>() {
+                @Override
+                public int compare(Currency o1, Currency o2) {
+                    if(o1.getPrice_usd() > o2.getPrice_usd())
+                    return 1;
+                    if(o1.getPrice_usd() == o2.getPrice_usd())
+                        return 0;
+                    if(o1.getPrice_usd() < o2.getPrice_usd())
+                        return -1;
+                    return 1;
+                }
+            });
+            model.addAttribute("currencies", currencies);
+            return "main";
+        }
+        else{
+            return "error";
+        }
+    }
+
+    @GetMapping("/getCurrencyByName")
+    public String getCurrencyByName(@RequestParam String text,  Model model){
+        List<Currency> currencies = currencyService.getAllCurr();
+        if (currencies.size() > 0){
+            System.out.println(text);
+            // удаление из списка валют, которые не соответствуют переданному имени
+
+            model.addAttribute("currencies", currencies);
+            return "main";
+        }
+        else{
+            return "error";
+        }
+    }
 
     @GetMapping("/test")
     public String testFund(){
