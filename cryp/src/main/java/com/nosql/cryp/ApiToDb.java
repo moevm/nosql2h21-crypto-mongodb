@@ -7,7 +7,6 @@ import java.io.*;
 import java.net.*;
 import java.util.Properties;
 
-import jdk.nashorn.internal.parser.JSONParser;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
