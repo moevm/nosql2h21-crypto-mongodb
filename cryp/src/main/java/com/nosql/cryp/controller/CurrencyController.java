@@ -33,7 +33,7 @@ public class CurrencyController {
             Collections.sort(currencies, new Comparator<Currency>() {
                 @Override
                 public int compare(Currency o1, Currency o2) {
-                    return o1.getAsset_id.compareTo(o2.getAsset_id);
+                    return o1.getAsset_id().compareTo(o2.getAsset_id());
                 }
             });
             model.addAttribute("currencies", currencies);
@@ -44,6 +44,11 @@ public class CurrencyController {
         }
     }
 
+    @GetMapping("/time_filter")
+    public String getCurrencyTimeFilter(Model model){
+        return "main";
+    }
+
     @GetMapping("/price_filter")
     public String getCurrencyPriceFilter(Model model){
         List<Currency> currencies = currencyService.getAllCurr();
@@ -51,9 +56,30 @@ public class CurrencyController {
             Collections.sort(currencies, new Comparator<Currency>() {
                 @Override
                 public int compare(Currency o1, Currency o2) {
-                    return o1.getPrice_usd > o2.getPrice_usd;
+                    if(o1.getPrice_usd() > o2.getPrice_usd())
+                    return 1;
+                    if(o1.getPrice_usd() == o2.getPrice_usd())
+                        return 0;
+                    if(o1.getPrice_usd() < o2.getPrice_usd())
+                        return -1;
+                    return 1;
                 }
             });
+            model.addAttribute("currencies", currencies);
+            return "main";
+        }
+        else{
+            return "error";
+        }
+    }
+
+    @GetMapping("/getCurrencyByName")
+    public String getCurrencyByName(@RequestParam String text,  Model model){
+        List<Currency> currencies = currencyService.getAllCurr();
+        if (currencies.size() > 0){
+            System.out.println(text);
+            // удаление из списка валют, которые не соответствуют переданному имени
+
             model.addAttribute("currencies", currencies);
             return "main";
         }

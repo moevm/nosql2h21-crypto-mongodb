@@ -21,12 +21,19 @@
         </div>
         </div>
     <div>
+        <p>Поиск валюты:</p>
+        <form th:action="@{/currency/getCurrencyByName}" method="get" style="max-width: 500px; margin:0 auto;">
+            <input type="text" name="text" class="search" placeholder="Название валюты">
+            <input type="submit" name="submit" class="submit">
+        </form>
+    </div>
+    <div>
         <table class="table table-bordered">
             <thead class="thead-dark">
                 <tr>
-                    <th>Название</th>
-                    <th>Стоимость</th>
-                    <th>Время</th>
+                    <th><a th:href="@{/currency/name_filter}">Название</a></th>
+                    <th><a th:href="@{/currency/price_filter}">Стоимость</a></th>
+                    <th><a th:href="@{/currency/time_filter}">Время</a></th>
                 </tr>
             </thead>
             <tbody>
@@ -51,9 +58,9 @@
     fileUploader.addEventListener('change',
         (event) => {
             const files = event.target.files;
-            console.log('files', files);
+            //console.log('files', files);
             var file    = document.querySelector('input[type=file]').files[0];
-            console.log('files2', file);
+            //console.log('files2', file);
             var reader  = new FileReader();
 
             reader.readAsText(file);
@@ -63,18 +70,6 @@
                 jsonString = jsonString.toString();
                 //console.log(reader.result);
             };
-
-            /*reader.onloadend = function () {
-                jsonString = reader.result;
-                //console.log(jsonString);
-            }*/
-
-            /*if (file) {
-                //jsonString = reader.readAsDataURL(file);
-                jsonString = reader.readAsText(file);
-
-                console.log(jsonString);
-            }*/
         }
     );
 
@@ -89,17 +84,6 @@
         xhr.send(jsonString);
     }
 
-    function readTextFile(file, callback) {
-        var rawFile = new XMLHttpRequest();
-        rawFile.overrideMimeType("application/json");
-        rawFile.open("GET", file, true);
-        rawFile.onreadystatechange = function() {
-            if (rawFile.readyState === 4 && rawFile.status == "200") {
-                callback(rawFile.responseText);
-            }
-        }
-        rawFile.send(null);
-    }
 </script>
 </body>
 </html>

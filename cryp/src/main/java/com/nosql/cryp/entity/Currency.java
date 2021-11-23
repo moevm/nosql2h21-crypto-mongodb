@@ -95,7 +95,15 @@ public class Currency {
             this.price_usd = curr.getDouble("price_usd");
 
     }
-/*
+
+    public String getAsset_id() {
+        return asset_id;
+    }
+
+    public double getPrice_usd() {
+        return price_usd;
+    }
+    /*
     public Currency(String asset_id, Date data_end, double price_usd){
         this.asset_id = asset_id;
         this.data_end = data_end;
