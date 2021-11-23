@@ -51,7 +51,7 @@ public class HistoryController {
         JSONArray curr = new JSONArray(jsonString);
         for (int i = 0 ; i < curr.length(); i++) {
             JSONObject obj = curr.getJSONObject(i);
-            if(!obj.has("rate") || obj.has("time") || obj.has("asset_id_quote") || obj.has("asset_id_base"))
+            if(!obj.has("rate") || !obj.has("time") || !obj.has("asset_id_quote") || !obj.has("asset_id_base"))
                 continue;
             if (obj.has("rate")) {
                 if (((int) obj.getDouble("rate")) <= 0)
