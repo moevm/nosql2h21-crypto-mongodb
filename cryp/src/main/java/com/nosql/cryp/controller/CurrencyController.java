@@ -14,13 +14,53 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+
+import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 
 @Controller
 @RequestMapping("/currency")
 public class CurrencyController {
     @Autowired
     private CurrencyService currencyService;
+
+    @GetMapping("/name_filter")
+    public String getCurrencyNameFilter(Model model){
+        List<Currency> currencies = currencyService.getAllCurr();
+        if (currencies.size() > 0){
+            Collections.sort(currencies, new Comparator<Currency>() {
+                @Override
+                public int compare(Currency o1, Currency o2) {
+                    return o1.getAsset_id.compareTo(o2.getAsset_id);
+                }
+            });
+            model.addAttribute("currencies", currencies);
+            return "main";
+        }
+        else{
+            return "error";
+        }
+    }
+
+    @GetMapping("/price_filter")
+    public String getCurrencyPriceFilter(Model model){
+        List<Currency> currencies = currencyService.getAllCurr();
+        if (currencies.size() > 0){
+            Collections.sort(currencies, new Comparator<Currency>() {
+                @Override
+                public int compare(Currency o1, Currency o2) {
+                    return o1.getPrice_usd > o2.getPrice_usd;
+                }
+            });
+            model.addAttribute("currencies", currencies);
+            return "main";
+        }
+        else{
+            return "error";
+        }
+    }
 
     @GetMapping("/test")
     public String testFund(){
