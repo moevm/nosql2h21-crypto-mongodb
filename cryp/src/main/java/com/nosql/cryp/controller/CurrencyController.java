@@ -44,6 +44,19 @@ public class CurrencyController {
         }
     }
 
+    @GetMapping("/get_currency_jsons")
+    public String getCurrencyJsons(Model model) throws JSONException {
+        List<Currency> currencies = currencyService.getAllCurr();
+        String  result = new String();
+        for (int i = 0 ; i < currencies.size(); i++) {
+            Currency element = currencies.get(i);
+            result += element.getCurrencyJSONOnject();
+            result += '\n';
+        }
+        //итоговая строка в result
+        return "main";
+    }
+
     @GetMapping("/time_filter")
     public String getCurrencyTimeFilter(Model model){
         return "main";

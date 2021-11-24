@@ -96,6 +96,36 @@ public class Currency {
 
     }
 
+    public String getCurrencyJSONOnject() throws JSONException {
+        JSONObject json = new JSONObject();
+        json.put("asset_id", this.asset_id);
+
+        json.put("name", this.name);
+
+        json.put("data_start", this.data_start);
+        json.put("data_end", this.data_end);
+
+        json.put("data_quote_start", this.data_quote_start);
+        json.put("data_quote_end", this.data_quote_end);
+
+        json.put("data_orderbook_start", this.data_orderbook_start);
+        json.put("data_orderbook_end", this.data_orderbook_end);
+
+        json.put("data_trade_start", this.data_trade_start);
+        json.put("data_trade_end", this.data_trade_end);
+
+        json.put("asset_id", this.data_symbols_count);
+
+        json.put("asset_id", this.volume_1hrs_usd);
+        json.put("asset_id", this.volume_1day_usd);
+        json.put("asset_id", this.volume_1mth_usd);
+
+        json.put("asset_id", this.price_usd);
+
+        return json.toString();
+    }
+
+
     public String getAsset_id() {
         return asset_id;
     }
