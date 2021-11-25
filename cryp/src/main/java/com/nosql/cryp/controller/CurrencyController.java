@@ -53,8 +53,8 @@ public class CurrencyController {
             result += element.getCurrencyJSONOnject();
             result += '\n';
         }
-        //итоговая строка в result
-        return "main";
+        model.addAttribute("result", result);
+        return "DBImport";
     }
 
     @GetMapping("/time_filter")
