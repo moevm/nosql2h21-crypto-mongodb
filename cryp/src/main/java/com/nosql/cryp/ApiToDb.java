@@ -21,7 +21,7 @@ import org.json.JSONTokener;
 
 public class ApiToDb {
 
-    public static final String PATH_TO_PROPERTIES = "src/main/resources/TextConstants.properties";
+    /*public static final String PATH_TO_PROPERTIES = "src/main/resources/TextConstants.properties";
     FileInputStream fileInputStream;
     Properties prop = new Properties();
 
@@ -31,9 +31,9 @@ public class ApiToDb {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    String key_api = prop.getProperty("key_api");
+    String key_api = "9D62D7F1-C92D-4615-BC53-BF7BC0B78399";//prop.getProperty("key_api");
 
     public JSONArray list_all_assets() throws IOException, URISyntaxException, JSONException {
         //Currency
