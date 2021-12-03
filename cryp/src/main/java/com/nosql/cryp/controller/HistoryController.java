@@ -29,7 +29,7 @@ public class HistoryController {
 
     @GetMapping("/new")
     public String showCurrencyForm(Model model){
-        model.addAttribute("history", new History());
+        model.addAttribute("currency", new Currency());
         return "currency_form";
     }
 

@@ -1,11 +1,8 @@
 package com.nosql.cryp.entity;
 
 import lombok.*;
-import org.bson.types.ObjectId;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -59,7 +56,8 @@ public class Currency {
 
         this.asset_id = (String) curr.get("asset_id");
 
-        this.name= (String) curr.get("name");
+        if(curr.has("name"))
+                    this.name= (String) curr.get("name");
 
         if(curr.has("data_start"))
             this.data_start = simpleDateFormat_1.parse((String) curr.get("data_start"));
@@ -132,6 +130,15 @@ public class Currency {
 
     public double getPrice_usd() {
         return price_usd;
+    }
+
+    public void setTime(Date curr_date) {
+        this.data_end  = curr_date;
+    }
+
+    public double getRate() {
+
+        return this.price_usd;
     }
     /*
     public Currency(String asset_id, Date data_end, double price_usd){

@@ -2,6 +2,7 @@ package com.nosql.cryp.controller;
 
 import com.nosql.cryp.ApiToDb;
 import com.nosql.cryp.entity.Currency;
+import com.nosql.cryp.entity.History;
 import com.nosql.cryp.service.CurrencyService;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,6 +17,7 @@ import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
@@ -145,10 +147,21 @@ public class CurrencyController {
     }
     @PostMapping("/new")
     public String saveCurrency(@RequestBody Currency newCurrency){
-
         currencyService.saveCurrency(newCurrency);
         return "Succesfully added currency: " + newCurrency.toString();
 
+    }
+
+    @PostMapping("/save")
+    public String saveCurrencyHtml(Currency newCurrency){
+        Date curr_date = new Date();
+        newCurrency.setTime(curr_date);
+        currencyService.saveCurrency(newCurrency);
+        System.out.println("rate: " + newCurrency.getRate());
+        /*for (int i = 0; i < currencyService.getAllHist().size(); i++){
+            System.out.println(historyService.getAllHist().get(i).toString());;
+        }*/
+        return "redirect:/currency/getAllCurr";
     }
 
     @GetMapping("/getAllCurr")

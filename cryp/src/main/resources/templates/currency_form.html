@@ -9,26 +9,21 @@
 <body>
     <div class="container fluid">
         <div class="text-center"><h2>Добавить новую валюту</h2></div>
-        <form th:action="@{/history/save}" method="post" th:object="${history}" style="max-width: 500px; margin:0 auto;">
+        <form th:action="@{/currency/save}" method="post" th:object="${currency}" style="max-width: 500px; margin:0 auto;">
             <div class="border border-secondary rounded p-3">
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Name:</label>
                     <div class="col-sm-8">
-                        <input type="text" th:field="*{asset_id_base}" class="form"/>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-4 col-form-label">Quote:</label>
-                    <div class="col-sm-8">
-                        <input type="text" th:field="*{asset_id_quote}" class="form"/>
+                        <input type="text" th:field="*{asset_id}" class="form"/>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-4 col-form-label">Rate:</label>
                     <div class="col-sm-8">
-                        <input type="number" th:field="*{rate}" class="form"/>
+                        <input type="number" th:field="*{price_usd}" class="form"/>
                     </div>
                 </div>
+
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary m-2">Сохранить</button>
                     <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Отменить</button>
