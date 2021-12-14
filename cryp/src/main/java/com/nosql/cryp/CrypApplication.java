@@ -14,6 +14,7 @@ import java.net.UnknownHostException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.util.Date;
 
 import org.json.JSONArray;
 
@@ -22,7 +23,12 @@ public class CrypApplication {
 
     public static void main(String[] args) throws IOException, URISyntaxException, JSONException {
 
+
         SpringApplication.run(CrypApplication.class, args);
+
+        //ApiToDb apiToDb = new ApiToDb();
+        //apiToDb.list_all_history("BTC", new Date(), new Date());
+
 
     }
 

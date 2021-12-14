@@ -1,5 +1,6 @@
 package com.nosql.cryp.controller;
 
+import com.nosql.cryp.ApiToDb;
 import com.nosql.cryp.entity.Currency;
 import com.nosql.cryp.entity.History;
 import com.nosql.cryp.service.HistoryService;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -65,5 +68,19 @@ public class HistoryController {
         }
         return "main";
 
+    }
+
+    public String historyFromApi(String asset_id, Date date1, Date date2) throws JSONException, IOException, URISyntaxException, ParseException {
+        // запросы к апи
+        ApiToDb apitodb = new ApiToDb();
+        JSONArray curr = apitodb.list_all_history(asset_id, date1, date2);
+        for (int i = 0; i < curr.length(); i++) {
+            JSONObject obj = curr.getJSONObject(i);
+
+            History history = new History(obj, asset_id);
+            historyService.saveHistory(history);
+
+        }
+        return "redirect:/currency/getAllCurr";
     }
 }

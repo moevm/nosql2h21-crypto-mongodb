@@ -43,4 +43,18 @@ public class History {
         if(curr.has("rate"))
             this.rate = curr.getDouble("rate");
     }
+
+    public History(JSONObject curr, String asset_id_base) throws JSONException, ParseException {
+
+        DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'");
+
+        this.asset_id_base = asset_id_base;
+
+        if (curr.has("time_period_end"))
+            this.time = simpleDateFormat.parse((String) curr.get("time_period_end"));
+
+        if(curr.has("rate_high"))
+            this.rate = curr.getDouble("rate_high");
+    }
+
 }

@@ -5,6 +5,7 @@ import com.nosql.cryp.entity.Currency;
 
 import java.io.*;
 import java.net.*;
+import java.util.Date;
 import java.util.Properties;
 
 import org.apache.http.HttpResponse;
@@ -61,6 +62,29 @@ public class ApiToDb {
         JSONTokener tokener = new JSONTokener(builder.toString());
         JSONArray finalResult = new JSONArray(tokener);
         //System.out.println(finalResult);
+
+        return finalResult;
+    }
+
+    public JSONArray list_all_history(String asset_id_base, Date date1, Date date2) throws IOException, JSONException {
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        String cUrl = "http://rest.coinapi.io/v1/exchangerate/" + asset_id_base +
+                "/USD/history?period_id=1HRS&time_start=2016-01-01T00:00:00&time_end=2016-02-01T00:00:00";
+
+
+        //HttpGet httpGet = new HttpGet(cUrl);
+        HttpGet httpGet = new HttpGet(cUrl);
+        httpGet.setHeader("X-CoinAPI-Key" , key_api);
+        HttpResponse response = httpclient.execute(httpGet);
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+        StringBuilder builder = new StringBuilder();
+        for (String line = null; (line = reader.readLine()) != null;) {
+            builder.append(line).append("\n");
+        }
+        JSONTokener tokener = new JSONTokener(builder.toString());
+        JSONArray finalResult = new JSONArray(tokener);
+        System.out.println(finalResult);
 
         return finalResult;
     }
