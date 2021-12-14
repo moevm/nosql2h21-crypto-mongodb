@@ -15,10 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 
@@ -136,6 +133,18 @@ public class CurrencyController {
         double result = (n1*price1)/price2;
 
         return String.valueOf(result);
+    }
+
+    //Получение списка asset_id для выпадающего списка
+    public List<String> getListAsset_id()
+    {
+        List<Currency> currencies = currencyService.getAllCurr();
+        List<String> listAsset_id = new ArrayList<String>();
+        for (int i = 0 ; i < currencies.size(); i++) {
+            Currency element = currencies.get(i);
+            listAsset_id.add(element.getAsset_id());
+        }
+        return listAsset_id;
     }
 
     @GetMapping("/test")
