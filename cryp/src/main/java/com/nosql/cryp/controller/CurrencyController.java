@@ -24,6 +24,49 @@ import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 public class CurrencyController {
     @Autowired
     private CurrencyService currencyService;
+    //по цене
+    public String getCurrencyRateFilter(Model model, int rateMax, int rateMin){
+        List<Currency> currencies = currencyService.getAllCurr();
+        if (currencies.size() > 0){
+            List<Currency> newCurrncies = new ArrayList<Currency>();
+            for (int i = 0 ; i < currencies.size(); i++) {
+                Currency element = currencies.get(i);
+                if(element.getPrice_usd() >= rateMin && element.getPrice_usd() <= rateMax) {
+                    newCurrncies.add(element);
+                }
+            }
+            model.addAttribute("currencies", newCurrncies);
+            return "main";
+        }
+        else{
+            return "error";
+        }
+    }
+    //по времени
+    public String getCurrencyTimeFilter(Model model, Date dateMax, Date dateMin){
+        List<Currency> currencies = currencyService.getAllCurr();
+        if (currencies.size() > 0){
+            List<Currency> newCurrncies = new ArrayList<Currency>();
+            for (int i = 0 ; i < currencies.size(); i++) {
+                Currency element = currencies.get(i);
+                if(element.getData_end() != null)
+                {
+                    if(element.getData_end().after(dateMin))
+                    {
+                        if(element.getData_end().before(dateMax))
+                        {
+                            newCurrncies.add(element);
+                        }
+                    }
+                }
+            }
+            model.addAttribute("currencies", newCurrncies);
+            return "main";
+        }
+        else{
+            return "error";
+        }
+    }
 
     @GetMapping("/name_filter")
     public String getCurrencyNameFilter(Model model){
