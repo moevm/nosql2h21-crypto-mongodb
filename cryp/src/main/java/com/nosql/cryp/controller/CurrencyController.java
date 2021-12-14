@@ -102,6 +102,20 @@ public class CurrencyController {
             return "error";
         }
     }
+    //Конвертер
+    public String currConvert(String curr1, String curr2, int n1)
+    {
+        List<Currency> assetCurrency1 = currencyService.getByAsset_id(curr1);
+        List<Currency> assetCurrency2 = currencyService.getByAsset_id(curr2);
+        Currency currency1 = assetCurrency1.get(0);
+        Currency currency2 = assetCurrency2.get(0);
+        double price1 = currency1.getPrice_usd();
+        double price2 = currency2.getPrice_usd();
+
+        double result = (n1*price1)/price2;
+
+        return String.valueOf(result);
+    }
 
     @GetMapping("/test")
     public String testFund(){
