@@ -61,7 +61,28 @@ public class CurrencyController {
 
     @GetMapping("/time_filter")
     public String getCurrencyTimeFilter(Model model){
-        return "main";
+        List<Currency> currencies = currencyService.getAllCurr();
+        if (currencies.size() > 0){
+            Collections.sort(currencies, new Comparator<Currency>() {
+                @Override
+                public int compare(Currency o1, Currency o2) {
+                    if(o1.getData_end() != null && o2.getData_end() != null){
+                        if(o1.getData_end().after(o2.getData_end()))
+                            return -1;
+                        if(o1.getData_end().equals(o2.getData_end()))
+                            return 0;
+                        if(o1.getData_end().before(o2.getData_end()))
+                            return 1;
+                    }
+                    return 1;
+                }
+            });
+            model.addAttribute("currencies", currencies);
+            return "main";
+        }
+        else{
+            return "error";
+        }
     }
 
     @GetMapping("/price_filter")
@@ -72,11 +93,11 @@ public class CurrencyController {
                 @Override
                 public int compare(Currency o1, Currency o2) {
                     if(o1.getPrice_usd() > o2.getPrice_usd())
-                    return 1;
+                    return -1;
                     if(o1.getPrice_usd() == o2.getPrice_usd())
                         return 0;
                     if(o1.getPrice_usd() < o2.getPrice_usd())
-                        return -1;
+                        return 1;
                     return 1;
                 }
             });
