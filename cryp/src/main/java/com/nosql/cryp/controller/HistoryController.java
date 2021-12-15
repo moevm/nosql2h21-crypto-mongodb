@@ -27,6 +27,86 @@ import java.util.*;
 @RequestMapping("/history")
 public class HistoryController {
 
+    //Данные для графика: Курс одной валюты к другой
+    public String twoCurrenciesGhraphicData(String asset_id_base1, String asset_id_base2, Date date1, Date date2)
+    {
+        List<History> historyList = historyService.getAllHist();
+        List<Double> rate1= new ArrayList<Double>();
+        List<Double> rate2= new ArrayList<Double>();
+
+        if(historyList.size() > 0)
+        {
+            List<History> asset_history_list1 = new ArrayList<History>();
+            List<History> asset_history_list2 = new ArrayList<History>();
+            for (int i = 0; i < historyList.size(); i++)
+            {
+                History element = historyList.get(i);
+                if (element.getTime().after(date1))
+                {
+                    if (element.getTime().before(date2))
+                    {
+                        if(element.getAsset_id_base() == asset_id_base1)
+                        {
+                            asset_history_list1.add(element);
+                        }
+                        if(element.getAsset_id_base() == asset_id_base2)
+                        {
+                            asset_history_list2.add(element);
+                        }
+                    }
+                }
+            }
+
+            Collections.sort(asset_history_list1, new Comparator<History>() {
+                @Override
+                public int compare(History o1, History o2) {
+                    if(o1.getTime() != null && o2.getTime() != null){
+                        if(o1.getTime().after(o2.getTime()))
+                            return -1;
+                        if(o1.getTime().equals(o2.getTime()))
+                            return 0;
+                        if(o1.getTime().before(o2.getTime()))
+                            return 1;
+                    }
+                    return 1;
+                }
+            });
+
+            /*Collections.sort(asset_history_list2, new Comparator<History>() {
+                @Override
+                public int compare(History o1, History o2) {
+                    if(o1.getTime() != null && o2.getTime() != null){
+                        if(o1.getTime().after(o2.getTime()))
+                            return -1;
+                        if(o1.getTime().equals(o2.getTime()))
+                            return 0;
+                        if(o1.getTime().before(o2.getTime()))
+                            return 1;
+                    }
+                    return 1;
+                }
+            });*/
+
+            for (int i = 0; i < asset_history_list1.size(); i++)
+            {
+                History element1 = asset_history_list1.get(i);
+                for (int j = 0; i < asset_history_list2.size(); i++)
+                {
+                    History element2 = asset_history_list2.get(i);
+                    int dateForElem1 = element1.getTime().getYear() + element1.getTime().getMonth() + element1.getTime().getDay();
+                    int dateForElem2 = element2.getTime().getYear() + element2.getTime().getMonth() + element2.getTime().getDay();
+                    if(dateForElem1 == dateForElem2)
+                    {
+                        rate1.add(element1.getRate());
+                        rate2.add(element2.getRate());
+                    }
+                }
+            }
+
+        }
+        return "two lists";
+    }
+
     //Анализ правильности покупки
     public String purhcaseCorrect(String asset_id_base, Date date)
     {
@@ -41,11 +121,14 @@ public class HistoryController {
             for (int i = 0; i < historyList.size(); i++)
             {
                 History element = historyList.get(i);
-                if (element.getTime().after(date))
+                if(element.getAsset_id_base() == asset_id_base)
                 {
-                    if (element.getTime().before(newDate))
+                    if (element.getTime().after(date))
                     {
-                        asset_history_list.add(element);
+                        if (element.getTime().before(newDate))
+                        {
+                            asset_history_list.add(element);
+                        }
                     }
                 }
 
@@ -99,11 +182,14 @@ public class HistoryController {
             for (int i = 0; i < historyList.size(); i++)
             {
                 History element = historyList.get(i);
-                if (element.getTime().after(newDate))
+                if(element.getAsset_id_base() == assetd_id_base)
                 {
-                    if (element.getTime().before(date))
+                    if (element.getTime().after(newDate))
                     {
-                        asset_history_list.add(element);
+                        if (element.getTime().before(date))
+                        {
+                            asset_history_list.add(element);
+                        }
                     }
                 }
 

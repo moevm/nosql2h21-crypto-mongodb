@@ -69,7 +69,7 @@ public class ApiToDb {
     public JSONArray list_all_history(String asset_id_base, Date date1, Date date2) throws IOException, JSONException {
         DefaultHttpClient httpclient = new DefaultHttpClient();
         String cUrl = "http://rest.coinapi.io/v1/exchangerate/" + asset_id_base +
-                "/USD/history?period_id=1HRS&time_start=2016-01-01T00:00:00&time_end=2016-02-01T00:00:00";
+                "/USD/history?period_id=1DAY&time_start=2016-01-01T00:00:00&time_end=2016-02-01T00:00:00";
 
 
         //HttpGet httpGet = new HttpGet(cUrl);
