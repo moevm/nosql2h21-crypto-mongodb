@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <head>
     <meta charset="UTF-8">
     <title>Crypto-leti</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="test.css" />
@@ -30,33 +31,64 @@
     <a href="http://localhost:8080/main">Таблица</a>
 
     <div>
-        <p>Калькулятор и конвертер криптовалют</p>
 
 
         <div class="border border-secondary rounded p-3">
             <body>
-            <div class="currency-row-outer">
-                <div class="currency-converter">
-                    <h2>Currency Converter</h2>
-                    <div class="field grid-50-50">
-                        <div class="colmun col-left"> <input type="number" class="form-input" id="number" placeholder="00000"> </div>
-                        <div class="colmun col-right">
-                            <div class="select"> <select name="currency" class="currency" onchange="updatevalue()"></select> </div>
-                        </div>
-                    </div>
-                    <div class="field grid-50-50">
-                        <div class="colmun col-left"> <input type="text" class="form-input" id="output" placeholder="00000" disabled> </div>
-                        <div class="colmun col-right">
-                            <div class="select"> <select name="currency" class="currency" onchange="updatevalue()"></select> </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <p>Калькулятор и конвертер криптовалют</p>
+
+            <select name="check" class="mySelector" id="mySelector1" >
+            </select>
+
+            <button onclick="convert()" class="btn btn-primary m-2">Отправить</button>
+
+            <select name="check" class="mySelector" id="mySelector2" >
+            </select>
+
+            <input id="valueToChange" type="number" step="0.01" placeholder="Значение для обмена">
+
+
             </body>
         </div>
     </div>
 
 </body>
+
+<script type="text/javascript">
+
+    for (var i = 1; i < 3; i++) {
+        var objSel = document.getElementById("mySelector"+i);
+
+        for (var j = 0; j < arr.length; j++) {
+            objSel.options[j] = new Option(arr[j].valueOf(), "");
+        }
+    }
+
+    function convert(){
+        var cur1 = document.getElementById("mySelector1");
+        var cur2 = document.getElementById("mySelector2");
+
+        var valueToChange = document.getElementById("valueToChange").value;
+        var cur1Val;
+        var cur2Val;
+
+
+        for (var selectedIndex = 0; selectedIndex < cur1.length; selectedIndex++){
+            if ( cur1.options[selectedIndex].selected == true)
+            {
+                cur1Val = cur1.options[selectedIndex].text;
+            }
+        }
+
+        for (var selectedIndex = 0; selectedIndex < cur2.length; selectedIndex++){
+            if ( cur2.options[selectedIndex].selected == true)
+            {
+                cur2Val = cur2.options[selectedIndex].text;
+            }
+        }
+    }
+</script>
+
 
 <script type="text/javascript">
     /*const request = new XMLHttpRequest();
@@ -82,52 +114,16 @@
     });*/
 
 
-    const select = document.querySelectorAll('.currency');
-    const number = document.getElementById("number");
-    const output = document.getElementById("output");
-
-
-    fetch('https://api.frankfurter.app/currencies').then((data) => data.json())
-        .then((data) => {
-            display(data);
-        });
-
-
-    function display(data) {
-        const entries = Object.entries(data);
-        for (var i = 0; i < entries.length; i++) { select[0].innerHTML +=`<option value="${entries[i][0]}">${entries[i][0]} : ${entries[i][1]}</option>`;
-            select[1].innerHTML += `<option value="${entries[i][0]}">${entries[i][0]} : ${entries[i][1]}</option>`;
-        }
-    }
 
 
 
-    function updatevalue() {
-        let currency1 = select[0].value;
-        let currency2 = select[1].value;
-
-        let value = number.value;
 
 
-        if (currency1 != currency2) {
-            convert(currency1, currency2, value);
-        } else {
-            alert("Choose Diffrent Currency");
-        }
-    }
 
 
-    function convert(currency1, currency2, value) {
-        const host = "api.frankfurter.app";
 
-        fetch(`https://${host}/latest?amount=${value}&from=${currency1}&to=${currency2}`)
-            .then((val) => val.json())
-            .then((val) => {
-                console.log(Object.values(val.rates)[0]);
-                output.value = Object.values(val.rates)[0];
-            });
 
-    }
+
 
 </script>
 
