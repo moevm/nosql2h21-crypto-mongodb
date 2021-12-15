@@ -27,11 +27,65 @@ import java.util.*;
 @RequestMapping("/history")
 public class HistoryController {
 
+    //Данные для графика: валюта по времени
+    public String currencyTimeRateGrahpicData(String asset_id_base, Date date1, Date date2)
+    {
+        List<History> historyList = historyService.getAllHist();
+        List<Double> rateList= new ArrayList<Double>();//Сами данные тут
+        List<Date> dateList= new ArrayList<Date>();
+        if(historyList.size() > 0)
+        {
+            List<History> asset_history_list = new ArrayList<History>();
+            for (int i = 0; i < historyList.size(); i++)
+            {
+                History element = historyList.get(i);
+                if (element.getAsset_id_base() == asset_id_base)
+                {
+                    if (element.getTime().after(date1))
+                    {
+
+                        if (element.getTime().before(date2))
+                        {
+                            asset_history_list.add(element);
+                        }
+                    }
+                }
+            }
+            if(asset_history_list.size() > 0)
+            {
+                Collections.sort(asset_history_list, new Comparator<History>() {
+                    @Override
+                    public int compare(History o1, History o2) {
+                        if(o1.getTime() != null && o2.getTime() != null){
+                            if(o1.getTime().after(o2.getTime()))
+                                return -1;
+                            if(o1.getTime().equals(o2.getTime()))
+                                return 0;
+                            if(o1.getTime().before(o2.getTime()))
+                                return 1;
+                        }
+                        return 1;
+                    }
+                });
+
+                for(int i = 0; i < asset_history_list.size(); i++)
+                {
+                    History element = asset_history_list.get(i);
+                    rateList.add(element.getRate());
+                    dateList.add(element.getTime());
+                }
+            }
+
+        }
+
+        return "two lists";
+    }
+
     //Данные для графика: Курс одной валюты к другой
     public String twoCurrenciesGhraphicData(String asset_id_base1, String asset_id_base2, Date date1, Date date2)
     {
         List<History> historyList = historyService.getAllHist();
-        List<Double> rate1= new ArrayList<Double>();
+        List<Double> rate1= new ArrayList<Double>();//Сами данные тут
         List<Double> rate2= new ArrayList<Double>();
 
         if(historyList.size() > 0)
