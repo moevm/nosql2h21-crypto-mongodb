@@ -1,4 +1,8 @@
 <!DOCTYPE html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js"></script>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +16,8 @@
     <!-- - -->
 </head>
 <body>
+
+<a href="http://localhost:8080/mainPage">Главная</a>
 
 <div id="container1" style="width: 700px; height: 400px "></div>
 
@@ -33,9 +39,6 @@
             </div>
         </div>
     <div>
-
-
-
         <p>Поиск валюты:</p>
         <p>По имени:</p>
         <form th:action="@{/currency/getCurrencyByName}" method="get" style="max-width: 500px; margin:0 auto;">
@@ -54,8 +57,39 @@
             <input type="text" name="text" class="search" placeholder="Дата конца:">
             <input type="submit" name="submit" class="submit">
         </form>
-
     </div>
+
+<!--    ***********************************************-->
+
+<!--    <div>-->
+<!--        <p>Калькулятор и конвертер криптовалют</p>-->
+
+<!--        <div class="border border-secondary rounded p-3">-->
+
+<!--            <div class="dropdown">-->
+<!--                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdown_coins" data-toggle="dropdown" aria-haspopup="true"-->
+<!--                        aria-expanded="false">-->
+<!--                    Coin-->
+<!--                </button>-->
+<!--                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdown_coins" data-toggle="dropdown" aria-haspopup="true"-->
+<!--                        aria-expanded="false">-->
+<!--                    Coin-->
+<!--                </button>-->
+<!--                <div id="menu" class="dropdown-menu" aria-labelledby="dropdown_coins">-->
+<!--                    <form class="px-4 py-2">-->
+<!--                        <input type="search" class="form-control" id="searchCoin" placeholder="BTC" autofocus="autofocus">-->
+<!--                    </form>-->
+<!--                    <div id="menuItems"></div>-->
+<!--                    <div id="empty" class="dropdown-header">No coins found</div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+<!--        </div>-->
+
+<!--    </div>-->
+
+    <!--    ***********************************************-->
     <div>
         <table class="table table-bordered">
             <thead class="thead-dark">
@@ -66,6 +100,8 @@
                 </tr>
             </thead>
             <tbody>
+
+
             <th:block th:each="currency : ${currencies}">
                 <tr>
                     <td><p th:text="${currency.asset_id}"></p></td>
@@ -73,6 +109,8 @@
                     <td><p th:text="${currency.data_end}"></p></td>
                 </tr>
             </th:block>
+
+
             </tbody>
         </table>
     </div>
