@@ -25,6 +25,24 @@ public class CurrencyController {
     @Autowired
     private CurrencyService currencyService;
     //по цене
+    @GetMapping("/getCurrencyByPrice")
+    public String getCurrencyByPrice(@RequestParam double rateMin, @RequestParam double rateMax, Model model){
+        List<Currency> currencies = currencyService.getAllCurr();
+        if (currencies.size() > 0){
+            List<Currency> newCurrncies = new ArrayList<Currency>();
+            for (int i = 0 ; i < currencies.size(); i++) {
+                Currency element = currencies.get(i);
+                if(element.getPrice_usd() >= rateMin && element.getPrice_usd() <= rateMax) {
+                    newCurrncies.add(element);
+                }
+            }
+            model.addAttribute("currencies", newCurrncies);
+            return "main";
+        }
+        else{
+            return "error";
+        }
+    }
     public String getCurrencyRateFilter(Model model, int rateMax, int rateMin){
         List<Currency> currencies = currencyService.getAllCurr();
         if (currencies.size() > 0){
@@ -43,7 +61,8 @@ public class CurrencyController {
         }
     }
     //по времени
-    public String getCurrencyTimeFilter(Model model, Date dateMax, Date dateMin){
+    @GetMapping("/getCurrencyByDate")
+    public String getCurrencyByDate(@RequestParam Date dateMax, @RequestParam Date dateMin,  Model model){
         List<Currency> currencies = currencyService.getAllCurr();
         if (currencies.size() > 0){
             List<Currency> newCurrncies = new ArrayList<Currency>();
@@ -67,6 +86,7 @@ public class CurrencyController {
             return "error";
         }
     }
+
 
     @GetMapping("/name_filter")
     public String getCurrencyNameFilter(Model model){
