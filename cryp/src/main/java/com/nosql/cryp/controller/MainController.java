@@ -20,7 +20,7 @@ public class MainController {
     }
     @GetMapping("/mainPage")
     public String showHomePage(Model model){
-        
+
         return "mainPage";
     }
 }
