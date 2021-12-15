@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"
-            type="text/javascript"></script>
-    <script src="https://code.highcharts.com/highcharts.src.js"></script>
-    <!-- - -->
+    <!-- Datatable plugin CSS file -->
+    <link rel="stylesheet" href=
+            "https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
 
-    <!-- - -->
+    <!-- jQuery library file -->
+    <script type="text/javascript"
+            src="https://code.jquery.com/jquery-3.5.1.js">
+    </script>
+
+    <!-- Datatable plugin JS library file -->
+    <script type="text/javascript" src=
+            "https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js">
+    </script>
 </head>
 <body>
 
@@ -35,14 +42,6 @@
         </div>
     <div>
 
-
-
-        <p>Поиск валюты:</p>
-        <p>По имени:</p>
-        <form th:action="@{/currency/getCurrencyByName}" method="get" style="max-width: 500px; margin:0 auto;">
-            <input type="text" name="text" class="search" placeholder="Название валюты">
-            <input type="submit" name="submit" class="submit">
-        </form>
         <p>По стоимости:</p>
         <form th:action="@{/currency/getCurrencyByPrice}" method="get" style="max-width: 500px; margin:0 auto;">
             <input type="number" step="0.01" name="rateMin" class="search" placeholder="Минимальная стоимость">
@@ -58,12 +57,12 @@
 
     </div>
     <div>
-        <table class="table table-bordered">
+        <table id="tableID" class="table table-bordered">
             <thead class="thead-dark">
                 <tr>
-                    <th><a th:href="@{/currency/name_filter}">Название</a></th>
-                    <th><a th:href="@{/currency/price_filter}">Стоимость</a></th>
-                    <th><a th:href="@{/currency/time_filter}">Время</a></th>
+                    <th>Название</th>
+                    <th>Стоимость</th>
+                    <th>Время</th>
                 </tr>
             </thead>
             <tbody>
@@ -116,6 +115,16 @@
         xhr.send(jsonString);
     }
 
+
+
+</script>
+
+<script>
+
+    /* Initialization of datatable */
+    $(document).ready(function() {
+        $('#tableID').DataTable({ });
+    });
 </script>
 </body>
 </html>
