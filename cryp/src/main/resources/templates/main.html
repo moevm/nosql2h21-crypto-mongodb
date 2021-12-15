@@ -44,12 +44,14 @@
         </form>
         <p>По стоимости:</p>
         <form th:action="@{/currency/getCurrencyByPrice}" method="get" style="max-width: 500px; margin:0 auto;">
-            <input type="text" name="text" class="search" placeholder="Название валюты">
+            <input type="number" name="text" class="search" placeholder="Минимальная стоимость">
+            <input type="number" name="text" class="search" placeholder="Максимальная стоимость">
             <input type="submit" name="submit" class="submit">
         </form>
         <p>По дате:</p>
         <form th:action="@{/currency/getCurrencyByDate}" method="get" style="max-width: 500px; margin:0 auto;">
-            <input type="text" name="text" class="search" placeholder="Название валюты">
+            <input type="date" name="text" class="search" placeholder="Дата начала:">
+            <input type="date" name="text" class="search" placeholder="Дата конца:">
             <input type="submit" name="submit" class="submit">
         </form>
 
