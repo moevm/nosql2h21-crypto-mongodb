@@ -26,30 +26,15 @@ public class CurrencyController {
     private CurrencyService currencyService;
     //по цене
     @GetMapping("/getCurrencyByPrice")
-    public String getCurrencyByPrice(@RequestParam double rateMin, @RequestParam double rateMax, Model model){
+    public String getCurrencyByPrice(@RequestParam String rateMin, @RequestParam String rateMax, Model model){
+        double rateMinimum = Double.valueOf(rateMin);
+        double rateMaximum = Double.valueOf(rateMax);
         List<Currency> currencies = currencyService.getAllCurr();
         if (currencies.size() > 0){
             List<Currency> newCurrncies = new ArrayList<Currency>();
             for (int i = 0 ; i < currencies.size(); i++) {
                 Currency element = currencies.get(i);
-                if(element.getPrice_usd() >= rateMin && element.getPrice_usd() <= rateMax) {
-                    newCurrncies.add(element);
-                }
-            }
-            model.addAttribute("currencies", newCurrncies);
-            return "main";
-        }
-        else{
-            return "error";
-        }
-    }
-    public String getCurrencyRateFilter(Model model, int rateMax, int rateMin){
-        List<Currency> currencies = currencyService.getAllCurr();
-        if (currencies.size() > 0){
-            List<Currency> newCurrncies = new ArrayList<Currency>();
-            for (int i = 0 ; i < currencies.size(); i++) {
-                Currency element = currencies.get(i);
-                if(element.getPrice_usd() >= rateMin && element.getPrice_usd() <= rateMax) {
+                if(element.getPrice_usd() >= rateMinimum && element.getPrice_usd() <= rateMaximum) {
                     newCurrncies.add(element);
                 }
             }
