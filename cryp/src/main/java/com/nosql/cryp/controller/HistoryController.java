@@ -21,11 +21,128 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.text.ParseException;
-import java.util.Date;
+import java.util.*;
 
 @Controller
 @RequestMapping("/history")
 public class HistoryController {
+
+    //Анализ правильности покупки
+    public String purhcaseCorrect(String asset_id_base, Date date)
+    {
+        Date curr_date = new Date();
+        List<History> historyList = historyService.getAllHist();
+        double trend = 0;
+        if(historyList.size() > 0)
+        {
+            List<History> asset_history_list = new ArrayList<History>();
+            Date newDate = curr_date;
+            newDate.setMonth(date.getMonth() - 1);
+            for (int i = 0; i < historyList.size(); i++)
+            {
+                History element = historyList.get(i);
+                if (element.getTime().after(date))
+                {
+                    if (element.getTime().before(newDate))
+                    {
+                        asset_history_list.add(element);
+                    }
+                }
+
+            }
+
+            Collections.sort(asset_history_list, new Comparator<History>() {
+                @Override
+                public int compare(History o1, History o2) {
+                    if(o1.getTime() != null && o2.getTime() != null){
+                        if(o1.getTime().after(o2.getTime()))
+                            return -1;
+                        if(o1.getTime().equals(o2.getTime()))
+                            return 0;
+                        if(o1.getTime().before(o2.getTime()))
+                            return 1;
+                    }
+                    return 1;
+                }
+            });
+
+            List<Double> rates = new ArrayList<Double>();
+
+            double start_point = asset_history_list.get(0).getRate();
+            for (int i = 1; i < asset_history_list.size(); i++)
+            {
+                double element = asset_history_list.get(i).getRate();
+                //rates.add((element/start_point)*100 - 100);
+                trend += (element/start_point)*100 - 100;
+
+            }
+            trend = trend/(asset_history_list.size()-1);
+        }
+
+        if(trend > 0)
+        {
+            return "Покупка правильна";
+        }
+        return "Покупка не правильна";
+    }
+
+    //Анализ тренда
+    public String trendAnalys(String assetd_id_base, Date date)
+    {
+        List<History> historyList = historyService.getAllHist();
+        double trend = 0;
+        if(historyList.size() > 0)
+        {
+            List<History> asset_history_list = new ArrayList<History>();
+            Date newDate = date;
+            newDate.setMonth(date.getMonth() - 1);
+            for (int i = 0; i < historyList.size(); i++)
+            {
+                History element = historyList.get(i);
+                if (element.getTime().after(newDate))
+                {
+                    if (element.getTime().before(date))
+                    {
+                        asset_history_list.add(element);
+                    }
+                }
+
+            }
+
+            Collections.sort(asset_history_list, new Comparator<History>() {
+                @Override
+                public int compare(History o1, History o2) {
+                    if(o1.getTime() != null && o2.getTime() != null){
+                        if(o1.getTime().after(o2.getTime()))
+                            return -1;
+                        if(o1.getTime().equals(o2.getTime()))
+                            return 0;
+                        if(o1.getTime().before(o2.getTime()))
+                            return 1;
+                    }
+                    return 1;
+                }
+            });
+
+            List<Double> rates = new ArrayList<Double>();
+
+            double start_point = asset_history_list.get(0).getRate();
+            for (int i = 1; i < asset_history_list.size(); i++)
+            {
+                double element = asset_history_list.get(i).getRate();
+                //rates.add((element/start_point)*100 - 100);
+                trend += (element/start_point)*100 - 100;
+
+            }
+            trend = trend/(asset_history_list.size()-1);
+        }
+
+        if(trend > 0)
+        {
+            return "Валюта в тренде";
+        }
+        return "Валюта не в тренде";
+    }
 
     @Autowired
     private HistoryService historyService;
@@ -42,9 +159,9 @@ public class HistoryController {
         newHistory.setTime(curr_date);
         historyService.saveHistory(newHistory);
        // System.out.println("rate: " + newHistory.getRate);
-        for (int i = 0; i < historyService.getAllHist().size(); i++){
+        /*for (int i = 0; i < historyService.getAllHist().size(); i++){
             System.out.println(historyService.getAllHist().get(i).toString());;
-        }
+        }*/
         return "main";
     }
 
