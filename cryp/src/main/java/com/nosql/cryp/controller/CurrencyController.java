@@ -189,7 +189,8 @@ public class CurrencyController {
     }
 
     //Получение списка asset_id для выпадающего списка
-    public List<String> getListAsset_id()
+    @GetMapping("/getListAsset_id")
+    public String getListAsset_id(Model model)
     {
         List<Currency> currencies = currencyService.getAllCurr();
         List<String> listAsset_id = new ArrayList<String>();
@@ -197,7 +198,14 @@ public class CurrencyController {
             Currency element = currencies.get(i);
             listAsset_id.add(element.getAsset_id());
         }
-        return listAsset_id;
+        System.out.println(listAsset_id);
+        if (currencies.size() > 0){
+            model.addAttribute("listAsset_id", listAsset_id);
+            return "mainPage";
+        }
+        else{
+            return "error";
+        }
     }
 
     @GetMapping("/test")
@@ -210,7 +218,7 @@ public class CurrencyController {
             // запросы к апи
         ApiToDb apitodb = new ApiToDb();
         JSONArray curr = apitodb.list_all_assets();
-        for (int i = 0 ; i < curr.length(); i++) {
+        for (int i = 0 ; i < 30; i++) {
             JSONObject obj = curr.getJSONObject(i);
             if (((int) obj.get("type_is_crypto") == 0))
                 continue;

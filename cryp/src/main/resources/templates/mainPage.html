@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Crypto-leti</title>
@@ -7,19 +7,34 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"
         type="text/javascript"></script>
 <script src="https://code.highcharts.com/highcharts.src.js"></script>
+
+<script type="text/javascript">
+    const request2 = new XMLHttpRequest();
+    const url2 = "http://localhost:8080/currency/getListAsset_id";
+    request2.open('GET', url2);
+    request2.setRequestHeader('Content-Type', 'application/x-www-form-url');
+    request2.addEventListener("readystatechange", () => {
+        if (request2.readyState === 4 && request2.status === 200) {
+            print(request2.responseText);
+        }
+    });
+    request2.send();
+</script>
+
+
 <script type="text/javascript">
     const request = new XMLHttpRequest();
     const url = "http://localhost:8080/getCurrencyForGrafik";
     var dat1 = [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4];
     request.open('GET', url);
     request.setRequestHeader('Content-Type', 'application/x-www-form-url');
+    // Выполняем запрос
+    request.send();
     request.addEventListener("readystatechange", () => {
         if (request.readyState === 4 && request.status === 200) {
             dat1 = request.responseText;
         }
     });
-    // Выполняем запрос
-    request.send();
 
     
     var chart1;
@@ -30,11 +45,16 @@
         });
     });
 </script>
+
+<script type="text/javascript">
+    var currency = [[${listAsset_id}]]//тут
+    print(currency)
+</script>
+
 <body>
     <a href="http://localhost:8080/main">Таблица</a>
-    Тестовая запись
-    <a href="http://localhost:8080/">Таблица</a>
 
     <div id="container1" style="width: 700px; height: 400px "></div>
+
 </body>
 </html>
