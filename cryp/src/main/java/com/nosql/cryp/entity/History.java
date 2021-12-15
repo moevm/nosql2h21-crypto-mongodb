@@ -20,10 +20,10 @@ import java.util.Date;
 @Document(collection="History")
 public class History {
 
-    @Id
+    //@Id
     private String asset_id_base;
 
-    @Id
+    //@Id
     private Date time;
 
     private String asset_id_quote;
