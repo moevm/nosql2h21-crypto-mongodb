@@ -8,18 +8,6 @@
         type="text/javascript"></script>
 <script src="https://code.highcharts.com/highcharts.src.js"></script>
 
-<script type="text/javascript">
-    const request2 = new XMLHttpRequest();
-    const url2 = "http://localhost:8080/currency/getListAsset_id";
-    request2.open('GET', url2);
-    request2.setRequestHeader('Content-Type', 'application/x-www-form-url');
-    request2.addEventListener("readystatechange", () => {
-        if (request2.readyState === 4 && request2.status === 200) {
-            print(request2.responseText);
-        }
-    });
-    request2.send();
-</script>
 
 
 <script type="text/javascript">
@@ -47,8 +35,8 @@
 </script>
 
 <script type="text/javascript">
-    var currency = [[${listAsset_id}]]//тут
-    print(currency)
+    var currency = "[[${listAsset_id}]]";
+    print(currency[0])
 </script>
 
 <body>

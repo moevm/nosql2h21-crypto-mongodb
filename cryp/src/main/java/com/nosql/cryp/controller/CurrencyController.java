@@ -194,18 +194,16 @@ public class CurrencyController {
     {
         List<Currency> currencies = currencyService.getAllCurr();
         List<String> listAsset_id = new ArrayList<String>();
-        for (int i = 0 ; i < currencies.size(); i++) {
+        for (int i = 0 ; i < 10; i++) {
             Currency element = currencies.get(i);
             listAsset_id.add(element.getAsset_id());
         }
-        System.out.println(listAsset_id);
+        //System.out.println(listAsset_id);
         if (currencies.size() > 0){
             model.addAttribute("listAsset_id", listAsset_id);
             return "mainPage";
         }
-        else{
-            return "error";
-        }
+        return "mainPage";
     }
 
     @GetMapping("/test")
