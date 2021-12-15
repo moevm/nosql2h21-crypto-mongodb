@@ -11,7 +11,7 @@
 
 
 <script type="text/javascript">
-    const request = new XMLHttpRequest();
+    /*const request = new XMLHttpRequest();
     const url = "http://localhost:8080/getCurrencyForGrafik";
     var dat1 = [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4];
     request.open('GET', url);
@@ -31,12 +31,15 @@
             chart: {renderTo: 'container1'},
             series: [{data: dat1}]
         });
-    });
+    });*/
 </script>
 
 <script type="text/javascript">
-    var currency = "[[${listAsset_id}]]";
-    print(currency[0])
+    var listAssetsStr = "[[${listAsset_id}]]";
+    listAssetsStr = listAssetsStr.replace('[', '');
+    listAssetsStr = listAssetsStr.replace(']', '');
+    var arr = listAssetsStr.split(', ');
+    console.log(arr);
 </script>
 
 <body>
