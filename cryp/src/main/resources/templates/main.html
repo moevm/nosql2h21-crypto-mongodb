@@ -15,7 +15,6 @@
 
 <a href="http://localhost:8080/mainPage">Главная</a>
 
-<div id="container1" style="width: 700px; height: 400px "></div>
 
 <div class="container fluid text-center">
     <div class="m-2"><a class="h3" th:href="@{/history/new}">Добавить новую валюту</a></div>
@@ -46,14 +45,14 @@
         </form>
         <p>По стоимости:</p>
         <form th:action="@{/currency/getCurrencyByPrice}" method="get" style="max-width: 500px; margin:0 auto;">
-            <input type="text" name="text" class="search" placeholder="Минимальная стоимость">
-            <input type="text" name="text" class="search" placeholder="Максимальная стоимость">
+            <input type="number" step="0.01" name="rateMin" class="search" placeholder="Минимальная стоимость">
+            <input type="number" step="0.01" name="rateMax" class="search" placeholder="Максимальная стоимость">
             <input type="submit" name="submit" class="submit">
         </form>
         <p>По дате:</p>
         <form th:action="@{/currency/getCurrencyByDate}" method="get" style="max-width: 500px; margin:0 auto;">
-            <input type="text" name="text" class="search" placeholder="Дата начала:">
-            <input type="text" name="text" class="search" placeholder="Дата конца:">
+            <input type="date" name="dateMin" class="search" placeholder="Дата начала:">
+            <input type="date" name="dateMax" class="search" placeholder="Дата конца:">
             <input type="submit" name="submit" class="submit">
         </form>
 

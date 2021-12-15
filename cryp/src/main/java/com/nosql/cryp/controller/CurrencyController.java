@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
@@ -47,7 +48,11 @@ public class CurrencyController {
     }
     //по времени
     @GetMapping("/getCurrencyByDate")
-    public String getCurrencyByDate(@RequestParam Date dateMax, @RequestParam Date dateMin,  Model model){
+    public String getCurrencyByDate(@RequestParam String dateMin, @RequestParam String dateMax,  Model model) throws ParseException {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedDateMin = format.parse(dateMin);
+        Date parsedDateMax = format.parse(dateMax);
         List<Currency> currencies = currencyService.getAllCurr();
         if (currencies.size() > 0){
             List<Currency> newCurrncies = new ArrayList<Currency>();
@@ -55,9 +60,9 @@ public class CurrencyController {
                 Currency element = currencies.get(i);
                 if(element.getData_end() != null)
                 {
-                    if(element.getData_end().after(dateMin))
+                    if(element.getData_end().after(parsedDateMin))
                     {
-                        if(element.getData_end().before(dateMax))
+                        if(element.getData_end().before(parsedDateMax))
                         {
                             newCurrncies.add(element);
                         }
