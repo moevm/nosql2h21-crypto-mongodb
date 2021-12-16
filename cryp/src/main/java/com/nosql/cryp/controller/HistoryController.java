@@ -89,13 +89,18 @@ public class HistoryController {
 
     //Данные для графика: Курс одной валюты к другой
     @GetMapping("/twoCurrenciesGhraphicData")
-    public String twoCurrenciesGhraphicData(@RequestParam String asset_id_base1,@RequestParam String asset_id_base2,@RequestParam Date date1,@RequestParam Date date2, Model model)
-    {
-        if(Objects.equals("", asset_id_base1) || Objects.equals("", date1) || Objects.equals("", date2) || Objects.equals("", asset_id_base2))
+    public String twoCurrenciesGhraphicData(@RequestParam String asset_id_base1,@RequestParam String asset_id_base2,@RequestParam String dateMin,@RequestParam String dateMax, Model model) throws ParseException {
+        if(Objects.equals("", asset_id_base1) || Objects.equals("", dateMin) || Objects.equals("", dateMax) || Objects.equals("", asset_id_base2))
             return "mainPage";
+        dateMin += "T00:00:00.0000000Z";
+        dateMax += "T00:00:00.0000000Z";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'");
+        Date date1 = format.parse(dateMin);
+        Date date2 = format.parse(dateMax);
         List<History> historyList = historyService.getAllHist();
         List<Double> rate1= new ArrayList<Double>();//Сами данные тут
         List<Double> rate2= new ArrayList<Double>();
+        List<Date> dateList= new ArrayList<Date>();
 
         if(historyList.size() > 0)
         {
@@ -104,15 +109,16 @@ public class HistoryController {
             for (int i = 0; i < historyList.size(); i++)
             {
                 History element = historyList.get(i);
-                if (element.getTime().after(date1))
+                Date date22 = element.getTime();
+                if (date22.after(date1))
                 {
-                    if (element.getTime().before(date2))
+                    if (date22.before(date2))
                     {
-                        if(element.getAsset_id_base() == asset_id_base1)
+                        if(Objects.equals(element.getAsset_id_base(), asset_id_base1))
                         {
                             asset_history_list1.add(element);
                         }
-                        if(element.getAsset_id_base() == asset_id_base2)
+                        if(Objects.equals(element.getAsset_id_base(), asset_id_base2))
                         {
                             asset_history_list2.add(element);
                         }
@@ -135,7 +141,7 @@ public class HistoryController {
                 }
             });
 
-            /*Collections.sort(asset_history_list2, new Comparator<History>() {
+            Collections.sort(asset_history_list2, new Comparator<History>() {
                 @Override
                 public int compare(History o1, History o2) {
                     if(o1.getTime() != null && o2.getTime() != null){
@@ -148,25 +154,61 @@ public class HistoryController {
                     }
                     return 1;
                 }
-            });*/
-
-            for (int i = 0; i < asset_history_list1.size(); i++)
+            });
+            if(asset_history_list1.size() > 0 && asset_history_list2.size() > 0)
             {
-                History element1 = asset_history_list1.get(i);
-                for (int j = 0; i < asset_history_list2.size(); i++)
+                for (int i = 0; i < asset_history_list1.size(); i++)
                 {
-                    History element2 = asset_history_list2.get(i);
-                    int dateForElem1 = element1.getTime().getYear() + element1.getTime().getMonth() + element1.getTime().getDay();
-                    int dateForElem2 = element2.getTime().getYear() + element2.getTime().getMonth() + element2.getTime().getDay();
-                    if(dateForElem1 == dateForElem2)
-                    {
-                        rate1.add(element1.getRate());
-                        rate2.add(element2.getRate());
-                    }
+                    History element1 = asset_history_list1.get(i);
+                    dateList.add(element1.getTime());
+                    rate1.add(element1.getRate());
+
                 }
+                for (int j = 0; j < asset_history_list2.size(); j++)
+                {
+                    History element2 = asset_history_list2.get(j);
+                    rate2.add(element2.getRate());
+                }
+                /*for (int i = 0; i < asset_history_list1.size();)
+                {
+                    History element1 = asset_history_list1.get(i);
+                    for (int j = 0; j < asset_history_list2.size(); j++)
+                    {
+                        History element2 = asset_history_list2.get(j);
+                        Date date22 = element1.getTime();
+                        Date date33 = element1.getTime();
+                        long milliseconds = date22.getTime() - date33.getTime();
+                        //System.out.println("\nРазница между датами в миллисекундах: " + milliseconds);
+
+                        // 1000 миллисекунд = 1 секунда
+                        int seconds = (int) (milliseconds / (1000));
+                        //System.out.println("Разница между датами в секундах: " + seconds);
+
+                        // 60 000 миллисекунд = 60 секунд = 1 минута
+                        int minutes = (int) (milliseconds / (60 * 1000));
+                        //System.out.println("Разница между датами в минутах: " + minutes);
+
+                        // 3 600 секунд = 60 минут = 1 час
+                        int hours = (int) (milliseconds / (60 * 60 * 1000));
+                        //System.out.println("Разница между датами в часах: " + hours);
+
+                        // 24 часа = 1 440 минут = 1 день
+                        int days = (int) (milliseconds / (24 * 60 * 60 * 1000));
+                        //System.out.println("Разница между датами в днях: " + days);
+
+                        if (days <=3)
+                        {
+                            dateList.add(element1.getTime());
+                            rate1.add(element1.getRate());
+                            rate2.add(element2.getRate());
+
+                       }
+                    }
+                }*/
             }
             model.addAttribute("rate1", rate1);
             model.addAttribute("rate2", rate2);
+            model.addAttribute("dateTwoCurr", dateList);
 
         }
         return "mainPage";

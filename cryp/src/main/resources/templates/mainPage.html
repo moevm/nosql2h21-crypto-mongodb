@@ -85,6 +85,36 @@
         </div>
     </div>
     <div>
+        <div id="container2" style="width: 700px; height: 400px "></div>
+        <form th:action="@{/history/twoCurrenciesGhraphicData}" method="get" style="max-width: 500px; margin:0 auto;">
+            <input type="text" name="asset_id_base1" class="search" list="currencies" placeholder="Валюта">
+            <input type="text" name="asset_id_base2" class="search" list="currencies" placeholder="Валюта">
+            <input type="date" name="dateMin" class="search" placeholder="Дата начала:">
+            <input type="date" name="dateMax" class="search" placeholder="Дата конца:">
+            <input type="submit" name="submit" class="submit">
+        </form>
+        <table id="tableGraph2" class="table table-bordered">
+            <tbody>
+            <th:block  th:each="rates1 : ${rate1}">
+                <tr>
+                    <td><p class="ratesForGraphic2_1" th:text="${rates1}"></p></td>
+                </tr>
+            </th:block>
+            <th:block th:each="rates2: ${rate2}">
+                <tr>
+                    <td><p class="ratesForGraphic2_2" th:text="${rates2}"></p></td>
+                </tr>
+            </th:block>
+            <th:block th:each="dates2: ${dateTwoCurr}">
+                <tr>
+                    <td><p class="datesForGraphic2_1" th:text="${dates2}"></p></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <div>
         <p>Анализ правильности покупки валюты</p>
         <form th:action="@{/history/purhcaseCorrect}" method="get" style="max-width: 500px; margin:0 auto;">
             <input type="date" name="datePurchase" class="search" placeholder="Дата">
@@ -126,6 +156,60 @@
 </body>
 
 <script type="text/javascript">
+    var dat1_1 = document.getElementsByClassName('ratesForGraphic2_1');
+    var dat2_2 = document.getElementsByClassName('ratesForGraphic2_2');
+    var dat3 = document.getElementsByClassName('datesForGraphic2_1');
+
+    var newDat1_1 = [];
+    var newDat2_2 = [];
+    var newDat3 = [];
+
+    var dataTwoCurr = []
+
+
+    for (let i = 0; i < dat1_1.length; i++) {
+        newDat1_1.push(Number(dat1_1[i].textContent));
+    }
+    for (let i = 0; i < dat2_2.length; i++) {
+        newDat2_2.push(Number(dat2_2[i].textContent));
+        dataTwoCurr.push({
+            x: Number(dat1_1[i].textContent),
+            y: Number(dat2_2[i].textContent)
+        });
+    }
+    for (let i = 0; i < dat3.length; i++) {
+        newDat3.push(dat3[i].textContent);
+    }
+    var chart2;
+    $(document).ready(function(){
+        chart2 = new Highcharts.Chart({
+            title: {text: 'Зависимость курса одной валюты от другой'},
+            xAxis: [
+                {
+                    categories: newDat1_1,
+                    labels: {
+                        rotation: -45
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    categories: newDat2_2,
+                }
+            ],
+            chart: {renderTo: 'container2'},
+            series: [
+                {
+                    data: dataTwoCurr,
+                    name: "Зависиомость валют"
+                }]
+        });
+    });
+
+
+</script>
+
+<script type="text/javascript">
     var dat1 = document.getElementsByClassName('ratesForGraphic1');
     var dat2 = document.getElementsByClassName('datesForGraphic1');
 
@@ -157,14 +241,11 @@
             chart: {renderTo: 'container1'},
             series: [
                 {
-                    data: newDat1
+                    data: newDat1,
+                    name: "Курс валюты"
                 }]
         });
     });
-
-
-    console.log(newDat1);
-    console.log(newDat2);
 
 </script>
 
