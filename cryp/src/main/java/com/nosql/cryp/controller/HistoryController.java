@@ -26,8 +26,8 @@ import java.util.*;
 public class HistoryController {
 
     //Данные для графика: валюта по времени
-    @GetMapping("/currencyTimeRateGrahpicData")
-    public String currencyTimeRateGrahpicData(@RequestParam String asset_id_base,@RequestParam String dateMin,@RequestParam String dateMax, Model model) throws ParseException {
+    @GetMapping("/currencyTimeRateGrahpicData/{asset_id_base}/{dateMin}/{dateMax}")
+    public String currencyTimeRateGrahpicData(@PathVariable String asset_id_base,@PathVariable String dateMin,@PathVariable String dateMax, Model model) throws ParseException {
         if(Objects.equals("", asset_id_base) || Objects.equals("", dateMin) || Objects.equals("", dateMax))
             return "mainPage";
         dateMin += "T00:00:00.0000000Z";
