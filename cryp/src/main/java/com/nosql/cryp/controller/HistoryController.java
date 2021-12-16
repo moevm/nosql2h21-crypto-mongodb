@@ -30,7 +30,9 @@ public class HistoryController {
     public String currencyTimeRateGrahpicData(@RequestParam String asset_id_base,@RequestParam String dateMin,@RequestParam String dateMax, Model model) throws ParseException {
         if(Objects.equals("", asset_id_base) || Objects.equals("", dateMin) || Objects.equals("", dateMax))
             return "mainPage";
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        dateMin += "T00:00:00.0000000Z";
+        dateMax += "T00:00:00.0000000Z";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'");
         Date date1 = format.parse(dateMin);
         Date date2 = format.parse(dateMax);
         List<History> historyList = historyService.getAllHist();
@@ -42,12 +44,12 @@ public class HistoryController {
             for (int i = 0; i < historyList.size(); i++)
             {
                 History element = historyList.get(i);
-                if (element.getAsset_id_base() == asset_id_base)
+                if (Objects.equals(element.getAsset_id_base(), asset_id_base))
                 {
-                    if (element.getTime().after(date1))
+                    Date date22 = element.getTime();
+                    if (date22.after(date1))
                     {
-
-                        if (element.getTime().before(date2))
+                        if (date22.before(date2))
                         {
                             asset_history_list.add(element);
                         }

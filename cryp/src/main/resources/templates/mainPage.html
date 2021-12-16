@@ -20,7 +20,7 @@
 </head>
 
 <script type="text/javascript">
-    /*var dat1 = [[${rateList}]];
+    var dat1 = [[${rateList}]];
     var dat2 = [[${dateList}]];
 
     var chart1;
@@ -33,7 +33,7 @@
 
 
     console.log("afdsfs" + dat1);
-    console.log(dat2);*/
+    console.log(dat2);
 </script>
 
 
@@ -50,28 +50,55 @@
 
     <div>
 
+        <datalist id="currencies">
+            <option value="BTC">
+            <option value="U">
+            <option value="LTC">
+        </datalist>
 
         <div class="border border-secondary rounded p-3">
-            <form th:action="@{/history/currencyTimeRateGrahpicData}" method="get" style="max-width: 500px; margin:0 auto;">
-                <p>Конвертер криптовалют</p>
-                <select name="curr1" class="mySelector" id="mySelector1" >
-                </select>
-                <button onclick="convert()" class="btn btn-primary m-2">Отправить</button>
-                <select name="curr2" class="mySelector" id="mySelector2" >
-                </select>
-                <input name="n" id="valueToChange" type="number" step="0.01" placeholder="Значение для обмена">
+            <p>Конвертер криптовалют</p>
+            <form th:action="@{/currency/currConvert}" method="get" style="max-width: 500px; margin:0 auto;">
+                <input name="curr1" type="text" list="currencies" />
+                <input name="curr2" type="text" list="currencies" />
+                <input name="n1" id="valueToChange" type="number" step="0.01" placeholder="Значение для обмена">
+                <input type="submit" name="submit" class="submit">
             </form>
+            <table id="tablConv" class="table table-bordered">
+                <tbody>
+                <th:block th:each="conv : ${converted}">
+                    <tr>
+                        <td><p th:text="${conv}"></p></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
         </div>
     </div>
-    <div id="container1" style="width: 700px; height: 400px "></div>
-    <form th:action="@{/history/currencyTimeRateGrahpicData}" method="get" style="max-width: 500px; margin:0 auto;">
-        <input type="date" name="dateMin" class="search" placeholder="Дата начала:">
-        <input type="date" name="dateMax" class="search" placeholder="Дата конца:">
-        <input type="text" name="asset_id_base" class="search" placeholder="Валюта">
-        <input type="submit" name="submit" class="submit">
-    </form>
+    <div>
+        <div id="container1" style="width: 700px; height: 400px "></div>
+            <form th:action="@{/history/currencyTimeRateGrahpicData}" method="get" style="max-width: 500px; margin:0 auto;">
+                <input type="date" name="dateMin" class="search" placeholder="Дата начала:">
+                <input type="date" name="dateMax" class="search" placeholder="Дата конца:">
+                <input type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта">
+                <input type="submit" name="submit" class="submit">
+            </form>
+        <table id="tableGraph1" class="table table-bordered" style="display: none;">
+            <tbody>
+            <th:block  th:each="rates : ${rateList}">
+                <tr>
+                    <td><p class="ratesForGraphic1" th:text="${rates}"></p></td>
+                </tr>
+            </th:block>
+            <th:block th:each="dates : ${dateList}">
+                <tr>
+                    <td><p class="datesForGraphic1" th:text="${dates}"></p></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+        </div>
     </div>
-    <p><input type="button" value="Проверить" onclick="buttonClicked()"></p>
     <div>
         <p>Анализ правильности покупки валюты</p>
         <form th:action="@{/history/purhcaseCorrect}" method="get" style="max-width: 500px; margin:0 auto;">
@@ -114,38 +141,46 @@
 </body>
 
 <script type="text/javascript">
+    var dat1 = document.getElementsByClassName('ratesForGraphic1');
+    var dat2 = document.getElementsByClassName('datesForGraphic1');
 
-    for (var i = 1; i < 3; i++) {
-        var objSel = document.getElementById("mySelector"+i);
-
-        for (var j = 0; j < arr.length; j++) {
-            objSel.options[j] = new Option(arr[j].valueOf(), "");
-        }
+    var newDat1 = [];
+    var newDat2 = [];
+    for (let i = 0; i < dat1.length; i++) {
+        newDat1.push(Number(dat1[i].textContent));
     }
-
-    function convert(){
-        var cur1 = document.getElementById("mySelector1");
-        var cur2 = document.getElementById("mySelector2");
-
-        var valueToChange = document.getElementById("valueToChange").value;
-        var cur1Val;
-        var cur2Val;
-
-
-        for (var selectedIndex = 0; selectedIndex < cur1.length; selectedIndex++){
-            if ( cur1.options[selectedIndex].selected == true)
-            {
-                cur1Val = cur1.options[selectedIndex].text;
-            }
-        }
-
-        for (var selectedIndex = 0; selectedIndex < cur2.length; selectedIndex++){
-            if ( cur2.options[selectedIndex].selected == true)
-            {
-                cur2Val = cur2.options[selectedIndex].text;
-            }
-        }
+    for (let i = 0; i < dat2.length; i++) {
+        newDat2.push(dat2[i].textContent);
     }
+    var chart1;
+    $(document).ready(function(){
+        chart1 = new Highcharts.Chart({
+            title: {text: 'Зависимость курса валюты от времени'},
+            xAxis: [
+                {
+                    categories: newDat2,
+                    labels: {
+                        rotation: -45
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    categories: newDat1,
+                }
+            ],
+            chart: {renderTo: 'container1'},
+            series: [
+                {
+                    data: newDat1
+                }]
+        });
+    });
+
+
+    console.log(newDat1);
+    console.log(newDat2);
+
 </script>
 
 

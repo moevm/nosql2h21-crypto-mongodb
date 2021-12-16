@@ -178,19 +178,41 @@ public class CurrencyController {
     }
     //Конвертер
     @GetMapping("/currConvert")
-    public String currConvert(@RequestParam String curr1, @RequestParam String curr2,@RequestParam int n1, Model model)
+    public String currConvert(@RequestParam String curr1, @RequestParam String curr2,@RequestParam String n1, Model model)
     {
+        int n = Integer.parseInt(n1);
         if(Objects.equals("", curr1) || Objects.equals("", curr2))
             return "mainPage";
-        List<Currency> assetCurrency1 = currencyService.getByAsset_id(curr1);
-        List<Currency> assetCurrency2 = currencyService.getByAsset_id(curr2);
-        if(assetCurrency1.size() > 0 && assetCurrency2.size() > 0) {
-            Currency currency1 = assetCurrency1.get(0);
-            Currency currency2 = assetCurrency2.get(0);
-            double price1 = currency1.getPrice_usd();
-            double price2 = currency2.getPrice_usd();
+        List<Currency> assets = currencyService.getAllCurr();
+        List<Currency> assetCurrency1 = new ArrayList<Currency>();
+        List<Currency> assetCurrency2 = new ArrayList<Currency>();
+        List<String> finalresult = new ArrayList<String>();
+        if(assets.size() > 0)
+        {
+            for(int i = 0; i < assets.size(); i++)
+            {
+                Currency element = assets.get(i);
+                if(Objects.equals(element.getAsset_id(), curr1))
+                {
+                    assetCurrency1.add(element);
+                }
+                if(Objects.equals(element.getAsset_id(), curr2))
+                {
+                    assetCurrency2.add(element);
+                }
+            }
+            if(assetCurrency1.size() > 0 && assetCurrency2.size() > 0)
+            {
+                Currency currency1 = assetCurrency1.get(0);
+                Currency currency2 = assetCurrency2.get(0);
+                double price1 = currency1.getPrice_usd();
+                double price2 = currency2.getPrice_usd();
 
-            double result = (n1 * price1) / price2;
+                double result = (n * price1) / price2;
+                String total2 = String.valueOf(result);
+                finalresult.add(total2);
+                model.addAttribute("converted", finalresult);
+            }
         }
 
         return "mainPage";
@@ -277,7 +299,7 @@ public class CurrencyController {
         Date curr_date = new Date();
         newCurrency.setTime(curr_date);
         currencyService.saveCurrency(newCurrency);
-        System.out.println("rate: " + newCurrency.getRate());
+        //System.out.println("rate: " + newCurrency.getRate());
         /*for (int i = 0; i < currencyService.getAllHist().size(); i++){
             System.out.println(historyService.getAllHist().get(i).toString());;
         }*/
