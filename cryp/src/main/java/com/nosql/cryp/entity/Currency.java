@@ -48,6 +48,11 @@ public class Currency {
 
     private History currHistory;
 
+    public Currency(double price_usd, Date date)
+    {
+        this.data_end = date;
+        this.price_usd = price_usd;
+    }
 
     public Currency(JSONObject curr) throws JSONException, ParseException {
 

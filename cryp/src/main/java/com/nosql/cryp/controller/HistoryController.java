@@ -17,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -227,6 +228,12 @@ public class HistoryController {
         Date curr_date = new Date();
         List<History> historyList = historyService.getAllHist();
         List<String> finalResult = new ArrayList<String>();
+        List<String> rateTopPurchases = new ArrayList<String>();
+        List<String> dateTopPurchases = new ArrayList<String>();
+        List<Currency> finalTop = new ArrayList<Currency>();
+
+        Map treeMap = new TreeMap<>();
+
         double trend = 0;
         double maxProfit = 0;
         double minProfit = 0;
@@ -286,6 +293,7 @@ public class HistoryController {
                     double currPercent = ((element - start_point) / start_point) * 100;
 
                     trend += currPercent;
+                    finalTop.add(new Currency((start_point * currPercent - start_point), asset_history_list.get(i).getTime()));
 
                     if (currPercent > 0) {
                         if (maxProfitPercent < currPercent) {
@@ -314,12 +322,14 @@ public class HistoryController {
                 }
                 trend = trend / (asset_history_list.size() - 1);
                 finalResult.add("Максимальная прибыль: " + maxProfit + " на срок продажи: " + maxProfitDate);
-                finalResult.add("Минимальная прибыль: " + minProfit + " на срок продажи: " + minProfitDate);
+                //finalResult.add("Минимальная прибыль: " + minProfit + " на срок продажи: " + minProfitDate);
                 finalResult.add("Максимальный убыток: " + maxLoss + " на срок продажи: " + maxLossDate);
-                finalResult.add("Минимальный убыток: " + minLoss + " на срок продажи: " + minLossDate);
+                //finalResult.add("Минимальный убыток: " + minLoss + " на срок продажи: " + minLossDate);
                 model.addAttribute("purchaseCorrectList", finalResult);
             }
         }
+
+        model.addAttribute("rateTopPurchases", finalTop);
         return "mainPage";
     }
 
