@@ -4,6 +4,7 @@ import com.nosql.cryp.ApiToDb;
 import com.nosql.cryp.entity.Currency;
 import com.nosql.cryp.entity.History;
 import com.nosql.cryp.service.CurrencyService;
+import com.nosql.cryp.service.HistoryService;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +26,8 @@ import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 public class CurrencyController {
     @Autowired
     private CurrencyService currencyService;
+    @Autowired
+    private HistoryService historyService;
     //по цене
     @GetMapping("/getCurrencyByPrice")
     public String getCurrencyByPrice(@RequestParam String rateMin, @RequestParam String rateMax, Model model){
@@ -216,7 +219,7 @@ public class CurrencyController {
             // запросы к апи
         ApiToDb apitodb = new ApiToDb();
         JSONArray curr = apitodb.list_all_assets();
-        for (int i = 0 ; i < 30; i++) {
+        for (int i = 0 ; i < 100; i++) {
             JSONObject obj = curr.getJSONObject(i);
             if (((int) obj.get("type_is_crypto") == 0))
                 continue;
@@ -231,6 +234,15 @@ public class CurrencyController {
             }
 
             Currency currency =  new Currency(obj);
+            /*JSONArray curr2 = apitodb.list_all_history(currency.getAsset_id(), new Date(), new Date());
+            for (int j = 0; j < curr2.length(); j++) {
+                JSONObject obj2 = curr2.getJSONObject(j);
+
+                History history = new History(obj2, currency.getAsset_id());
+                historyService.saveHistory(history);
+
+            }/*
+            //apitodb.list_all_history(currency.getAsset_id(), new Date(), new Date());
             currencyService.saveCurrency(currency);
             /*String asset_id = (String) obj.get("asset_id");
             List<Currency> assetCurrency = currencyService.getByAsset_id(asset_id);

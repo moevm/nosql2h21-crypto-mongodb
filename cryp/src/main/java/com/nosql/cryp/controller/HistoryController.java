@@ -11,16 +11,14 @@ import org.json.JSONTokener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -28,8 +26,11 @@ import java.util.*;
 public class HistoryController {
 
     //Данные для графика: валюта по времени
-    public String currencyTimeRateGrahpicData(String asset_id_base, Date date1, Date date2)
-    {
+    @GetMapping("/currencyTimeRateGrahpicData")
+    public String currencyTimeRateGrahpicData(@RequestParam String asset_id_base,@RequestParam String dateMin,@RequestParam String dateMax, Model model) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date1 = format.parse(dateMin);
+        Date date2 = format.parse(dateMax);
         List<History> historyList = historyService.getAllHist();
         List<Double> rateList= new ArrayList<Double>();//Сами данные тут
         List<Date> dateList= new ArrayList<Date>();
@@ -77,12 +78,14 @@ public class HistoryController {
             }
 
         }
-
-        return "two lists";
+        model.addAttribute("rateList", rateList);
+        model.addAttribute("dateList", dateList);
+        return "mainPage";
     }
 
     //Данные для графика: Курс одной валюты к другой
-    public String twoCurrenciesGhraphicData(String asset_id_base1, String asset_id_base2, Date date1, Date date2)
+    @GetMapping("/twoCurrenciesGhraphicData")
+    public String twoCurrenciesGhraphicData(@RequestParam String asset_id_base1,@RequestParam String asset_id_base2,@RequestParam Date date1,@RequestParam Date date2, Model model)
     {
         List<History> historyList = historyService.getAllHist();
         List<Double> rate1= new ArrayList<Double>();//Сами данные тут
@@ -156,29 +159,51 @@ public class HistoryController {
                     }
                 }
             }
+            model.addAttribute("rate1", rate1);
+            model.addAttribute("rate2", rate2);
 
         }
-        return "two lists";
+        return "mainPage";
     }
 
-    //Анализ правильности покупки
-    public String purhcaseCorrect(String asset_id_base, Date date)
-    {
+    //Анализ правильности покупки на один месяц
+    @GetMapping("/purhcaseCorrect")
+    public String purhcaseCorrect(@RequestParam String datePurchase,@RequestParam String asset_id_base, Model model) throws ParseException {
+        datePurchase += "T00:00:00.0000000Z";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'");
+        Date date = format.parse(datePurchase);
+        System.out.println(date);
+
         Date curr_date = new Date();
         List<History> historyList = historyService.getAllHist();
+        List<String> finalResult = new ArrayList<String>();
         double trend = 0;
+        double maxProfit = 0;
+        double minProfit = 0;
+        double maxLoss = 0;
+        double minLoss = 0;
+        double maxProfitPercent = 0;
+        double minProfitPercent = 0;
+        double maxLossPercent = 0;
+        double minLossPercent = 0;
+        Date maxProfitDate = new Date();
+        Date minProfitDate = new Date();
+        Date maxLossDate = new Date();
+        Date minLossDate = new Date();
         if(historyList.size() > 0)
         {
             List<History> asset_history_list = new ArrayList<History>();
             Date newDate = curr_date;
-            newDate.setMonth(date.getMonth() - 1);
+            //newDate.setMonth(date.getMonth() - 1);
             for (int i = 0; i < historyList.size(); i++)
             {
                 History element = historyList.get(i);
-                if(element.getAsset_id_base() == asset_id_base)
+                if(Objects.equals(element.getAsset_id_base(), asset_id_base))
                 {
-                    if (element.getTime().after(date))
+                    Date date22 = element.getTime();
+                    if (date22.after(date))
                     {
+                        System.out.println("here2");
                         if (element.getTime().before(newDate))
                         {
                             asset_history_list.add(element);
@@ -204,27 +229,54 @@ public class HistoryController {
             });
 
             List<Double> rates = new ArrayList<Double>();
+            if(asset_history_list.size() > 0) {
+                double start_point = asset_history_list.get(0).getRate();
+                for (int i = 1; i < asset_history_list.size(); i++) {
+                    double element = asset_history_list.get(i).getRate();
+                    //rates.add((element/start_point)*100 - 100);
+                    double currPercent = ((element - start_point) / start_point) * 100;
 
-            double start_point = asset_history_list.get(0).getRate();
-            for (int i = 1; i < asset_history_list.size(); i++)
-            {
-                double element = asset_history_list.get(i).getRate();
-                //rates.add((element/start_point)*100 - 100);
-                trend += (element/start_point)*100 - 100;
+                    trend += currPercent;
 
+                    if (currPercent > 0) {
+                        if (maxProfitPercent < currPercent) {
+                            maxProfitPercent = currPercent;
+                            maxProfit = start_point * maxProfitPercent - start_point;
+                            maxProfitDate = asset_history_list.get(i).getTime();
+                        }
+                        if (minProfitPercent > currPercent) {
+                            minProfitPercent = currPercent;
+                            minProfit = start_point * minProfitPercent - start_point;
+                            minProfitDate = asset_history_list.get(i).getTime();
+                        }
+                    } else if (currPercent < 0) {
+                        if (maxLossPercent > currPercent) {
+                            maxLossPercent = currPercent;
+                            maxLoss = start_point * maxLossPercent - start_point;
+                            maxLossDate = asset_history_list.get(i).getTime();
+                        }
+                        if (minLossPercent < currPercent) {
+                            minLossPercent = currPercent;
+                            minLoss = start_point * minLossPercent - start_point;
+                            minLossDate = asset_history_list.get(i).getTime();
+                        }
+                    }
+
+                }
+                trend = trend / (asset_history_list.size() - 1);
+                finalResult.add("Максимальная прибыль: " + maxProfit + " на срок продажи: " + maxProfitDate);
+                finalResult.add("Минимальная прибыль: " + minProfit + " на срок продажи: " + minProfitDate);
+                finalResult.add("Максимальный убыток: " + maxLoss + " на срок продажи: " + maxLossDate);
+                finalResult.add("Минимальный убыток: " + minLoss + " на срок продажи: " + minLossDate);
+                model.addAttribute("purchaseCorrectList", finalResult);
             }
-            trend = trend/(asset_history_list.size()-1);
         }
-
-        if(trend > 0)
-        {
-            return "Покупка правильна";
-        }
-        return "Покупка не правильна";
+        return "mainPage";
     }
 
     //Анализ тренда
-    public String trendAnalys(String assetd_id_base, Date date)
+    @GetMapping("/trendAnalys")
+    public String trendAnalys(@RequestParam String assetd_id_base,@RequestParam Date date, Model model)
     {
         List<History> historyList = historyService.getAllHist();
         double trend = 0;
@@ -276,12 +328,17 @@ public class HistoryController {
             }
             trend = trend/(asset_history_list.size()-1);
         }
-
+        String finalResult = new String();
         if(trend > 0)
         {
-            return "Валюта в тренде";
+            finalResult = "Валюта в тренде";
         }
-        return "Валюта не в тренде";
+        else
+        {
+            finalResult = "Валюта не в тренде";
+        }
+        model.addAttribute("trend", finalResult);
+        return "mainPage";
     }
 
     @Autowired

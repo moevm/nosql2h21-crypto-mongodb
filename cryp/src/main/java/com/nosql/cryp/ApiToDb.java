@@ -8,6 +8,7 @@ import java.net.*;
 import java.util.Date;
 import java.util.Properties;
 
+import com.nosql.cryp.entity.History;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -18,6 +19,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.json.JSONTokener;
 
 public class ApiToDb {
@@ -69,7 +71,7 @@ public class ApiToDb {
     public JSONArray list_all_history(String asset_id_base, Date date1, Date date2) throws IOException, JSONException {
         DefaultHttpClient httpclient = new DefaultHttpClient();
         String cUrl = "http://rest.coinapi.io/v1/exchangerate/" + asset_id_base +
-                "/USD/history?period_id=1DAY&time_start=2016-01-01T00:00:00&time_end=2016-02-01T00:00:00";
+                "/USD/history?period_id=7DAY&time_start=2019-01-01T00:00:00&time_end=2021-01-01T00:00:00";
 
 
         //HttpGet httpGet = new HttpGet(cUrl);
@@ -84,7 +86,8 @@ public class ApiToDb {
         }
         JSONTokener tokener = new JSONTokener(builder.toString());
         JSONArray finalResult = new JSONArray(tokener);
-        System.out.println(finalResult);
+        //System.out.println(finalResult);
+
 
         return finalResult;
     }
