@@ -57,9 +57,9 @@
         <div class="border border-secondary rounded p-3">
             <p>Конвертер криптовалют</p>
             <form th:action="@{/currency/currConvert}" method="get" style="max-width: 500px; margin:0 auto;">
-                <input name="curr1" type="text" list="currencies" />
-                <input name="curr2" type="text" list="currencies" />
-                <input name="n1" id="valueToChange" type="number" step="0.01" placeholder="Значение для обмена">
+                <input id="currConv1" name="curr1" type="text" list="currencies" placeholder="Валюта" />
+                <input id="currConv2" name="curr2" type="text" list="currencies" placeholder="Валюта"/>
+                <input id="nConv" name="n1" type="number" step="0.01" placeholder="Значение для обмена">
                 <input type="submit" name="submit" class="submit">
             </form>
             <table id="tablConv" class="table table-bordered">
@@ -71,6 +71,15 @@
                 </th:block>
                 </tbody>
             </table>
+            <table id="tablConvNames" class="table table-bordered" style="display: none;">
+                <tbody>
+                <th:block th:each="convN : ${namesConv}">
+                    <tr>
+                        <td><p class="convNames" th:text="${convN}"></p></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
         </div>
     </div>
     <div>
@@ -78,7 +87,7 @@
             <form th:action="@{/history/currencyTimeRateGrahpicData}" method="get" style="max-width: 500px; margin:0 auto;">
                 <input type="date" name="dateMin" class="search" placeholder="Дата начала:">
                 <input type="date" name="dateMax" class="search" placeholder="Дата конца:">
-                <input type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта">
+                <input id="cryptocurrency1_1" type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта">
                 <input type="submit" name="submit" class="submit">
             </form>
         <table id="tableGraph1" class="table table-bordered" style="display: none;">
@@ -93,6 +102,11 @@
                     <td><p class="datesForGraphic1" th:text="${dates}"></p></td>
                 </tr>
             </th:block>
+            <th:block th:each="names : ${assetsNames}">
+                <tr>
+                    <td><p class="namesForGraphic1" th:text="${names}"></p></td>
+                </tr>
+            </th:block>
             </tbody>
         </table>
         </div>
@@ -100,8 +114,8 @@
     <div>
         <div id="container2" style="width: 700px; height: 400px "></div>
         <form th:action="@{/history/twoCurrenciesGhraphicData}" method="get" style="max-width: 500px; margin:0 auto;">
-            <input type="text" name="asset_id_base1" class="search" list="currencies" placeholder="Валюта">
-            <input type="text" name="asset_id_base2" class="search" list="currencies" placeholder="Валюта">
+            <input id="cryptocurrency2_1" type="text" name="asset_id_base1" class="search" list="currencies" placeholder="Валюта">
+            <input id="cryptocurrency2_2"type="text" name="asset_id_base2" class="search" list="currencies" placeholder="Валюта">
             <input type="date" name="dateMin" class="search" placeholder="Дата начала:">
             <input type="date" name="dateMax" class="search" placeholder="Дата конца:">
             <input type="submit" name="submit" class="submit">
@@ -123,6 +137,11 @@
                     <td><p class="datesForGraphic2_1" th:text="${dates2}"></p></td>
                 </tr>
             </th:block>
+            <th:block th:each="names: ${assetsNames2}">
+                <tr>
+                    <td><p class="namesForGraphic2_1" th:text="${names}"></p></td>
+                </tr>
+            </th:block>
             </tbody>
         </table>
     </div>
@@ -131,7 +150,7 @@
         <p>Анализ правильности покупки валюты</p>
         <form th:action="@{/history/purhcaseCorrect}" method="get" style="max-width: 500px; margin:0 auto;">
             <input type="date" name="datePurchase" class="search" placeholder="Дата">
-            <input type="text" name="asset_id_base" class="search" placeholder="Валюта">
+            <input id="name3P" type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта">
             <input type="submit" name="submit" class="submit">
         </form>
         <div>
@@ -140,6 +159,16 @@
                 <th:block th:each="purchase : ${purchaseCorrectList}">
                     <tr>
                         <td><p th:text="${purchase}"></p></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+
+            <table id="tablNamePurchase" class="table table-bordered" style="display: none;">
+                <tbody>
+                <th:block th:each="purchaseN : ${namePurchase}">
+                    <tr>
+                        <td><p class="names3" th:text="${purchaseN}"></p></td>
                     </tr>
                 </th:block>
                 </tbody>
@@ -167,7 +196,7 @@
         <p>Анализ тренда валюты</p>
         <form th:action="@{/history/trendAnalys}" method="get" style="max-width: 500px; margin:0 auto;">
             <input type="date" name="dateAnalys" class="search" placeholder="Дата">
-            <input type="text" name="asset_id_base" class="search" placeholder="Валюта">
+            <input id="name4T" type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта">
             <input type="submit" name="submit" class="submit">
         </form>
         <div>
@@ -176,6 +205,11 @@
                 <th:block th:each="trends : ${trend}">
                     <tr>
                         <td><p th:text="${trends}"></p></td>
+                    </tr>
+                </th:block>
+                <th:block th:each="namesT : ${namesTrend}" style="display: none;">
+                    <tr>
+                        <td><p class="names4" th:text="${namesT}"></p></td>
                     </tr>
                 </th:block>
                 </tbody>
@@ -199,15 +233,41 @@
     });
 </script>
 
+<script>
+
+    var nameC = document.getElementsByClassName('convNames');
+    document.getElementById("currConv1").value = nameC[0].textContent;
+    document.getElementById("currConv2").value = nameC[1].textContent;
+    document.getElementById("nConv").value = nameC[2].textContent;
+</script>
+
+<script>
+
+    var namePurchase = document.getElementsByClassName('names3');
+    document.getElementById("name3P").value = namePurchase[0].textContent;
+
+</script>
+
+<script>
+
+    var nameTrend = document.getElementsByClassName('names4');
+    document.getElementById("name4T").value = nameTrend[0].textContent;
+
+</script>
+
 <script type="text/javascript">
     var dat1_1 = document.getElementsByClassName('ratesForGraphic2_1');
     var dat2_2 = document.getElementsByClassName('ratesForGraphic2_2');
     var dat3 = document.getElementsByClassName('datesForGraphic2_1');
+    var dat4 = document.getElementsByClassName('namesForGraphic2_1');
 
     var newDat1_1 = [];
     var newDat2_2 = [];
     var newDat3 = [];
-
+    var currName1 = dat4[0].textContent;
+    var currName2 = dat4[1].textContent;
+    document.getElementById("cryptocurrency2_1").value = currName1;
+    document.getElementById("cryptocurrency2_2").value = currName2;
     var dataTwoCurr = []
 
 
@@ -230,6 +290,9 @@
             title: {text: 'Зависимость курса одной валюты от другой'},
             xAxis: [
                 {
+                    title: {
+                        text: currName1
+                    },
                     categories: newDat1_1,
                     labels: {
                         rotation: -45
@@ -238,6 +301,9 @@
             ],
             yAxis: [
                 {
+                    title: {
+                        text: currName2
+                    },
                     categories: newDat2_2,
                 }
             ],
@@ -245,7 +311,7 @@
             series: [
                 {
                     data: dataTwoCurr,
-                    name: "Зависиомость валют"
+                    name: "Зависиомость валют - " + currName1 + " и " + currName2
                 }]
         });
     });
@@ -256,9 +322,12 @@
 <script type="text/javascript">
     var dat1 = document.getElementsByClassName('ratesForGraphic1');
     var dat2 = document.getElementsByClassName('datesForGraphic1');
+    var dat3_1 = document.getElementsByClassName('namesForGraphic1');
 
     var newDat1 = [];
     var newDat2 = [];
+    var newDat3_1 = dat3_1[0].textContent
+    document.getElementById("cryptocurrency1_1").value = newDat3_1;
     for (let i = 0; i < dat1.length; i++) {
         newDat1.push(Number(dat1[i].textContent));
     }
@@ -271,6 +340,9 @@
             title: {text: 'Зависимость курса валюты от времени'},
             xAxis: [
                 {
+                    title: {
+                        text: 'Дата'
+                    },
                     categories: newDat2,
                     labels: {
                         rotation: -45
@@ -279,6 +351,9 @@
             ],
             yAxis: [
                 {
+                    title: {
+                        text: 'Курс'
+                    },
                     categories: newDat1,
                 }
             ],
@@ -286,7 +361,7 @@
             series: [
                 {
                     data: newDat1,
-                    name: "Курс валюты"
+                    name: "Курс валюты - " + newDat3_1
                 }]
         });
     });

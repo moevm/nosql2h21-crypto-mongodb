@@ -27,8 +27,8 @@ import java.util.*;
 public class HistoryController {
 
     //Данные для графика: валюта по времени
-    @GetMapping("/currencyTimeRateGrahpicData/{asset_id_base}/{dateMin}/{dateMax}")
-    public String currencyTimeRateGrahpicData(@PathVariable String asset_id_base,@PathVariable String dateMin,@PathVariable String dateMax, Model model) throws ParseException {
+    @GetMapping("/currencyTimeRateGrahpicData")
+    public String currencyTimeRateGrahpicData(@RequestParam  String asset_id_base,@RequestParam  String dateMin,@RequestParam  String dateMax, Model model) throws ParseException {
         if(Objects.equals("", asset_id_base) || Objects.equals("", dateMin) || Objects.equals("", dateMax))
             return "mainPage";
         dateMin += "T00:00:00.0000000Z";
@@ -39,6 +39,8 @@ public class HistoryController {
         List<History> historyList = historyService.getAllHist();
         List<Double> rateList= new ArrayList<Double>();//Сами данные тут
         List<Date> dateList= new ArrayList<Date>();
+        List<String> assetsNames = new ArrayList<String>();
+        assetsNames.add(asset_id_base);
         if(historyList.size() > 0)
         {
             List<History> asset_history_list = new ArrayList<History>();
@@ -85,6 +87,7 @@ public class HistoryController {
         }
         model.addAttribute("rateList", rateList);
         model.addAttribute("dateList", dateList);
+        model.addAttribute("assetsNames",assetsNames);
         return "mainPage";
     }
 
@@ -102,6 +105,9 @@ public class HistoryController {
         List<Double> rate1= new ArrayList<Double>();//Сами данные тут
         List<Double> rate2= new ArrayList<Double>();
         List<Date> dateList= new ArrayList<Date>();
+        List<String> assetsNames = new ArrayList<String>();
+        assetsNames.add(asset_id_base1);
+        assetsNames.add(asset_id_base2);
 
         if(historyList.size() > 0)
         {
@@ -210,6 +216,7 @@ public class HistoryController {
             model.addAttribute("rate1", rate1);
             model.addAttribute("rate2", rate2);
             model.addAttribute("dateTwoCurr", dateList);
+            model.addAttribute("assetsNames2", assetsNames);
 
         }
         return "mainPage";
@@ -231,6 +238,8 @@ public class HistoryController {
         List<String> rateTopPurchases = new ArrayList<String>();
         List<String> dateTopPurchases = new ArrayList<String>();
         List<Currency> finalTop = new ArrayList<Currency>();
+        List<String> names = new ArrayList<String>();
+        names.add(asset_id_base);
 
         Map treeMap = new TreeMap<>();
 
@@ -330,6 +339,7 @@ public class HistoryController {
         }
 
         model.addAttribute("rateTopPurchases", finalTop);
+        model.addAttribute("namePurchase", names);
         return "mainPage";
     }
 
@@ -343,6 +353,8 @@ public class HistoryController {
         Date date = format.parse(dateAnalys);
         List<History> historyList = historyService.getAllHist();
         List<String> finalResult = new ArrayList<String>();
+        List<String> names = new ArrayList<String>();
+        names.add(asset_id_base);
         double trend = 0;
         if(historyList.size() > 0)
         {
@@ -402,6 +414,7 @@ public class HistoryController {
             finalResult.add("Валюта не в тренде");
         }
         model.addAttribute("trend", finalResult);
+        model.addAttribute("namesTrend", names);
         return "mainPage";
     }
 

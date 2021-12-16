@@ -187,6 +187,10 @@ public class CurrencyController {
         List<Currency> assetCurrency1 = new ArrayList<Currency>();
         List<Currency> assetCurrency2 = new ArrayList<Currency>();
         List<String> finalresult = new ArrayList<String>();
+        List<String> names = new ArrayList<String>();
+        names.add(curr1);
+        names.add(curr2);
+        names.add(n1);
         if(assets.size() > 0)
         {
             for(int i = 0; i < assets.size(); i++)
@@ -214,7 +218,7 @@ public class CurrencyController {
                 model.addAttribute("converted", finalresult);
             }
         }
-
+        model.addAttribute("namesConv", names);
         return "mainPage";
     }
 
