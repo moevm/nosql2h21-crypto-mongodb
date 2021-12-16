@@ -20,6 +20,12 @@
 </head>
 
 <script type="text/javascript">
+    var request = new XMLHttpRequest();
+    request.open('GET','/history/currencyTimeRateGrahpicData?asset_id_base=' + ,true);
+    request.send();
+    if (request.status==200) {
+        document.getElementById("answer").innerHTML = request.responseText;
+    }
     /*var dat1 = [[${rateList}]];
     var dat2 = [[${dateList}]];
 
