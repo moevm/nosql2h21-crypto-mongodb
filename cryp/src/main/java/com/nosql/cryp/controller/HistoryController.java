@@ -28,6 +28,8 @@ public class HistoryController {
     //Данные для графика: валюта по времени
     @GetMapping("/currencyTimeRateGrahpicData")
     public String currencyTimeRateGrahpicData(@RequestParam String asset_id_base,@RequestParam String dateMin,@RequestParam String dateMax, Model model) throws ParseException {
+        if(Objects.equals("", asset_id_base) || Objects.equals("", dateMin) || Objects.equals("", dateMax))
+            return "mainPage";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date1 = format.parse(dateMin);
         Date date2 = format.parse(dateMax);
@@ -87,6 +89,8 @@ public class HistoryController {
     @GetMapping("/twoCurrenciesGhraphicData")
     public String twoCurrenciesGhraphicData(@RequestParam String asset_id_base1,@RequestParam String asset_id_base2,@RequestParam Date date1,@RequestParam Date date2, Model model)
     {
+        if(Objects.equals("", asset_id_base1) || Objects.equals("", date1) || Objects.equals("", date2) || Objects.equals("", asset_id_base2))
+            return "mainPage";
         List<History> historyList = historyService.getAllHist();
         List<Double> rate1= new ArrayList<Double>();//Сами данные тут
         List<Double> rate2= new ArrayList<Double>();
@@ -169,10 +173,12 @@ public class HistoryController {
     //Анализ правильности покупки на один месяц
     @GetMapping("/purhcaseCorrect")
     public String purhcaseCorrect(@RequestParam String datePurchase,@RequestParam String asset_id_base, Model model) throws ParseException {
+        if(Objects.equals("", asset_id_base) || Objects.equals("", datePurchase))
+            return "mainPage";
         datePurchase += "T00:00:00.0000000Z";
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'");
         Date date = format.parse(datePurchase);
-        System.out.println(date);
+        //System.out.println(date);
 
         Date curr_date = new Date();
         List<History> historyList = historyService.getAllHist();
@@ -203,8 +209,7 @@ public class HistoryController {
                     Date date22 = element.getTime();
                     if (date22.after(date))
                     {
-                        System.out.println("here2");
-                        if (element.getTime().before(newDate))
+                        if (date22.before(newDate))
                         {
                             asset_history_list.add(element);
                         }
@@ -276,23 +281,29 @@ public class HistoryController {
 
     //Анализ тренда
     @GetMapping("/trendAnalys")
-    public String trendAnalys(@RequestParam String assetd_id_base,@RequestParam Date date, Model model)
-    {
+    public String trendAnalys(@RequestParam String dateAnalys,@RequestParam String asset_id_base, Model model) throws ParseException {
+        if(Objects.equals("", asset_id_base) || Objects.equals("", dateAnalys) )
+            return "mainPage";
+        dateAnalys += "T00:00:00.0000000Z";
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'");
+        Date date = format.parse(dateAnalys);
         List<History> historyList = historyService.getAllHist();
+        List<String> finalResult = new ArrayList<String>();
         double trend = 0;
         if(historyList.size() > 0)
         {
             List<History> asset_history_list = new ArrayList<History>();
-            Date newDate = date;
+            Date newDate = new Date();
             newDate.setMonth(date.getMonth() - 1);
             for (int i = 0; i < historyList.size(); i++)
             {
                 History element = historyList.get(i);
-                if(element.getAsset_id_base() == assetd_id_base)
+                if(Objects.equals(element.getAsset_id_base(), asset_id_base))
                 {
-                    if (element.getTime().after(newDate))
+                    Date date22 = element.getTime();
+                    if (date22.after(date))
                     {
-                        if (element.getTime().before(date))
+                        if (date22.before(newDate))
                         {
                             asset_history_list.add(element);
                         }
@@ -317,25 +328,24 @@ public class HistoryController {
             });
 
             List<Double> rates = new ArrayList<Double>();
+            if(asset_history_list.size() > 0) {
+                double start_point = asset_history_list.get(0).getRate();
+                for (int i = 1; i < asset_history_list.size(); i++) {
+                    double element = asset_history_list.get(i).getRate();
+                    //rates.add((element/start_point)*100 - 100);
+                    trend += (element / start_point) * 100 - 100;
 
-            double start_point = asset_history_list.get(0).getRate();
-            for (int i = 1; i < asset_history_list.size(); i++)
-            {
-                double element = asset_history_list.get(i).getRate();
-                //rates.add((element/start_point)*100 - 100);
-                trend += (element/start_point)*100 - 100;
-
+                }
+                trend = trend / (asset_history_list.size() - 1);
             }
-            trend = trend/(asset_history_list.size()-1);
         }
-        String finalResult = new String();
         if(trend > 0)
         {
-            finalResult = "Валюта в тренде";
+            finalResult.add("Валюта в тренде");
         }
         else
         {
-            finalResult = "Валюта не в тренде";
+            finalResult.add("Валюта не в тренде");
         }
         model.addAttribute("trend", finalResult);
         return "mainPage";

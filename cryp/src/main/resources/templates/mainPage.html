@@ -52,15 +52,15 @@
 
 
         <div class="border border-secondary rounded p-3">
-            <body>
-            <p>Калькулятор и конвертер криптовалют</p>
-            <select name="check" class="mySelector" id="mySelector1" >
-            </select>
-            <button onclick="convert()" class="btn btn-primary m-2">Отправить</button>
-            <select name="check" class="mySelector" id="mySelector2" >
-            </select>
-            <input id="valueToChange" type="number" step="0.01" placeholder="Значение для обмена">
-            </body>
+            <form th:action="@{/history/currencyTimeRateGrahpicData}" method="get" style="max-width: 500px; margin:0 auto;">
+                <p>Конвертер криптовалют</p>
+                <select name="curr1" class="mySelector" id="mySelector1" >
+                </select>
+                <button onclick="convert()" class="btn btn-primary m-2">Отправить</button>
+                <select name="curr2" class="mySelector" id="mySelector2" >
+                </select>
+                <input name="n" id="valueToChange" type="number" step="0.01" placeholder="Значение для обмена">
+            </form>
         </div>
     </div>
     <div id="container1" style="width: 700px; height: 400px "></div>
@@ -72,22 +72,43 @@
     </form>
     </div>
     <p><input type="button" value="Проверить" onclick="buttonClicked()"></p>
-
-    <form th:action="@{/history/purhcaseCorrect}" method="get" style="max-width: 500px; margin:0 auto;">
-        <input type="date" name="datePurchase" class="search" placeholder="Дата">
-        <input type="text" name="asset_id_base" class="search" placeholder="Валюта">
-        <input type="submit" name="submit" class="submit">
-    </form>
     <div>
-        <table id="tabl" class="table table-bordered">
-            <tbody>
-            <th:block th:each="purchase : ${purchaseCorrectList}">
-                <tr>
-                    <td><p th:text="${purchase}"></p></td>
-                </tr>
-            </th:block>
-            </tbody>
-        </table>
+        <p>Анализ правильности покупки валюты</p>
+        <form th:action="@{/history/purhcaseCorrect}" method="get" style="max-width: 500px; margin:0 auto;">
+            <input type="date" name="datePurchase" class="search" placeholder="Дата">
+            <input type="text" name="asset_id_base" class="search" placeholder="Валюта">
+            <input type="submit" name="submit" class="submit">
+        </form>
+        <div>
+            <table id="tabl" class="table table-bordered">
+                <tbody>
+                <th:block th:each="purchase : ${purchaseCorrectList}">
+                    <tr>
+                        <td><p th:text="${purchase}"></p></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <p>Анализ тренда валюты</p>
+        <form th:action="@{/history/trendAnalys}" method="get" style="max-width: 500px; margin:0 auto;">
+            <input type="date" name="dateAnalys" class="search" placeholder="Дата">
+            <input type="text" name="asset_id_base" class="search" placeholder="Валюта">
+            <input type="submit" name="submit" class="submit">
+        </form>
+        <div>
+            <table id="tabl2" class="table table-bordered">
+                <tbody>
+                <th:block th:each="trends : ${trend}">
+                    <tr>
+                        <td><p th:text="${trends}"></p></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </body>
@@ -150,17 +171,6 @@
             series: [{data: dat1}]
         });
     });*/
-
-
-
-
-
-
-
-
-
-
-
 
 
 </script>
