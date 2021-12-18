@@ -397,9 +397,10 @@ public class HistoryController {
             if(asset_history_list.size() > 0) {
                 double start_point = asset_history_list.get(0).getRate();
                 for (int i = 1; i < asset_history_list.size(); i++) {
+
                     double element = asset_history_list.get(i).getRate();
                     //rates.add((element/start_point)*100 - 100);
-                    trend += (element / start_point) * 100 - 100;
+                    trend += ((element - start_point) / start_point) * 100;;
 
                 }
                 trend = trend / (asset_history_list.size() - 1);
