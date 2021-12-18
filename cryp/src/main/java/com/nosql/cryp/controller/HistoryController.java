@@ -60,7 +60,7 @@ public class HistoryController {
         {
             grahpicByProfitLow(asset_id_base, date1, date2, model);
         }
-        else if(Objects.equals(type_of_graphic,"Относительные изменения курса"))
+        else if(Objects.equals(type_of_graphic,"Абсолютные изменения курса"))
         {
             grahpicRelative(asset_id_base, date1, date2, model);
         }
@@ -560,6 +560,7 @@ public class HistoryController {
                     dateList.add(element1.getTime());
                     rate1.add(element1.getRate());
 
+
                 }
                 for (int j = 0; j < asset_history_list2.size(); j++)
                 {
@@ -603,6 +604,8 @@ public class HistoryController {
                     }
                 }*/
             }
+            //System.out.println(rate1);
+            //System.out.println(rate2);
             model.addAttribute("rate1", rate1);
             model.addAttribute("rate2", rate2);
             model.addAttribute("dateTwoCurr", dateList);
