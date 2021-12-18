@@ -58,15 +58,16 @@
     </datalist>
 
     <div class="container border border-secondary rounded p-3">
-        <div class="row justify-content-center" style="padding-top: 15px;">
             <p class="justify-content-center">Конвертер криптовалют</p>
+        <div class="row fw-weight-bold justify-content-center" style="padding-top: 15px;">
+            <p class="font-weight-bold">Конвертер криптовалют</p>
         </div>
 
         <div class="container px-1 row justify-content-center ">
             <div class="row gx-1 pb-3">
-                <input class="pb-1 ml-auto mr-3 p-1 border bg-dark" id="currConv1" name="curr1" type="text" list="currencies" placeholder="Валюта" />
+                <input class="pb-1 ml-auto mr-3 p-1 border" id="currConv1" name="curr1" type="text" list="currencies" placeholder="Валюта" />
                 <input type="submit" name="submit" class="submit">
-                <input class="pb-1 mr-auto ml-3  p-1 border bg-dark" id="currConv2" name="curr2" type="text" list="currencies" placeholder="Валюта"/>
+                <input class="pb-1 mr-auto ml-3  p-1 border" id="currConv2" name="curr2" type="text" list="currencies" placeholder="Валюта"/>
             </div>
         </div>
 
@@ -88,10 +89,10 @@
     </div>
     </div>
 
-    <div>
+    <div class="container px-1 row justify-content-center ">
         <div id="container1" style="width: 700px; height: 400px "></div>
         <form th:action="@{/history/currencyTimeRateGrahpicData}" method="get" style="max-width: 500px; margin:0 auto;">
-            <select name="type_of_graphic" placeholder="Параметр">
+            <select name="type_of_graphic pb-123 ml-auto mr-1 p-1" placeholder="Параметр">
                 <option>По максимальному курсу за 7 дней</option>
                 <option>По минимальному курсу за 7 дней</option>
                 <option>По начальному курсу за 7 дней</option>
@@ -100,8 +101,8 @@
                 <option>По минимальной прибыли за 7 дней</option>
                 <option>Относительные изменения курса</option>
             </select>
-            <input type="date" name="dateMin" class="search" placeholder="Дата начала:">
-            <input type="date" name="dateMax" class="search" placeholder="Дата конца:">
+            <input type="date" name="dateMin" class="search ml-1 my-2" placeholder="Дата начала:">
+            <input type="date" name="dateMax" class="search " placeholder="Дата конца:">
             <input id="cryptocurrency1_1" type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта">
             <input type="submit" name="submit" class="submit">
         </form>
@@ -125,12 +126,14 @@
             </tbody>
         </table>
     </div>
+
 </div>
+
 
 <div>
     <div id="container2" style="width: 700px; height: 400px "></div>
     <form th:action="@{/history/twoCurrenciesGhraphicData}" method="get" style="max-width: 500px; margin:0 auto;">
-        <input id="cryptocurrency2_1" type="text" name="asset_id_base1" class="search" list="currencies" placeholder="Валюта">
+        <input id="cryptocurrency2_1" type="text" name="asset_id_base1" class="search ml-1 my-2" list="currencies" placeholder="Валюта">
         <input id="cryptocurrency2_2"type="text" name="asset_id_base2" class="search" list="currencies" placeholder="Валюта">
         <input type="date" name="dateMin" class="search" placeholder="Дата начала:">
         <input type="date" name="dateMax" class="search" placeholder="Дата конца:">
@@ -162,8 +165,11 @@
     </table>
 </div>
 
+
 <div>
-    <p>Анализ правильности покупки валюты</p>
+    <div class="row fw-weight-bold justify-content-center" style="padding-top: 15px;">
+        <p class="font-weight-bold">Анализ правильности покупки валюты</p>
+    </div>
     <form th:action="@{/history/purhcaseCorrect}" method="get" style="max-width: 500px; margin:0 auto;">
         <input type="date" name="datePurchase" class="search" placeholder="Дата">
         <input id="name3P" type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта">
@@ -190,26 +196,44 @@
             </tbody>
         </table>
 
-        <table id="tableID" class="table table-bordered">
-            <thead class="thead-dark">
-            <tr>
-                <th>Прибыль (Убыток)</th>
-                <th>Дата</th>
-            </tr>
-            </thead>
-            <tbody>
-            <th:block th:each="currency : ${rateTopPurchases}">
+
+
+
+
+
+        <div class="row justify-content-center" style="padding-top: 15px;">
+            <table id="tableID " class="w-75 p-3 table table-bordered ">
+                <thead class="thead-dark">
                 <tr>
-                    <td><p th:text="${currency.price_usd}"></p></td>
-                    <td><p th:text="${currency.data_end}"></p></td>
+                    <th>Прибыль (Убыток)</th>
+                    <th>Дата</th>
                 </tr>
-            </th:block>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <th:block th:each="currency : ${rateTopPurchases}">
+                    <tr>
+                        <td><p th:text="${currency.price_usd}"></p></td>
+                        <td><p th:text="${currency.data_end}"></p></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+
+
+
+
+
+
+
     </div>
 </div>
+
+
 <div>
-    <p>Анализ тренда валюты</p>
+    <div class="row fw-weight-bold justify-content-center" style="padding-top: 15px;">
+        <p class="font-weight-bold">Анализ тренда валюты</p>
+    </div>
     <form th:action="@{/history/trendAnalys}" method="get" style="max-width: 500px; margin:0 auto;">
         <input type="date" name="dateAnalys" class="search" placeholder="Дата">
         <input id="name4T" type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта">
@@ -270,6 +294,10 @@
     document.getElementById("name4T").value = nameTrend[0].textContent;
 
 </script>
+
+<div class="row justify-content-center" style="padding-top: 15px;">
+
+</div>
 
 <script type="text/javascript">
     var dat1_1 = document.getElementsByClassName('ratesForGraphic2_1');
