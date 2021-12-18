@@ -54,9 +54,7 @@
             <option value="USDT">
             <option value="LTC">
             <option value="U">
-            <option value="UNIC">
             <option value="CCB">
-            <option value="AC">
         </datalist>
 
         <div class="border border-secondary rounded p-3">
@@ -340,7 +338,7 @@
 
     var newDat1 = [];
     var newDat2 = [];
-    var newDat3_1 = dat3_1[0].textContent
+    var newDat3_1 = dat3_1[0].textContent;
     document.getElementById("cryptocurrency1_1").value = newDat3_1;
     for (let i = 0; i < dat1.length; i++) {
         newDat1.push(Number(dat1[i].textContent));
@@ -375,7 +373,7 @@
             series: [
                 {
                     data: newDat1,
-                    name: "Курс валюты - " + newDat3_1
+                    name: "Курс валюты - " + newDat3_1 + "\n" + dat3_1[1].textContent
                 }]
         });
     });

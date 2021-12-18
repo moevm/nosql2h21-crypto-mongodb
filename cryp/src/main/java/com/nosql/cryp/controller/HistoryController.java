@@ -74,6 +74,7 @@ public class HistoryController {
         List<Date> dateList= new ArrayList<Date>();
         List<String> assetsNames = new ArrayList<String>();
         assetsNames.add(asset_id_base);
+        assetsNames.add("По максимальному курсу за 7 дней");
         if(historyList.size() > 0)
         {
             List<History> asset_history_list = new ArrayList<History>();
@@ -99,11 +100,11 @@ public class HistoryController {
                     public int compare(History o1, History o2) {
                         if(o1.getTime() != null && o2.getTime() != null){
                             if(o1.getTime().after(o2.getTime()))
-                                return -1;
+                                return 1;
                             if(o1.getTime().equals(o2.getTime()))
                                 return 0;
                             if(o1.getTime().before(o2.getTime()))
-                                return 1;
+                                return -1;
                         }
                         return 1;
                     }
@@ -130,6 +131,7 @@ public class HistoryController {
         List<Date> dateList= new ArrayList<Date>();
         List<String> assetsNames = new ArrayList<String>();
         assetsNames.add(asset_id_base);
+        assetsNames.add("По минимальному курсу за 7 дней");
         if(historyList.size() > 0)
         {
             List<History> asset_history_list = new ArrayList<History>();
@@ -155,11 +157,11 @@ public class HistoryController {
                     public int compare(History o1, History o2) {
                         if(o1.getTime() != null && o2.getTime() != null){
                             if(o1.getTime().after(o2.getTime()))
-                                return -1;
+                                return 1;
                             if(o1.getTime().equals(o2.getTime()))
                                 return 0;
                             if(o1.getTime().before(o2.getTime()))
-                                return 1;
+                                return -1;
                         }
                         return 1;
                     }
@@ -186,6 +188,7 @@ public class HistoryController {
         List<Date> dateList= new ArrayList<Date>();
         List<String> assetsNames = new ArrayList<String>();
         assetsNames.add(asset_id_base);
+        assetsNames.add("По начальному курсу за 7 дней");
         if(historyList.size() > 0)
         {
             List<History> asset_history_list = new ArrayList<History>();
@@ -211,11 +214,11 @@ public class HistoryController {
                     public int compare(History o1, History o2) {
                         if(o1.getTime() != null && o2.getTime() != null){
                             if(o1.getTime().after(o2.getTime()))
-                                return -1;
+                                return 1;
                             if(o1.getTime().equals(o2.getTime()))
                                 return 0;
                             if(o1.getTime().before(o2.getTime()))
-                                return 1;
+                                return -1;
                         }
                         return 1;
                     }
@@ -243,6 +246,7 @@ public class HistoryController {
         List<Date> dateList= new ArrayList<Date>();
         List<String> assetsNames = new ArrayList<String>();
         assetsNames.add(asset_id_base);
+        assetsNames.add("По конечному курсу за 7 дней");
         if(historyList.size() > 0)
         {
             List<History> asset_history_list = new ArrayList<History>();
@@ -268,11 +272,11 @@ public class HistoryController {
                     public int compare(History o1, History o2) {
                         if(o1.getTime() != null && o2.getTime() != null){
                             if(o1.getTime().after(o2.getTime()))
-                                return -1;
+                                return 1;
                             if(o1.getTime().equals(o2.getTime()))
                                 return 0;
                             if(o1.getTime().before(o2.getTime()))
-                                return 1;
+                                return -1;
                         }
                         return 1;
                     }
@@ -299,6 +303,7 @@ public class HistoryController {
         List<Date> dateList= new ArrayList<Date>();
         List<String> assetsNames = new ArrayList<String>();
         assetsNames.add(asset_id_base);
+        assetsNames.add("По максимальной прибыли за 7 дней");
         if(historyList.size() > 0)
         {
             List<History> asset_history_list = new ArrayList<History>();
@@ -324,21 +329,26 @@ public class HistoryController {
                     public int compare(History o1, History o2) {
                         if(o1.getTime() != null && o2.getTime() != null){
                             if(o1.getTime().after(o2.getTime()))
-                                return -1;
+                                return 1;
                             if(o1.getTime().equals(o2.getTime()))
                                 return 0;
                             if(o1.getTime().before(o2.getTime()))
-                                return 1;
+                                return -1;
                         }
                         return 1;
                     }
                 });
 
-                for(int i = 0; i < asset_history_list.size(); i++)
-                {
-                    History element = asset_history_list.get(i);
-                    rateList.add(element.getRate());
-                    dateList.add(element.getTime());
+                if(asset_history_list.size() > 0) {
+                    double start_point = asset_history_list.get(0).getRate();
+                    for (int i = 0; i < asset_history_list.size(); i++) {
+                        History element = asset_history_list.get(i);
+                        //rates.add((element/start_point)*100 - 100);
+                        double currPercent = ((element.getRate() - start_point) / start_point) * 100;
+
+                        rateList.add((start_point * currPercent - start_point));
+                        dateList.add(element.getTime());
+                    }
                 }
             }
 
@@ -350,12 +360,125 @@ public class HistoryController {
     }
     public String grahpicByProfitLow(String asset_id_base, Date date1, Date date2, Model model)
     {
+        List<History> historyList = historyService.getAllHist();
+        List<Double> rateList= new ArrayList<Double>();//Сами данные тут
+        List<Date> dateList= new ArrayList<Date>();
+        List<String> assetsNames = new ArrayList<String>();
+        assetsNames.add(asset_id_base);
+        assetsNames.add("По минимальной прибыли за 7 дней");
+        if(historyList.size() > 0)
+        {
+            List<History> asset_history_list = new ArrayList<History>();
+            for (int i = 0; i < historyList.size(); i++)
+            {
+                History element = historyList.get(i);
+                if (Objects.equals(element.getAsset_id_base(), asset_id_base))
+                {
+                    Date date22 = element.getTime();
+                    if (date22.after(date1))
+                    {
+                        if (date22.before(date2))
+                        {
+                            asset_history_list.add(element);
+                        }
+                    }
+                }
+            }
+            if(asset_history_list.size() > 0)
+            {
+                Collections.sort(asset_history_list, new Comparator<History>() {
+                    @Override
+                    public int compare(History o1, History o2) {
+                        if(o1.getTime() != null && o2.getTime() != null){
+                            if(o1.getTime().after(o2.getTime()))
+                                return 1;
+                            if(o1.getTime().equals(o2.getTime()))
+                                return 0;
+                            if(o1.getTime().before(o2.getTime()))
+                                return -1;
+                        }
+                        return 1;
+                    }
+                });
 
+                if(asset_history_list.size() > 0) {
+                    double start_point = asset_history_list.get(0).getRate_low();
+                    for (int i = 0; i < asset_history_list.size(); i++) {
+                        History element = asset_history_list.get(i);
+                        //rates.add((element/start_point)*100 - 100);
+                        double currPercent = ((element.getRate_low() - start_point) / start_point) * 100;
+
+                        rateList.add((start_point * currPercent - start_point));
+                        dateList.add(element.getTime());
+                    }
+                }
+            }
+
+        }
+        model.addAttribute("rateList", rateList);
+        model.addAttribute("dateList", dateList);
+        model.addAttribute("assetsNames",assetsNames);
         return "mainPage";
     }
     public String grahpicRelative(String asset_id_base, Date date1, Date date2, Model model)
     {
+        List<History> historyList = historyService.getAllHist();
+        List<Double> rateList= new ArrayList<Double>();//Сами данные тут
+        List<Date> dateList= new ArrayList<Date>();
+        List<String> assetsNames = new ArrayList<String>();
+        assetsNames.add(asset_id_base);
+        assetsNames.add("По относительному курсу за 7 дней");
+        if(historyList.size() > 0)
+        {
+            List<History> asset_history_list = new ArrayList<History>();
+            for (int i = 0; i < historyList.size(); i++)
+            {
+                History element = historyList.get(i);
+                if (Objects.equals(element.getAsset_id_base(), asset_id_base))
+                {
+                    Date date22 = element.getTime();
+                    if (date22.after(date1))
+                    {
+                        if (date22.before(date2))
+                        {
+                            asset_history_list.add(element);
+                        }
+                    }
+                }
+            }
+            if(asset_history_list.size() > 0)
+            {
+                Collections.sort(asset_history_list, new Comparator<History>() {
+                    @Override
+                    public int compare(History o1, History o2) {
+                        if(o1.getTime() != null && o2.getTime() != null){
+                            if(o1.getTime().after(o2.getTime()))
+                                return 1;
+                            if(o1.getTime().equals(o2.getTime()))
+                                return 0;
+                            if(o1.getTime().before(o2.getTime()))
+                                return -1;
+                        }
+                        return 1;
+                    }
+                });
+                if(asset_history_list.size() > 0)
+                {
+                    double start_point = asset_history_list.get(0).getRate();
 
+                    for (int i = 0; i < asset_history_list.size(); i++)
+                    {
+                        History element = asset_history_list.get(i);
+                        rateList.add(element.getRate() - start_point);
+                        dateList.add(element.getTime());
+                    }
+                }
+            }
+
+        }
+        model.addAttribute("rateList", rateList);
+        model.addAttribute("dateList", dateList);
+        model.addAttribute("assetsNames",assetsNames);
         return "mainPage";
     }
     //Данные для графика: Курс одной валюты к другой
@@ -405,11 +528,11 @@ public class HistoryController {
                 public int compare(History o1, History o2) {
                     if(o1.getTime() != null && o2.getTime() != null){
                         if(o1.getTime().after(o2.getTime()))
-                            return -1;
+                            return 1;
                         if(o1.getTime().equals(o2.getTime()))
                             return 0;
                         if(o1.getTime().before(o2.getTime()))
-                            return 1;
+                            return -1;
                     }
                     return 1;
                 }
@@ -420,11 +543,11 @@ public class HistoryController {
                 public int compare(History o1, History o2) {
                     if(o1.getTime() != null && o2.getTime() != null){
                         if(o1.getTime().after(o2.getTime()))
-                            return -1;
+                            return 1;
                         if(o1.getTime().equals(o2.getTime()))
                             return 0;
                         if(o1.getTime().before(o2.getTime()))
-                            return 1;
+                            return -1;
                     }
                     return 1;
                 }
