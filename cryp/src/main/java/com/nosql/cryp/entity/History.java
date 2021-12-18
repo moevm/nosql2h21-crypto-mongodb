@@ -48,6 +48,18 @@ public class History {
 
         if(curr.has("rate"))
             this.rate = curr.getDouble("rate");
+
+        if(curr.has("rate_high"))
+            this.rate = curr.getDouble("rate_high");
+
+        if(curr.has("rate_open"))
+            this.rate_start = curr.getDouble("rate_open");
+
+        if(curr.has("rate_low"))
+            this.rate_low = curr.getDouble("rate_low");
+
+        if(curr.has("rate_close"))
+            this.rate_end = curr.getDouble("rate_close");
     }
 
     public History(JSONObject curr, String asset_id_base) throws JSONException, ParseException {
