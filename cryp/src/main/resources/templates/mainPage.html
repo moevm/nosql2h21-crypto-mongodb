@@ -62,18 +62,23 @@
             <p class="font-weight-bold">Конвертер криптовалют</p>
         </div>
 
+        <form th:action="@{/currency/currConvert}"  method="get" class="row gx-1 pb-3"  >
+            <input id="currConv1" class="pb-1 ml-auto mr-3 p-1 border" name="curr1" type="text" list="currencies" placeholder="Валюта" />
+            <input type="submit" name="submit" class="submit my-2 btn-primary m-2 btn-primary">
+            <input id="currConv2" class="pb-1 mr-auto ml-3  p-1 border" name="curr2" type="text" list="currencies" placeholder="Валюта"/>
+            <div class="container pb-3 px-1 row justify-content-center my-2">
+                <div class="row gx-1 pb-3">
+                    <input id="nConv" name="n1" type="number" step="0.01" placeholder="Значение для обмена">
+                </div>
+        </form>
+
         <div class="container px-1 row justify-content-center ">
-            <div class="row gx-1 pb-3">
-                <input class="pb-1 ml-auto mr-3 p-1 border" id="currConv1" name="curr1" type="text" list="currencies" placeholder="Валюта" />
-                <input type="submit" name="submit" class="submit">
-                <input class="pb-1 mr-auto ml-3  p-1 border" id="currConv2" name="curr2" type="text" list="currencies" placeholder="Валюта"/>
-            </div>
+
+
         </div>
 
-        <div class="container pb-3 px-1 row justify-content-center">
-            <div class="row gx-1 pb-3">
-                <input id="nConv" name="n1" type="number" step="0.01" placeholder="Значение для обмена">
-        </div>
+
+
 
         <div class="container pb-3 px-1 row justify-content-center">
            <div class="row gx-1">
@@ -136,7 +141,7 @@
         <input id="cryptocurrency2_2"type="text" name="asset_id_base2" class="search" list="currencies" placeholder="Валюта">
         <input type="date" name="dateMin" class="search" placeholder="Дата начала:">
         <input type="date" name="dateMax" class="search" placeholder="Дата конца:">
-        <input type="submit" name="submit" class="submit">
+        <input type="submit" name="submit" class="submit btn-primary m-2">
     </form>
     <table id="tableGraph2" class="table table-bordered" style="display: none;">
         <tbody>
@@ -172,7 +177,7 @@
     <form th:action="@{/history/purhcaseCorrect}" method="get" style="max-width: 500px; margin:0 auto;">
         <input type="date" name="datePurchase" class="search" placeholder="Дата">
         <input id="name3P" type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта">
-        <input type="submit" name="submit" class="submit">
+        <input type="submit" name="submit" class="submit btn-primary m-2">
     </form>
     <div>
         <table id="tabl" class="table table-bordered">
@@ -195,11 +200,6 @@
             </tbody>
         </table>
 
-
-
-
-
-
         <div class="row justify-content-center" style="padding-top: 15px;">
             <table id="tableID " class="w-75 p-3 table table-bordered ">
                 <thead class="thead-dark">
@@ -219,12 +219,6 @@
             </table>
         </div>
 
-
-
-
-
-
-
     </div>
 </div>
 
@@ -236,7 +230,7 @@
     <form th:action="@{/history/trendAnalys}" method="get" style="max-width: 500px; margin:0 auto;">
         <input type="date" name="dateAnalys" class="search" placeholder="Дата">
         <input id="name4T" type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта">
-        <input type="submit" name="submit" class="submit">
+        <input type="submit" name="submit" class="submit btn-primary m-2">
     </form>
     <div>
         <table id="tabl2" class="table table-bordered">
