@@ -40,23 +40,27 @@ public class HistoryController {
         {
             grahpicByHighRate(asset_id_base, date1, date2, model);
         }
-        if(Objects.equals(type_of_graphic,"По минимальному курсу за 7 дней"))
+        else if(Objects.equals(type_of_graphic,"По минимальному курсу за 7 дней"))
         {
             grahpicByLowRate(asset_id_base, date1, date2, model);
         }
-        if(Objects.equals(type_of_graphic,"По начальному курсу за 7 дней"))
+        else if(Objects.equals(type_of_graphic,"По начальному курсу за 7 дней"))
         {
             grahpicByOpenRate(asset_id_base, date1, date2, model);
         }
-        if(Objects.equals(type_of_graphic,"По конечному курсу за 7 дней"))
+        else if(Objects.equals(type_of_graphic,"По конечному курсу за 7 дней"))
         {
             grahpicByCloseRate(asset_id_base, date1, date2, model);
         }
-        if(Objects.equals(type_of_graphic,"По прибыли"))
+        else if(Objects.equals(type_of_graphic,"По максимальной прибыли за 7 дней"))
         {
-            grahpicByProfit(asset_id_base, date1, date2, model);
+            grahpicByProfitHigh(asset_id_base, date1, date2, model);
         }
-        if(Objects.equals(type_of_graphic,"Относительные изменения курса"))
+        else if(Objects.equals(type_of_graphic,"По минимальной прибыли за 7 дней"))
+        {
+            grahpicByProfitLow(asset_id_base, date1, date2, model);
+        }
+        else if(Objects.equals(type_of_graphic,"Относительные изменения курса"))
         {
             grahpicRelative(asset_id_base, date1, date2, model);
         }
@@ -121,20 +125,230 @@ public class HistoryController {
     }
     public String grahpicByLowRate(String asset_id_base, Date date1, Date date2, Model model)
     {
+        List<History> historyList = historyService.getAllHist();
+        List<Double> rateList= new ArrayList<Double>();//Сами данные тут
+        List<Date> dateList= new ArrayList<Date>();
+        List<String> assetsNames = new ArrayList<String>();
+        assetsNames.add(asset_id_base);
+        if(historyList.size() > 0)
+        {
+            List<History> asset_history_list = new ArrayList<History>();
+            for (int i = 0; i < historyList.size(); i++)
+            {
+                History element = historyList.get(i);
+                if (Objects.equals(element.getAsset_id_base(), asset_id_base))
+                {
+                    Date date22 = element.getTime();
+                    if (date22.after(date1))
+                    {
+                        if (date22.before(date2))
+                        {
+                            asset_history_list.add(element);
+                        }
+                    }
+                }
+            }
+            if(asset_history_list.size() > 0)
+            {
+                Collections.sort(asset_history_list, new Comparator<History>() {
+                    @Override
+                    public int compare(History o1, History o2) {
+                        if(o1.getTime() != null && o2.getTime() != null){
+                            if(o1.getTime().after(o2.getTime()))
+                                return -1;
+                            if(o1.getTime().equals(o2.getTime()))
+                                return 0;
+                            if(o1.getTime().before(o2.getTime()))
+                                return 1;
+                        }
+                        return 1;
+                    }
+                });
 
+                for(int i = 0; i < asset_history_list.size(); i++)
+                {
+                    History element = asset_history_list.get(i);
+                    rateList.add(element.getRate_low());
+                    dateList.add(element.getTime());
+                }
+            }
+
+        }
+        model.addAttribute("rateList", rateList);
+        model.addAttribute("dateList", dateList);
+        model.addAttribute("assetsNames",assetsNames);
         return "mainPage";
     }
     public String grahpicByOpenRate(String asset_id_base, Date date1, Date date2, Model model)
     {
+        List<History> historyList = historyService.getAllHist();
+        List<Double> rateList= new ArrayList<Double>();//Сами данные тут
+        List<Date> dateList= new ArrayList<Date>();
+        List<String> assetsNames = new ArrayList<String>();
+        assetsNames.add(asset_id_base);
+        if(historyList.size() > 0)
+        {
+            List<History> asset_history_list = new ArrayList<History>();
+            for (int i = 0; i < historyList.size(); i++)
+            {
+                History element = historyList.get(i);
+                if (Objects.equals(element.getAsset_id_base(), asset_id_base))
+                {
+                    Date date22 = element.getTime();
+                    if (date22.after(date1))
+                    {
+                        if (date22.before(date2))
+                        {
+                            asset_history_list.add(element);
+                        }
+                    }
+                }
+            }
+            if(asset_history_list.size() > 0)
+            {
+                Collections.sort(asset_history_list, new Comparator<History>() {
+                    @Override
+                    public int compare(History o1, History o2) {
+                        if(o1.getTime() != null && o2.getTime() != null){
+                            if(o1.getTime().after(o2.getTime()))
+                                return -1;
+                            if(o1.getTime().equals(o2.getTime()))
+                                return 0;
+                            if(o1.getTime().before(o2.getTime()))
+                                return 1;
+                        }
+                        return 1;
+                    }
+                });
 
+                for(int i = 0; i < asset_history_list.size(); i++)
+                {
+                    History element = asset_history_list.get(i);
+                    rateList.add(element.getRate_start());
+                    dateList.add(element.getTime());
+                }
+            }
+
+        }
+        model.addAttribute("rateList", rateList);
+        model.addAttribute("dateList", dateList);
+        model.addAttribute("assetsNames",assetsNames);
         return "mainPage";
     }
     public String grahpicByCloseRate(String asset_id_base, Date date1, Date date2, Model model)
     {
 
+        List<History> historyList = historyService.getAllHist();
+        List<Double> rateList= new ArrayList<Double>();//Сами данные тут
+        List<Date> dateList= new ArrayList<Date>();
+        List<String> assetsNames = new ArrayList<String>();
+        assetsNames.add(asset_id_base);
+        if(historyList.size() > 0)
+        {
+            List<History> asset_history_list = new ArrayList<History>();
+            for (int i = 0; i < historyList.size(); i++)
+            {
+                History element = historyList.get(i);
+                if (Objects.equals(element.getAsset_id_base(), asset_id_base))
+                {
+                    Date date22 = element.getTime();
+                    if (date22.after(date1))
+                    {
+                        if (date22.before(date2))
+                        {
+                            asset_history_list.add(element);
+                        }
+                    }
+                }
+            }
+            if(asset_history_list.size() > 0)
+            {
+                Collections.sort(asset_history_list, new Comparator<History>() {
+                    @Override
+                    public int compare(History o1, History o2) {
+                        if(o1.getTime() != null && o2.getTime() != null){
+                            if(o1.getTime().after(o2.getTime()))
+                                return -1;
+                            if(o1.getTime().equals(o2.getTime()))
+                                return 0;
+                            if(o1.getTime().before(o2.getTime()))
+                                return 1;
+                        }
+                        return 1;
+                    }
+                });
+
+                for(int i = 0; i < asset_history_list.size(); i++)
+                {
+                    History element = asset_history_list.get(i);
+                    rateList.add(element.getRate_end());
+                    dateList.add(element.getTime());
+                }
+            }
+
+        }
+        model.addAttribute("rateList", rateList);
+        model.addAttribute("dateList", dateList);
+        model.addAttribute("assetsNames",assetsNames);
         return "mainPage";
     }
-    public String grahpicByProfit(String asset_id_base, Date date1, Date date2, Model model)
+    public String grahpicByProfitHigh(String asset_id_base, Date date1, Date date2, Model model)
+    {
+        List<History> historyList = historyService.getAllHist();
+        List<Double> rateList= new ArrayList<Double>();//Сами данные тут
+        List<Date> dateList= new ArrayList<Date>();
+        List<String> assetsNames = new ArrayList<String>();
+        assetsNames.add(asset_id_base);
+        if(historyList.size() > 0)
+        {
+            List<History> asset_history_list = new ArrayList<History>();
+            for (int i = 0; i < historyList.size(); i++)
+            {
+                History element = historyList.get(i);
+                if (Objects.equals(element.getAsset_id_base(), asset_id_base))
+                {
+                    Date date22 = element.getTime();
+                    if (date22.after(date1))
+                    {
+                        if (date22.before(date2))
+                        {
+                            asset_history_list.add(element);
+                        }
+                    }
+                }
+            }
+            if(asset_history_list.size() > 0)
+            {
+                Collections.sort(asset_history_list, new Comparator<History>() {
+                    @Override
+                    public int compare(History o1, History o2) {
+                        if(o1.getTime() != null && o2.getTime() != null){
+                            if(o1.getTime().after(o2.getTime()))
+                                return -1;
+                            if(o1.getTime().equals(o2.getTime()))
+                                return 0;
+                            if(o1.getTime().before(o2.getTime()))
+                                return 1;
+                        }
+                        return 1;
+                    }
+                });
+
+                for(int i = 0; i < asset_history_list.size(); i++)
+                {
+                    History element = asset_history_list.get(i);
+                    rateList.add(element.getRate());
+                    dateList.add(element.getTime());
+                }
+            }
+
+        }
+        model.addAttribute("rateList", rateList);
+        model.addAttribute("dateList", dateList);
+        model.addAttribute("assetsNames",assetsNames);
+        return "mainPage";
+    }
+    public String grahpicByProfitLow(String asset_id_base, Date date1, Date date2, Model model)
     {
 
         return "mainPage";
