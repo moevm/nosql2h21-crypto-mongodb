@@ -44,7 +44,7 @@
 </script>
 
 <body>
-    <a href="http://localhost:8080/main">Таблица</a>
+    <a href="http://localhost:8080/currency/getAllCurr">Таблица</a>
 
     <div>
 
@@ -90,6 +90,14 @@
     <div>
         <div id="container1" style="width: 700px; height: 400px "></div>
             <form th:action="@{/history/currencyTimeRateGrahpicData}" method="get" style="max-width: 500px; margin:0 auto;">
+                <select name="type_of_graphic" placeholder="Параметр">
+                    <option>По максимальному курсу за 7 дней</option>
+                    <option>По минимальному курсу за 7 дней</option>
+                    <option>По начальному курсу за 7 дней</option>
+                    <option>По конечному курсу за 7 дней</option>
+                    <option>По прибыли</option>
+                    <option>Относительные изменения курса</option>
+                </select>
                 <input type="date" name="dateMin" class="search" placeholder="Дата начала:">
                 <input type="date" name="dateMax" class="search" placeholder="Дата конца:">
                 <input id="cryptocurrency1_1" type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта">

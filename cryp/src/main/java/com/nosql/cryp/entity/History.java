@@ -30,6 +30,10 @@ public class History {
 
     private double rate;
 
+    private double rate_low;
+    private double rate_start;
+    private double rate_end;
+
     public History(JSONObject curr) throws JSONException, ParseException {
 
         DateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'");
@@ -57,6 +61,15 @@ public class History {
 
         if(curr.has("rate_high"))
             this.rate = curr.getDouble("rate_high");
+
+        if(curr.has("rate_open"))
+            this.rate_start = curr.getDouble("rate_open");
+
+        if(curr.has("rate_low"))
+            this.rate_low = curr.getDouble("rate_low");
+
+        if(curr.has("rate_close"))
+            this.rate_end = curr.getDouble("rate_close");
     }
 
 }

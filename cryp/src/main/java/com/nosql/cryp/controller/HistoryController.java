@@ -28,7 +28,7 @@ public class HistoryController {
 
     //Данные для графика: валюта по времени
     @GetMapping("/currencyTimeRateGrahpicData")
-    public String currencyTimeRateGrahpicData(@RequestParam  String asset_id_base,@RequestParam  String dateMin,@RequestParam  String dateMax, Model model) throws ParseException {
+    public String currencyTimeRateGrahpicData(@RequestParam  String type_of_graphic, @RequestParam  String asset_id_base,@RequestParam  String dateMin,@RequestParam  String dateMax, Model model) throws ParseException {
         if(Objects.equals("", asset_id_base) || Objects.equals("", dateMin) || Objects.equals("", dateMax))
             return "mainPage";
         dateMin += "T00:00:00.0000000Z";
@@ -36,6 +36,35 @@ public class HistoryController {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'");
         Date date1 = format.parse(dateMin);
         Date date2 = format.parse(dateMax);
+        if(Objects.equals(type_of_graphic,"По максимальному курсу за 7 дней"))
+        {
+            grahpicByHighRate(asset_id_base, date1, date2, model);
+        }
+        if(Objects.equals(type_of_graphic,"По минимальному курсу за 7 дней"))
+        {
+            grahpicByLowRate(asset_id_base, date1, date2, model);
+        }
+        if(Objects.equals(type_of_graphic,"По начальному курсу за 7 дней"))
+        {
+            grahpicByOpenRate(asset_id_base, date1, date2, model);
+        }
+        if(Objects.equals(type_of_graphic,"По конечному курсу за 7 дней"))
+        {
+            grahpicByCloseRate(asset_id_base, date1, date2, model);
+        }
+        if(Objects.equals(type_of_graphic,"По прибыли"))
+        {
+            grahpicByProfit(asset_id_base, date1, date2, model);
+        }
+        if(Objects.equals(type_of_graphic,"Относительные изменения курса"))
+        {
+            grahpicRelative(asset_id_base, date1, date2, model);
+        }
+
+        return "mainPage";
+    }
+    public String grahpicByHighRate(String asset_id_base, Date date1, Date date2, Model model)
+    {
         List<History> historyList = historyService.getAllHist();
         List<Double> rateList= new ArrayList<Double>();//Сами данные тут
         List<Date> dateList= new ArrayList<Date>();
@@ -90,7 +119,31 @@ public class HistoryController {
         model.addAttribute("assetsNames",assetsNames);
         return "mainPage";
     }
+    public String grahpicByLowRate(String asset_id_base, Date date1, Date date2, Model model)
+    {
 
+        return "mainPage";
+    }
+    public String grahpicByOpenRate(String asset_id_base, Date date1, Date date2, Model model)
+    {
+
+        return "mainPage";
+    }
+    public String grahpicByCloseRate(String asset_id_base, Date date1, Date date2, Model model)
+    {
+
+        return "mainPage";
+    }
+    public String grahpicByProfit(String asset_id_base, Date date1, Date date2, Model model)
+    {
+
+        return "mainPage";
+    }
+    public String grahpicRelative(String asset_id_base, Date date1, Date date2, Model model)
+    {
+
+        return "mainPage";
+    }
     //Данные для графика: Курс одной валюты к другой
     @GetMapping("/twoCurrenciesGhraphicData")
     public String twoCurrenciesGhraphicData(@RequestParam String asset_id_base1,@RequestParam String asset_id_base2,@RequestParam String dateMin,@RequestParam String dateMax, Model model) throws ParseException {
