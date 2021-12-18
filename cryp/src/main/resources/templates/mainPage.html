@@ -44,7 +44,7 @@
 </script>
 
 <body>
-<a href="http://localhost:8080/currency/getAllCurr">Таблица</a>
+<a class="btn btn-primary m-2" href="http://localhost:8080/currency/getAllCurr">Таблица</a>
 
 <div>
 
@@ -53,95 +53,83 @@
         <option value="NMC">
         <option value="USDT">
         <option value="LTC">
-        <option value="U">
         <option value="CCB">
     </datalist>
 
-    <div class="container border border-secondary rounded p-3">
-        <div class="row fw-weight-bold justify-content-center" style="padding-top: 15px;">
-            <p class="font-weight-bold">Конвертер криптовалют</p>
-        </div>
-
-        <form th:action="@{/currency/currConvert}"  method="get" class="row gx-1 pb-3"  >
-            <input id="currConv1" class="pb-1 ml-auto mr-3 p-1 border" name="curr1" type="text" list="currencies" placeholder="Валюта" />
-            <input type="submit" name="submit" class="submit my-2 btn-primary m-2 btn-primary">
-            <input id="currConv2" class="pb-1 mr-auto ml-3  p-1 border" name="curr2" type="text" list="currencies" placeholder="Валюта"/>
-            <div class="container pb-3 px-1 row justify-content-center my-2">
-                <div class="row gx-1 pb-3">
-                    <input id="nConv" name="n1" type="number" step="0.01" placeholder="Значение для обмена">
-                </div>
+    <div class="border border-secondary rounded p-3" style="max-width: 250px">
+        <p><h3>Конвертер криптовалют</h3></p>
+        <form th:action="@{/currency/currConvert}" method="get" style="max-width: 500px; margin:0 auto;">
+            <input id="currConv1" name="curr1" type="text" list="currencies" placeholder="Валюта" />
+            <input id="currConv2" name="curr2" type="text" list="currencies" placeholder="Валюта"/>
+            <input id="nConv" name="n1" type="number" step="0.01" placeholder="Значение для обмена">
+            <input type="submit" name="submit" class="submit btn btn-primary m-2">
         </form>
-
-        <div class="container px-1 row justify-content-center ">
-
-
-        </div>
-
-
-
-
-        <div class="container pb-3 px-1 row justify-content-center">
-           <div class="row gx-1">
-               <th:block th:each="conv : ${converted}">
-                   <tr class="my-2">
-                       <td><p class="justify-content-center" th:text="${conv}"></p></td>
-                   </tr>
-               </th:block>
-            </div>
-        </div>
-
-    </div>
-    </div>
-
-    <div class="container px-1 row justify-content-center ">
-        <div id="container1" style="width: 700px; height: 400px "></div>
-        <form th:action="@{/history/currencyTimeRateGrahpicData}" method="get" style="max-width: 500px; margin:0 auto;">
-            <select name="type_of_graphic pb-123 ml-auto mr-1 p-1" placeholder="Параметр">
-                <option>По максимальному курсу за 7 дней</option>
-                <option>По минимальному курсу за 7 дней</option>
-                <option>По начальному курсу за 7 дней</option>
-                <option>По конечному курсу за 7 дней</option>
-                <option>По максимальной прибыли за 7 дней</option>
-                <option>По минимальной прибыли за 7 дней</option>
-                <option>Относительные изменения курса</option>
-            </select>
-            <input type="date" name="dateMin" class="search ml-1 my-2" placeholder="Дата начала:">
-            <input type="date" name="dateMax" class="search " placeholder="Дата конца:">
-            <input id="cryptocurrency1_1" type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта">
-            <input type="submit" name="submit" class="submit">
-        </form>
-        <table id="tableGraph1" class="table table-bordered" style="display: none;">
+        <table id="tablConv" class="table table-bordered">
             <tbody>
-            <th:block  th:each="rates : ${rateList}">
+            <th:block th:each="conv : ${converted}">
                 <tr>
-                    <td><p class="ratesForGraphic1" th:text="${rates}"></p></td>
+                    <td><p th:text="${conv}"></p></td>
                 </tr>
             </th:block>
-            <th:block th:each="dates : ${dateList}">
+            </tbody>
+        </table>
+        <table id="tablConvNames" class="table table-bordered" style="display: none;">
+            <tbody>
+            <th:block th:each="convN : ${namesConv}">
                 <tr>
-                    <td><p class="datesForGraphic1" th:text="${dates}"></p></td>
-                </tr>
-            </th:block>
-            <th:block th:each="names : ${assetsNames}">
-                <tr>
-                    <td><p class="namesForGraphic1" th:text="${names}"></p></td>
+                    <td><p class="convNames" th:text="${convN}"></p></td>
                 </tr>
             </th:block>
             </tbody>
         </table>
     </div>
-
 </div>
-
-
+<div style="position: absolute; left: 300px; top: 50px;">
+    <div id="container1" style="width: 700px; height: 400px "></div>
+    <form class="border border-secondary rounded p-3" th:action="@{/history/currencyTimeRateGrahpicData}" method="get" style="max-width: 330px; position: relative; left: 700px; top: -300px;">
+        <select name="type_of_graphic" placeholder="Параметр">
+            <option>По максимальному курсу за 7 дней</option>
+            <option>По минимальному курсу за 7 дней</option>
+            <option>По начальному курсу за 7 дней</option>
+            <option>По конечному курсу за 7 дней</option>
+            <option>По максимальной прибыли за 7 дней</option>
+            <option>По минимальной прибыли за 7 дней</option>
+            <option>Абсолютные изменения курса</option>
+        </select>
+        <input type="date" name="dateMin" class="search" placeholder="Дата начала:" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" style="width: 300px;">
+        <input type="date" name="dateMax" class="search" placeholder="Дата конца:" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" style="width: 300px;">
+        <input id="cryptocurrency1_1" type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта" style="width: 300px;">
+        <input type="submit" name="submit" class="submit btn btn-primary m-2">
+    </form>
+    <table id="tableGraph1" class="table table-bordered" style="display: none;">
+        <tbody>
+        <th:block  th:each="rates : ${rateList}">
+            <tr>
+                <td><p class="ratesForGraphic1" th:text="${rates}"></p></td>
+            </tr>
+        </th:block>
+        <th:block th:each="dates : ${dateList}">
+            <tr>
+                <td><p class="datesForGraphic1" th:text="${dates}"></p></td>
+            </tr>
+        </th:block>
+        <th:block th:each="names : ${assetsNames}">
+            <tr>
+                <td><p class="namesForGraphic1" th:text="${names}"></p></td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+</div>
 <div>
-    <div id="container2" style="width: 700px; height: 400px "></div>
-    <form th:action="@{/history/twoCurrenciesGhraphicData}" method="get" style="max-width: 500px; margin:0 auto;">
-        <input id="cryptocurrency2_1" type="text" name="asset_id_base1" class="search ml-1 my-2" list="currencies" placeholder="Валюта">
-        <input id="cryptocurrency2_2"type="text" name="asset_id_base2" class="search" list="currencies" placeholder="Валюта">
-        <input type="date" name="dateMin" class="search" placeholder="Дата начала:">
-        <input type="date" name="dateMax" class="search" placeholder="Дата конца:">
-        <input type="submit" name="submit" class="submit btn-primary m-2">
+    <div id="container2" style="width: 700px; height: 400px; position: relative; left:300px "></div>
+    <form class="border border-secondary rounded p-3"  th:action="@{/history/twoCurrenciesGhraphicData}" method="get" style="max-width: 330px; position: relative; left: 1000px; top: -300px;">
+        <input id="cryptocurrency2_1" type="text" name="asset_id_base1" class="search" list="currencies" placeholder="Валюта" style="width: 300px;">
+        <input id="cryptocurrency2_2"type="text" name="asset_id_base2" class="search" list="currencies" placeholder="Валюта" style="width: 300px;">
+        <input type="date" name="dateMin" class="search" placeholder="Дата начала:"  onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" style="width: 300px;">
+        <input type="date" name="dateMax" class="search" placeholder="Дата конца:"  onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" style="width: 300px;">
+        <input type="submit" name="submit" class="submit btn btn-primary m-2">
     </form>
     <table id="tableGraph2" class="table table-bordered" style="display: none;">
         <tbody>
@@ -168,19 +156,16 @@
         </tbody>
     </table>
 </div>
-
-
-<div>
-    <div class="row fw-weight-bold justify-content-center" style="padding-top: 15px;">
-        <p class="font-weight-bold">Анализ правильности покупки валюты</p>
-    </div>
-    <form th:action="@{/history/purhcaseCorrect}" method="get" style="max-width: 500px; margin:0 auto;">
-        <input type="date" name="datePurchase" class="search" placeholder="Дата">
-        <input id="name3P" type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта">
-        <input type="submit" name="submit" class="submit btn-primary m-2">
+</div>
+<div style="position: relative; text-align: left;">
+    <p><h3 style="position: relative; top: -50px; padding-left: 50px;">Анализ правильности покупки валюты</h3></p>
+    <form th:action="@{/history/purhcaseCorrect}" method="get" style="max-width: 300px;position: relative; padding-left: 570px;" >
+        <input type="date" name="datePurchase" class="search" placeholder="Дата"  onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" style="width: 300px;">
+        <input id="name3P" type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта" style="width: 300px;">
+        <input type="submit" name="submit" class="submit btn btn-primary m-2">
     </form>
-    <div>
-        <table id="tabl" class="table table-bordered">
+    <div style="position: absolute; width:500px;height:400px; top: 0px; padding-left: 20px;">
+        <table id="tabl" class="table table-bordered" style="position: absolute; max-width: 300px; left: 580px; top: 200px;">
             <tbody>
             <th:block th:each="purchase : ${purchaseCorrectList}">
                 <tr>
@@ -200,37 +185,30 @@
             </tbody>
         </table>
 
-        <div class="row justify-content-center" style="padding-top: 15px;">
-            <table id="tableID " class="w-75 p-3 table table-bordered ">
-                <thead class="thead-dark">
+        <table id="tableID" class="table table-bordered" style=" padding-left: 50px;">
+            <thead class="thead-dark">
+            <tr>
+                <th>Прибыль (Убыток)</th>
+                <th>Дата</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="currency : ${rateTopPurchases}">
                 <tr>
-                    <th>Прибыль (Убыток)</th>
-                    <th>Дата</th>
+                    <td><p th:text="${currency.price_usd}"></p></td>
+                    <td><p th:text="${currency.data_end}"></p></td>
                 </tr>
-                </thead>
-                <tbody>
-                <th:block th:each="currency : ${rateTopPurchases}">
-                    <tr>
-                        <td><p th:text="${currency.price_usd}"></p></td>
-                        <td><p th:text="${currency.data_end}"></p></td>
-                    </tr>
-                </th:block>
-                </tbody>
-            </table>
-        </div>
-
+            </th:block>
+            </tbody>
+        </table>
     </div>
 </div>
-
-
-<div>
-    <div class="row fw-weight-bold justify-content-center" style="padding-top: 15px;">
-        <p class="font-weight-bold">Анализ тренда валюты</p>
-    </div>
-    <form th:action="@{/history/trendAnalys}" method="get" style="max-width: 500px; margin:0 auto;">
-        <input type="date" name="dateAnalys" class="search" placeholder="Дата">
+<div style="position: absolute; text-align: center; left: 950px; top:920px">
+    <p><h3>Анализ тренда валюты</h3></p>
+    <form th:action="@{/history/trendAnalys}" method="get" style="width: 300px; margin:0 auto;">
+        <input type="date" name="dateAnalys" class="search" placeholder="Дата"  onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" style="width: 300px;">
         <input id="name4T" type="text" name="asset_id_base" class="search" list="currencies" placeholder="Валюта">
-        <input type="submit" name="submit" class="submit btn-primary m-2">
+        <input type="submit" name="submit" class="submit btn btn-primary m-2">
     </form>
     <div>
         <table id="tabl2" class="table table-bordered">
@@ -240,13 +218,17 @@
                     <td><p th:text="${trends}"></p></td>
                 </tr>
             </th:block>
-            <th:block th:each="namesT : ${namesTrend}" style="display: none;">
-                <tr>
-                    <td><p class="names4" th:text="${namesT}"></p></td>
-                </tr>
-            </th:block>
+
             </tbody>
-        </table>
+            <table id="tabl23" class="table table-bordered" style="display: none;">
+                <tbody>
+                <th:block th:each="namesT : ${namesTrend}" >
+                    <tr>
+                        <td><p class="names4" th:text="${namesT}"></p></td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
     </div>
 </div>
 
@@ -257,11 +239,6 @@
     /* Initialization of datatable */
     $(document).ready(function() {
         var table = $('#tableID').DataTable({
-        });
-        table.on('order.dt search.dt', function () {
-            table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-                cell.innerHTML = i + 1;
-            });
         });
     });
 </script>
@@ -288,10 +265,6 @@
 
 </script>
 
-<div class="row justify-content-center" style="padding-top: 15px;">
-
-</div>
-
 <script type="text/javascript">
     var dat1_1 = document.getElementsByClassName('ratesForGraphic2_1');
     var dat2_2 = document.getElementsByClassName('ratesForGraphic2_2');
@@ -313,13 +286,17 @@
     }
     for (let i = 0; i < dat2_2.length; i++) {
         newDat2_2.push(Number(dat2_2[i].textContent));
-        dataTwoCurr.push({
-            x: Number(dat1_1[i].textContent),
-            y: Number(dat2_2[i].textContent)
-        });
+        dataTwoCurr.push([
+            Number(dat1_1[i].textContent),
+            Number(dat2_2[i].textContent)
+        ]);
     }
     for (let i = 0; i < dat3.length; i++) {
         newDat3.push(dat3[i].textContent);
+    }
+    for(let i = 0; i < dataTwoCurr.length; i++)
+    {
+        console.log(dataTwoCurr[i]);
     }
     var chart2;
     $(document).ready(function(){
