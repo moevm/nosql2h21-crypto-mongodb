@@ -265,14 +265,14 @@ public class CurrencyController {
             }
 
             Currency currency =  new Currency(obj);
-            /*JSONArray curr2 = apitodb.list_all_history(currency.getAsset_id(), new Date(), new Date());
+            JSONArray curr2 = apitodb.list_all_history(currency.getAsset_id(), new Date(), new Date());
             for (int j = 0; j < curr2.length(); j++) {
                 JSONObject obj2 = curr2.getJSONObject(j);
 
                 History history = new History(obj2, currency.getAsset_id());
                 historyService.saveHistory(history);
 
-            }*/
+            }
             //apitodb.list_all_history(currency.getAsset_id(), new Date(), new Date());
             currencyService.saveCurrency(currency);
             /*String asset_id = (String) obj.get("asset_id");
