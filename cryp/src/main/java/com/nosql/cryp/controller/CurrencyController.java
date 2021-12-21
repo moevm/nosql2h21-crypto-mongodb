@@ -43,6 +43,7 @@ public class CurrencyController {
                 }
             }
             model.addAttribute("currencies", newCurrncies);
+            model.addAttribute("historyList", historyService.getAllHist());
             return "main";
         }
         else{
@@ -72,6 +73,7 @@ public class CurrencyController {
                     }
                 }
             }
+            model.addAttribute("historyList", historyService.getAllHist());
             model.addAttribute("currencies", newCurrncies);
             return "main";
         }
@@ -314,8 +316,13 @@ public class CurrencyController {
     //public List<Currency> getCurrencies(){
     public String getAllCurrencies(Model model){
         List<Currency> currencies = currencyService.getAllCurr();
+        List<History> historyList = historyService.getAllHist();
         if (currencies.size() > 0){
             model.addAttribute("currencies", currencies);
+            if(historyList.size() > 0)
+            {
+                model.addAttribute("historyList", historyList);
+            }
             return "main";
         }
         else{

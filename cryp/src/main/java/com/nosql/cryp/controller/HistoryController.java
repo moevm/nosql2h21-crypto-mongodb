@@ -3,6 +3,7 @@ package com.nosql.cryp.controller;
 import com.nosql.cryp.ApiToDb;
 import com.nosql.cryp.entity.Currency;
 import com.nosql.cryp.entity.History;
+import com.nosql.cryp.service.CurrencyService;
 import com.nosql.cryp.service.HistoryService;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +26,62 @@ import java.util.*;
 @Controller
 @RequestMapping("/history")
 public class HistoryController {
+
+    @Autowired
+    private CurrencyService currencyService;
+
+    @GetMapping("/getHistoryByPrice")
+    public String getHistoryByPrice(@RequestParam String rateMin, @RequestParam String rateMax, Model model){
+        double rateMinimum = Double.valueOf(rateMin);
+        double rateMaximum = Double.valueOf(rateMax);
+        List<History> histories = historyService.getAllHist();
+        if (histories.size() > 0){
+            List<History> newHistories = new ArrayList<History>();
+            for (int i = 0 ; i < histories.size(); i++) {
+                History element = histories.get(i);
+                if(element.getRate() >= rateMinimum && element.getRate() <= rateMaximum) {
+                    newHistories.add(element);
+                }
+            }
+            model.addAttribute("historyList", newHistories);
+            model.addAttribute("currencies", currencyService.getAllCurr());
+            return "main";
+        }
+        else{
+            return "error";
+        }
+    }
+    //по времени
+    @GetMapping("/getHistoryByDate")
+    public String getCurrencyByDate(@RequestParam String dateMin, @RequestParam String dateMax,  Model model) throws ParseException {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date parsedDateMin = format.parse(dateMin);
+        Date parsedDateMax = format.parse(dateMax);
+        List<History> histories = historyService.getAllHist();
+        if (histories.size() > 0){
+            List<History> newHistories = new ArrayList<History>();
+            for (int i = 0 ; i < histories.size(); i++) {
+                History element = histories.get(i);
+                if(element.getTime() != null)
+                {
+                    if(element.getTime().after(parsedDateMin))
+                    {
+                        if(element.getTime().before(parsedDateMax))
+                        {
+                            newHistories.add(element);
+                        }
+                    }
+                }
+            }
+            model.addAttribute("historyList", newHistories);
+            model.addAttribute("currencies", currencyService.getAllCurr());
+            return "main";
+        }
+        else{
+            return "error";
+        }
+    }
 
     //Данные для графика: валюта по времени
     @GetMapping("/currencyTimeRateGrahpicData")

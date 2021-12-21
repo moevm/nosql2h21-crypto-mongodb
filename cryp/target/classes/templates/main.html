@@ -76,6 +76,39 @@
             </tbody>
         </table>
     </div>
+    <div>
+        <p><h3>Визуализация истории</h3></p>
+        <p>По стоимости:</p>
+        <form th:action="@{/history/getHistoryByPrice}" method="get" style="max-width: 500px; margin:0 auto;">
+            <input type="number" step="0.01" name="rateMin" class="search" placeholder="Минимальная стоимость">
+            <input type="number" step="0.01" name="rateMax" class="search" placeholder="Максимальная стоимость">
+            <input type="submit" name="submit" class="submit">
+        </form>
+        <p>По дате:</p>
+        <form th:action="@{/history/getHistoryByDate}" method="get" style="max-width: 500px; margin:0 auto;">
+            <input type="date" name="dateMin" class="search" placeholder="Дата начала:">
+            <input type="date" name="dateMax" class="search" placeholder="Дата конца:">
+            <input type="submit" name="submit" class="submit">
+        </form>
+        <table id="tableID2" class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th>Название</th>
+                <th>Стоимость</th>
+                <th>Время</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="history : ${historyList}">
+                <tr>
+                    <td><p th:text="${history.asset_id_base}"></p></td>
+                    <td><p th:text="${history.rate}"></p></td>
+                    <td><p th:text="${history.time}"></p></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div>
 </div>
 <a th:href="@{/mainPage}">Главная</a>
 
@@ -124,6 +157,10 @@
     /* Initialization of datatable */
     $(document).ready(function() {
         $('#tableID').DataTable({ });
+    });
+
+    $(document).ready(function() {
+        $('#tableID2').DataTable({ });
     });
 </script>
 </body>
