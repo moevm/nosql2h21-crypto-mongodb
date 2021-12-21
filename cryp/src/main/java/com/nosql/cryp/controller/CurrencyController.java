@@ -31,6 +31,12 @@ public class CurrencyController {
     //по цене
     @GetMapping("/getCurrencyByPrice")
     public String getCurrencyByPrice(@RequestParam String rateMin, @RequestParam String rateMax, Model model){
+        if(Objects.equals(rateMin, "") || Objects.equals(rateMax, ""))
+        {
+            model.addAttribute("historyList", historyService.getAllHist());
+            model.addAttribute("currencies", currencyService.getAllCurr());
+            return "main";
+        }
         double rateMinimum = Double.valueOf(rateMin);
         double rateMaximum = Double.valueOf(rateMax);
         List<Currency> currencies = currencyService.getAllCurr();
@@ -53,6 +59,12 @@ public class CurrencyController {
     //по времени
     @GetMapping("/getCurrencyByDate")
     public String getCurrencyByDate(@RequestParam String dateMin, @RequestParam String dateMax,  Model model) throws ParseException {
+        if(Objects.equals(dateMin, "") || Objects.equals(dateMax, ""))
+        {
+            model.addAttribute("historyList", historyService.getAllHist());
+            model.addAttribute("currencies", currencyService.getAllCurr());
+            return "main";
+        }
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date parsedDateMin = format.parse(dateMin);
